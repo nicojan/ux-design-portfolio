@@ -1,0 +1,60 @@
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header class="site-header" id="site-header">
+  <nav class="nav-inner" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Nico Jan — home">
+      <img src="assets/logo-white.svg" alt="Nico Jan" class="nav-logo-img logo-dark" />
+      <img src="assets/logo-black.svg" alt="Nico Jan" class="nav-logo-img logo-light" />
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="nav-links" role="list">
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li class="nav-icons">
+        <a href="mailto:hi@nicojan.com" aria-label="Email" class="nav-icon-link">
+          <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+        </a>
+        <a href="https://www.linkedin.com/in/nicojan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="nav-icon-link">
+          <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+
+    <!-- Mobile hamburger -->
+    <button
+      class="hamburger"
+      id="hamburger"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Open menu"
+    >
+      <span class="hamburger-top"></span>
+      <span class="hamburger-bottom"></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu overlay -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <ul role="list">
+      <li style="transition-delay: 75ms">
+        <a href="index.html#work" class="mobile-nav-link">Work</a>
+      </li>
+      <li style="transition-delay: 150ms">
+        <a href="about.html" class="mobile-nav-link">About</a>
+      </li>
+      <li style="transition-delay: 225ms" class="mobile-nav-icons">
+        <a href="mailto:hi@nicojan.com" class="mobile-nav-link" aria-label="Email">
+          <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+          Email
+        </a>
+      </li>
+      <li style="transition-delay: 300ms">
+        <a href="https://www.linkedin.com/in/nicojan/" target="_blank" rel="noopener noreferrer" class="mobile-nav-link" aria-label="LinkedIn">
+          <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+          LinkedIn
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>

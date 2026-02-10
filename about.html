@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About — Nico Jan</title>
+    <meta
+      name="description"
+      content="About Nico Jan — a UX designer and researcher in Vancouver, BC with eight years of teaching experience."
+    />
+    <meta property="og:title" content="About — Nico Jan" />
+    <meta
+      property="og:description"
+      content="About Nico Jan — a UX designer and researcher in Vancouver, BC."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_CA" />
+    <link rel="icon" href="favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Material Symbols for mail icon (used in nav) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=mail"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for LinkedIn icon (used in nav) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- NAV (loaded from partial) -->
+    <div data-include="partials/nav.html"></div>
+
+    <!-- MAIN CONTENT -->
+    <main id="main">
+      <!-- ABOUT SECTION — two columns -->
+      <section class="about-page">
+        <div class="about-page-inner">
+          <div class="about-page-portrait">
+            <img
+              src="assets/portrait.png"
+              alt="Portrait of Nico Jan"
+              class="about-portrait-img reveal-left"
+            />
+          </div>
+          <div class="about-page-content">
+            <h1 class="section-heading reveal">
+              From Classroom to User&nbsp;Experience
+            </h1>
+            <div class="about-text reveal-stagger">
+              <p class="reveal" style="--delay: 100ms">
+                Teaching taught me to design before I knew the vocabulary for it.
+                Every lesson plan is an information architecture problem. Every
+                assessment is a usability test. Every confused expression is user
+                feedback I can&rsquo;t ignore.
+              </p>
+              <p class="reveal" style="--delay: 200ms">
+                My background includes a BA in English Literature and a BEd from
+                UBC, a CELTA from Cambridge, and marketing work where I learned to
+                translate user insights into content that performs. I&rsquo;m
+                currently completing the Google UX Design Professional Certificate
+                and have applied to Emily Carr&rsquo;s UX Design program for
+                Spring 2026.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDUCATION SECTION -->
+      <section class="education">
+        <div class="education-inner">
+          <h2 class="section-heading reveal">Education</h2>
+          <div class="education-grid reveal-stagger">
+
+            <div class="education-item reveal" style="--delay: 100ms">
+              <p class="education-school">University of British Columbia</p>
+              <p class="education-degree">Bachelor of Education (BEd)</p>
+              <p class="education-meta">Completed 2016</p>
+              <p class="education-coursework">Curriculum design, instructional methods, assessment &amp; evaluation, educational psychology</p>
+            </div>
+
+            <div class="education-item reveal" style="--delay: 150ms">
+              <p class="education-school">University of British Columbia</p>
+              <p class="education-degree">Bachelor of Arts, English Literature</p>
+              <p class="education-meta">Completed 2014</p>
+              <p class="education-coursework">Critical analysis, rhetoric, research methods, technical writing</p>
+            </div>
+
+            <div class="education-item reveal" style="--delay: 200ms">
+              <p class="education-school">Cambridge University (CELTA)</p>
+              <p class="education-degree">Certificate in English Language Teaching to Adults</p>
+              <p class="education-meta">Completed 2017</p>
+              <p class="education-coursework">Learner-centred instruction, materials design, needs analysis, language assessment</p>
+            </div>
+
+            <div class="education-item reveal" style="--delay: 250ms">
+              <p class="education-school">Google / Coursera</p>
+              <p class="education-degree">Google UX Design Professional Certificate</p>
+              <p class="education-meta">In progress</p>
+              <p class="education-coursework">User research, wireframing, prototyping, usability testing, design systems</p>
+            </div>
+
+            <div class="education-item reveal" style="--delay: 300ms">
+              <p class="education-school">Emily Carr University of Art + Design</p>
+              <p class="education-degree">UX Design Program</p>
+              <p class="education-meta">Applied &mdash; Spring 2026</p>
+              <p class="education-coursework">Interaction design, user research, design thinking, service design</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER (loaded from partial) -->
+    <div data-include="partials/footer.html"></div>
+
+    <!-- Load partials, then initialise page JS -->
+    <script src="partials/includes.js"></script>
+    <script>
+      (function () {
+        "use strict";
+
+        function initNav() {
+          /* ─── Header scroll effect ─── */
+          var header = document.getElementById("site-header");
+          if (!header) return;
+          var mobileMenuEl = document.getElementById("mobile-menu");
+          function onScroll() {
+            if (window.scrollY > 16) {
+              header.classList.add("scrolled");
+              if (mobileMenuEl) mobileMenuEl.style.top = "80px";
+            } else {
+              header.classList.remove("scrolled");
+              if (mobileMenuEl) mobileMenuEl.style.top = "120px";
+            }
+          }
+          onScroll();
+          window.addEventListener("scroll", onScroll, { passive: true });
+
+          /* ─── Mobile menu ─── */
+          var hamburger = document.getElementById("hamburger");
+          var mobileMenu = document.getElementById("mobile-menu");
+          if (!hamburger || !mobileMenu) return;
+          var mobileLinks = mobileMenu.querySelectorAll(".mobile-nav-link");
+
+          function toggleMenu() {
+            var isOpen = hamburger.classList.toggle("open");
+            mobileMenu.classList.toggle("open", isOpen);
+            hamburger.setAttribute("aria-expanded", isOpen);
+            hamburger.setAttribute(
+              "aria-label",
+              isOpen ? "Close menu" : "Open menu",
+            );
+            mobileMenu.setAttribute("aria-hidden", !isOpen);
+          }
+
+          hamburger.addEventListener("click", toggleMenu);
+
+          mobileLinks.forEach(function (link) {
+            link.addEventListener("click", function () {
+              toggleMenu();
+            });
+          });
+
+          document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && hamburger.classList.contains("open")) {
+              toggleMenu();
+            }
+          });
+        }
+
+        /* Run immediately if partials already loaded, otherwise wait */
+        if (document.getElementById("site-header")) {
+          initNav();
+        } else {
+          document.addEventListener("includes:loaded", initNav);
+        }
+
+        /* ─── Scroll-triggered reveal animations ─── */
+        var reveals = document.querySelectorAll(
+          ".reveal, .reveal-left, .reveal-scale",
+        );
+
+        if ("IntersectionObserver" in window) {
+          var observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add("visible");
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            {
+              threshold: 0.15,
+              rootMargin: "0px 0px -60px 0px",
+            },
+          );
+
+          reveals.forEach(function (el) {
+            observer.observe(el);
+          });
+        } else {
+          reveals.forEach(function (el) {
+            el.classList.add("visible");
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
