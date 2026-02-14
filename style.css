@@ -625,6 +625,16 @@ ol {
 .projects-intro .section-heading {
   font-size: clamp(1.25rem, 3vw, 1.75rem);
   color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.projects-intro p {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  font-style: italic;
 }
 
 .projects-scroll {
@@ -649,41 +659,44 @@ ol {
   background: var(--bg-alt);
 }
 
-/* ─── Two-column inner container ───
-   Holds the card and the image side-by-side.
-   Max width of 1000px keeps things reined in on ultrawide monitors. */
+/* ─── Two-column grid container ───
+   Card takes 40%, image takes 60%.
+   Max width of 1200px to accommodate the layout. */
 
 .project-slide-inner {
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
   gap: 3rem;
-  max-width: 1000px;
+  max-width: 1200px;
   width: 100%;
+  align-items: center;
 }
 
-/* Odd projects (1, 3): card LEFT, image RIGHT — default order */
-/* Even projects (2, 4): card RIGHT, image LEFT — reverse */
+/* Even projects (2, 4): image LEFT, card RIGHT — reverse order */
 .project-slide.align-right .project-slide-inner {
-  flex-direction: row-reverse;
+  direction: rtl;
+}
+
+.project-slide.align-right .project-card,
+.project-slide.align-right .project-image {
+  direction: ltr;
 }
 
 /* ─── Project image ───
-   Replace the src with your own image. The image sits opposite the card. */
+   Takes up 2 columns in the grid, sits opposite the card. */
 
 .project-image {
-  flex: 1 1 0%;
-  min-width: 0;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 0;
 }
 
 .project-image img,
 .project-image video {
   width: 100%;
   height: auto;
-  border-radius: 16px;
   object-fit: cover;
   /* Subtle scale-in animation when slide enters view */
   transform: scale(0.96);
@@ -692,7 +705,8 @@ ol {
     transform 0.8s var(--ease-out),
     opacity 0.8s var(--ease-out);
 }
-.project-slide.in-view .project-image img,
+.project-slide.in-view .project-image .carousel-slide.active img,
+.project-slide.in-view .project-image > img,
 .project-slide.in-view .project-image video {
   transform: scale(1);
   opacity: 1;
@@ -703,7 +717,13 @@ ol {
   max-height: 70vh;
   width: auto;
   max-width: 100%;
-  border-radius: 24px;
+}
+
+/* Horizontal video — allow wider display */
+.project-image video[src*="watchmetype"] {
+  max-height: none;
+  width: 100%;
+  height: auto;
 }
 
 /* Placeholder shown when no image file exists yet */
@@ -720,11 +740,236 @@ ol {
   opacity: 0.4;
 }
 
+/* ─── Carousel ─── */
+
+/* Instagram Carousel Wrapper */
+.instagram-carousel {
+  position: relative;
+  width: 88%;
+  /* PNG aspect ratio: 885 / 1200 */
+  aspect-ratio: 885 / 1200;
+  /* Constrain height to fit comfortably within the project section */
+  max-height: 70vh;
+  /* Maintain aspect ratio when constrained by height */
+  max-width: calc(70vh * (885 / 1200));
+  margin: 0 auto;
+}
+
+/* Instagram Frame Overlay (behind carousel) */
+.instagram-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  z-index: 5;
+  display: block;
+  /* Override inherited opacity animation */
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Carousel Container (above Instagram frame) */
+.carousel-container {
+  position: absolute;
+  /* Position based on PNG dimensions: 885 × 1200 */
+  /* Carousel vertically centered between header and bottom buttons */
+  /* Top: 18.4%, Left: 7.16%, Width: 85.69% */
+  top: 13.3%;
+  left: 7.16%;
+  width: 85.69%;
+  /* Height maintains square aspect ratio */
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 0;
+  z-index: 10;
+}
+
+/* Carousel Track (sliding wrapper) */
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  height: 100%;
+}
+
+/* Individual Slides */
+.carousel-slide {
+  min-width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  flex-shrink: 0;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Navigation Arrows (positioned outside Instagram frame) */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: 300;
+  cursor: pointer;
+  z-index: 20;
+  transition:
+    background 0.3s var(--ease-out),
+    border-color 0.3s var(--ease-out),
+    color 0.3s var(--ease-out),
+    transform 0.3s var(--ease-out);
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.instagram-carousel:hover .carousel-arrow {
+  opacity: 1;
+}
+
+.carousel-arrow:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-arrow-prev {
+  left: -30px;
+}
+
+.carousel-arrow-next {
+  right: -30px;
+}
+
+.carousel-arrow:active {
+  transform: translateY(-50%) scale(0.98);
+}
+
+/* Dot Indicators */
+.carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 20;
+}
+
+.carousel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.carousel-dot:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.carousel-dot.active {
+  background: #fff;
+}
+
+/* ─── Paper Stack Effect ─── */
+
+.paper-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paper-card {
+  position: absolute;
+  width: 200px;
+  max-width: 70%;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: auto;
+}
+
+.paper-card img,
+.paper-card video {
+  width: 100%;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  filter: sepia(20%);
+  transition: filter 0.5s;
+  background-color: #f0f0f0;
+  opacity: 1;
+  visibility: visible;
+}
+
+.paper-card video {
+  background: #000;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  height: auto;
+}
+
+.paper-card:not(.active):hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  filter: brightness(1.05);
+}
+
+/* Active (prominent) state */
+.paper-card.active {
+  transform: translate(-50%, -50%) scale(2.2) rotate(0deg) !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  z-index: 10000;
+  pointer-events: auto;
+  max-width: 90vw;
+  max-height: 75vh;
+  width: auto;
+  height: auto;
+}
+
+.paper-card.active img,
+.paper-card.active video {
+  filter: sepia(0%);
+}
+
 /* ─── Project card ─── */
 
 .project-card {
-  flex: 0 0 auto;
-  width: 440px;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 20px;
@@ -734,6 +979,7 @@ ol {
   transition:
     border-color 0.4s var(--ease-out),
     box-shadow 0.4s var(--ease-out);
+  min-width: 0;
 }
 .project-card:hover {
   border-color: var(--border-hover);
@@ -853,7 +1099,7 @@ ol {
 
 /* Tooltip bubble (appears above the link) */
 .project-link-wip::before {
-  content: "\1F6A7 Under Construction \1F6A7";
+  content: "\1F6A7  Under Construction \1F6A7";
   position: absolute;
   bottom: calc(100% + 12px);
   left: 50%;
@@ -1220,7 +1466,7 @@ ol {
     padding: 3rem 3rem;
   }
   .project-slide-inner {
-    gap: 3.5rem;
+    gap: 4rem;
   }
 }
 
@@ -1245,7 +1491,7 @@ ol {
 /* ─── Tablet & below: stack card above image ─── */
 @media (max-width: 767px) {
   .project-slide-inner {
-    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
     gap: 1.75rem;
   }
 
@@ -1257,12 +1503,10 @@ ol {
 
   .project-card {
     width: 100%;
-    flex: none;
   }
 
   .project-image {
     width: 100%;
-    flex: none;
   }
 }
 

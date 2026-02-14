@@ -82,6 +82,11 @@
         <!-- Project heading -->
         <div class="projects-intro">
           <h2 class="section-heading reveal">Selected Projects</h2>
+          <p>
+            These projects span education, product design, and marketing. What
+            connects them is the same question: how do people actually
+            experience this, and where does it break down?
+          </p>
         </div>
 
         <!-- ── PROJECT 1 ── -->
@@ -90,14 +95,15 @@
             <article class="project-card reveal-scale">
               <div class="project-number">01</div>
               <p class="project-descriptor">
-                bilingual vocabulary tool for academic writing
+                helping ESL students write with better transitions
               </p>
               <h3 class="project-title">Useful Words</h3>
               <p class="project-desc">
-                A mobile-first reference designed for ESL students to use while
-                writing essays. Presents advanced transitions in English and
-                Chinese with contextual definitions. Interface optimized for
-                one-handed use based on observed writing behaviour.
+                My students kept reaching for the same five linking words in
+                every essay, so I built a bilingual reference they could check
+                while writing. The layout is mobile-first, and I placed
+                navigation on the left after watching right-handed students
+                struggle to tap and hold a pen at the same time.
               </p>
               <p class="project-tools">Webflow, jQuery</p>
               <div class="project-links">
@@ -145,11 +151,11 @@
                 aria-label="Useful Words app demo"
               >
                 <source
-                  src="assets/landing/useful-words.mov"
+                  src="assets/thumbnails/useful-words.mov"
                   type="video/mp4; codecs=hvc1"
                 />
                 <source
-                  src="assets/landing/useful-words.webm"
+                  src="assets/thumbnails/useful-words.webm"
                   type="video/webm"
                 />
               </video>
@@ -163,15 +169,17 @@
             <article class="project-card reveal-scale">
               <div class="project-number">02</div>
               <p class="project-descriptor">
-                macOS utility for simulating realistic typing
+                a shipped macOS app that questions how institutions respond to
+                AI
               </p>
               <h3 class="project-title">WatchMeType</h3>
               <p class="project-desc">
-                A shipped app that reproduces text with human pacing, pauses,
-                and errors. Supports single-draft typing and two-phase revision
-                simulation. Handles focus states across applications,
-                auto-pauses on window changes, and provides overlay feedback for
-                each operation phase.
+                If schools demand authentic-looking process instead of authentic
+                learning, students will manufacture the process. WatchMeType
+                types text into any window with human pacing, pauses, and
+                mistakes. It is a working product and a provocation: the
+                solution is not better surveillance but better teaching
+                conditions.
               </p>
               <p class="project-tools">
                 SwiftUI, AppKit, CoreGraphics, macOS Accessibility APIs
@@ -213,10 +221,22 @@
               </div>
             </article>
             <div class="project-image">
-              <img
-                src="assets/landing/watchmetype.jpg"
-                alt="WatchMeType project screenshot"
-              />
+              <video
+                autoplay
+                loop
+                muted
+                playsinline
+                aria-label="Useful Words app demo"
+              >
+                <source
+                  src="assets/thumbnails/watchmetype.mov"
+                  type="video/mp4; codecs=hvc1"
+                />
+                <source
+                  src="assets/thumbnails/watchmetype.webm"
+                  type="video/webm"
+                />
+              </video>
             </div>
           </div>
         </section>
@@ -227,16 +247,15 @@
             <article class="project-card reveal-scale">
               <div class="project-number">03</div>
               <p class="project-descriptor">
-                story seed generator for dystopian fiction writing
+                a story seed generator tested with real writers
               </p>
               <h3 class="project-title">Pocket Dystopia</h3>
               <p class="project-desc">
-                A mobile-first story seed generator built around a d20 die
-                metaphor. Assembles randomized characters, conflicts, and
-                settings for dystopian fiction prompts. Satirical tone that
-                plays with genre tropes rather than playing them straight.
-                Animation-driven interaction: die rolls at varying angles,
-                content swaps at midpoint, idle cycling for ambient movement.
+                A randomized premise generator for dystopian fiction, built
+                around a d20 die roll so the interaction feels physical rather
+                than procedural. I ran informal usability tests with writers and
+                adjusted timing, animation, and tone based on what they found
+                confusing or flat.
               </p>
               <p class="project-tools">vanilla HTML, CSS, JavaScript</p>
               <div class="project-links">
@@ -284,11 +303,11 @@
                 aria-label="Pocket Dystopia app demo"
               >
                 <source
-                  src="assets/landing/pocket-dystopia.mov"
+                  src="assets/thumbnails/pocket-dystopia.mov"
                   type="video/mp4; codecs=hvc1"
                 />
                 <source
-                  src="assets/landing/pocket-dystopia.webm"
+                  src="assets/thumbnails/pocket-dystopia.webm"
                   type="video/webm"
                 />
               </video>
@@ -302,15 +321,14 @@
             <article class="project-card reveal-scale">
               <div class="project-number">04</div>
               <p class="project-descriptor">
-                market research and content strategy
+                bridging cultural expectations through research-driven content
               </p>
               <h3 class="project-title">Aoni Campaigns</h3>
               <p class="project-desc">
-                Led research, developed campaign strategies, and wrote copy for
-                a health brand entering North America. Top campaign reached
-                30,000+ interactions. Work involved bridging cultural
-                differences between client expectations and audience
-                preferences.
+                I led audience research and wrote copy for a Hong Kong condom
+                brand entering North America. The client wanted direct
+                messaging; the audience responded to humour and subtlety. Our
+                top campaign reached over 30,000 interactions.
               </p>
               <div class="project-links">
                 <a
@@ -332,10 +350,43 @@
               </div>
             </article>
             <div class="project-image">
-              <img
-                src="assets/landing/aoni-campaigns.jpg"
-                alt="Aoni Campaigns project screenshot"
-              />
+              <div
+                class="instagram-carousel"
+                data-carousel-dir="assets/thumbnails/aoni"
+              >
+                <!-- Navigation Arrows (outside frame) -->
+                <button
+                  class="carousel-arrow carousel-arrow-prev"
+                  aria-label="Previous image"
+                >
+                  ‹
+                </button>
+                <button
+                  class="carousel-arrow carousel-arrow-next"
+                  aria-label="Next image"
+                >
+                  ›
+                </button>
+
+                <!-- Carousel images (dynamically loaded) -->
+                <div class="carousel-container">
+                  <div class="carousel-track">
+                    <!-- Images will be loaded dynamically via JavaScript -->
+                  </div>
+
+                  <!-- Dot Indicators -->
+                  <div class="carousel-dots">
+                    <!-- Dots will be generated dynamically via JavaScript -->
+                  </div>
+                </div>
+
+                <!-- Instagram frame overlay -->
+                <img
+                  src="assets/thumbnails/insta.png"
+                  alt="Instagram post frame"
+                  class="instagram-frame"
+                />
+              </div>
             </div>
           </div>
         </section>
@@ -346,15 +397,14 @@
             <article class="project-card reveal-scale">
               <div class="project-number">05</div>
               <p class="project-descriptor">
-                information architecture for learning
+                eight years of designing how learners encounter information
               </p>
               <h3 class="project-title">Curriculum Design</h3>
               <p class="project-desc">
-                Eight years of designing materials that guide students through
-                complex concepts. Handouts structured to scaffold comprehension.
-                Assessments built to reveal understanding rather than recall.
-                Each piece designed around how learners actually process
-                information.
+                Every handout and assessment I have built since 2017 is an
+                information architecture problem. Observing where students get
+                confused, restructuring materials, and testing whether changes
+                work is the same loop that drives iterative design.
               </p>
               <div class="project-links">
                 <a
@@ -376,10 +426,12 @@
               </div>
             </article>
             <div class="project-image">
-              <img
-                src="assets/landing/curriculum-design.jpg"
-                alt="Curriculum Design project screenshot"
-              />
+              <div
+                class="paper-stack"
+                data-media-dir="assets/thumbnails/teaching"
+              >
+                <!-- Media items will be dynamically loaded -->
+              </div>
             </div>
           </div>
         </section>
@@ -506,6 +558,427 @@
 
           slides.forEach(function (slide) {
             slideObserver.observe(slide);
+          });
+        }
+
+        /* ─── Carousel Functionality ─── */
+        var instagramCarousel = document.querySelector(".instagram-carousel");
+        if (instagramCarousel) {
+          var carouselDir = instagramCarousel.getAttribute("data-carousel-dir");
+          var track = instagramCarousel.querySelector(".carousel-track");
+          var dotsContainer = instagramCarousel.querySelector(".carousel-dots");
+          var prevBtn = instagramCarousel.querySelector(".carousel-arrow-prev");
+          var nextBtn = instagramCarousel.querySelector(".carousel-arrow-next");
+
+          // List of images in the aoni directory
+          var images = [
+            "002_how2sex_foreplay.png",
+            "003_how2sex_protection.png",
+            "006_how2sex_roleplay.png",
+            "007_how2sex_booty call.png",
+            "009_how2sex_toys.png",
+            "012_how2sex_signals.png",
+            "w1_animalsexspecs_three-d_colorbg_fb.png",
+            "w2_animalsexspecs_human-style_fb.png",
+            "w3_animalsexspecs_12-seconds_fb.png",
+            "w3_sexspecs_130000_fb.png",
+            "w3_sexspecs_teamwork_fb.png",
+            "w4_animalsexspecs_poop-play_fb.png",
+            "w4_sexspecs_average-ejaculation_fb.png",
+            "w4_sexspecs_grandma_fb.png",
+          ];
+
+          var currentIndex = 0;
+          var totalSlides = images.length;
+          var autoPlayInterval = null;
+          var autoPlayDelay = 7000;
+          var userHasInteracted = false; // Track if user has manually controlled carousel
+
+          // Dynamically create slides
+          images.forEach(function (imageName, index) {
+            var slide = document.createElement("div");
+            slide.className = "carousel-slide" + (index === 0 ? " active" : "");
+            var img = document.createElement("img");
+            img.src = carouselDir + "/" + imageName;
+            img.alt = "Aoni campaign " + (index + 1);
+            slide.appendChild(img);
+            track.appendChild(slide);
+          });
+
+          // Dynamically create dots
+          images.forEach(function (_, index) {
+            var dot = document.createElement("button");
+            dot.className = "carousel-dot" + (index === 0 ? " active" : "");
+            dot.setAttribute("aria-label", "Go to slide " + (index + 1));
+            dotsContainer.appendChild(dot);
+          });
+
+          var slides = Array.from(track.querySelectorAll(".carousel-slide"));
+          var dots = Array.from(
+            dotsContainer.querySelectorAll(".carousel-dot"),
+          );
+
+          // Update carousel position and active states
+          function updateCarousel(index) {
+            // Loop infinitely
+            if (index < 0) {
+              currentIndex = totalSlides - 1;
+            } else if (index >= totalSlides) {
+              currentIndex = 0;
+            } else {
+              currentIndex = index;
+            }
+
+            // Move track
+            track.style.transform = "translateX(-" + currentIndex * 100 + "%)";
+
+            // Update active slide
+            slides.forEach(function (slide, i) {
+              if (i === currentIndex) {
+                slide.classList.add("active");
+              } else {
+                slide.classList.remove("active");
+              }
+            });
+
+            // Update active dot
+            dots.forEach(function (dot, i) {
+              if (i === currentIndex) {
+                dot.classList.add("active");
+              } else {
+                dot.classList.remove("active");
+              }
+            });
+          }
+
+          // Auto-play functionality
+          function startAutoPlay() {
+            // Don't restart autoplay if user has manually interacted
+            if (userHasInteracted) {
+              return;
+            }
+            // Clear any existing interval first
+            stopAutoPlay();
+            autoPlayInterval = setInterval(function () {
+              updateCarousel(currentIndex + 1);
+            }, autoPlayDelay);
+          }
+
+          function stopAutoPlay() {
+            if (autoPlayInterval) {
+              clearInterval(autoPlayInterval);
+              autoPlayInterval = null;
+            }
+          }
+
+          function disableAutoPlay() {
+            userHasInteracted = true;
+            stopAutoPlay();
+          }
+
+          // Previous slide
+          prevBtn.addEventListener("click", function () {
+            updateCarousel(currentIndex - 1);
+            disableAutoPlay();
+          });
+
+          // Next slide
+          nextBtn.addEventListener("click", function () {
+            updateCarousel(currentIndex + 1);
+            disableAutoPlay();
+          });
+
+          // Dot navigation
+          dots.forEach(function (dot, index) {
+            dot.addEventListener("click", function () {
+              updateCarousel(index);
+              disableAutoPlay();
+            });
+          });
+
+          // Touch/swipe support
+          var touchStartX = 0;
+          var touchEndX = 0;
+          var swipeThreshold = 50;
+
+          instagramCarousel.addEventListener(
+            "touchstart",
+            function (e) {
+              touchStartX = e.changedTouches[0].screenX;
+            },
+            { passive: true },
+          );
+
+          instagramCarousel.addEventListener(
+            "touchend",
+            function (e) {
+              touchEndX = e.changedTouches[0].screenX;
+              handleSwipe();
+            },
+            { passive: true },
+          );
+
+          function handleSwipe() {
+            var swipeDistance = touchStartX - touchEndX;
+
+            if (Math.abs(swipeDistance) > swipeThreshold) {
+              if (swipeDistance > 0) {
+                updateCarousel(currentIndex + 1);
+              } else {
+                updateCarousel(currentIndex - 1);
+              }
+              disableAutoPlay();
+            }
+          }
+
+          // Keyboard navigation
+          instagramCarousel.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowLeft") {
+              updateCarousel(currentIndex - 1);
+              disableAutoPlay();
+            } else if (e.key === "ArrowRight") {
+              updateCarousel(currentIndex + 1);
+              disableAutoPlay();
+            }
+          });
+
+          // Pause auto-play on hover (but don't restart if user has interacted)
+          instagramCarousel.addEventListener("mouseenter", stopAutoPlay);
+          instagramCarousel.addEventListener("mouseleave", startAutoPlay);
+
+          // Make carousel focusable
+          instagramCarousel.setAttribute("tabindex", "0");
+
+          // Initialize carousel and start auto-play
+          updateCarousel(0);
+          startAutoPlay();
+        }
+
+        /* ─── Paper Stack Functionality ─── */
+        var paperStack = document.querySelector(".paper-stack");
+        if (paperStack) {
+          var mediaDir = paperStack.getAttribute("data-media-dir");
+
+          /* ═══════════════════════════════════════════════════════
+             CURRICULUM DESIGN - MEDIA FILES
+             ═══════════════════════════════════════════════════════
+
+             Add new teaching materials here!
+
+             For VIDEOS (.mov + .webm):
+             - Only include the base name (without extension)
+             - Example: { name: "filename", type: "video" }
+             - The code automatically loads both .mov and .webm versions
+
+             For IMAGES (.png, .jpg):
+             - Include the full filename with extension
+             - Example: { name: "filename.png", type: "image" }
+
+             ═══════════════════════════════════════════════════════ */
+          var mediaFiles = [
+            // Videos (base name only - .mov and .webm auto-loaded)
+            { name: "character-design", type: "video" },
+            { name: "freytag", type: "video" },
+            { name: "protagonist", type: "video" },
+
+            // Images (full filename with extension)
+            { name: "freytag.png", type: "image" },
+            { name: "story-starters.png", type: "image" },
+            { name: "types-of-characters.png", type: "image" },
+
+            // Add your new files below this line:
+            // { name: "new-video", type: "video" },
+            // { name: "new-image.png", type: "image" },
+          ];
+
+          var zIndexCounter = 10;
+
+          // Store card positions for collision detection
+          var cardPositions = [];
+
+          // Function to check if a position overlaps with existing cards
+          function isPositionOccupied(x, y, minDistance, excludeIndex) {
+            for (var i = 0; i < cardPositions.length; i++) {
+              // Skip the card we're currently moving
+              if (i === excludeIndex) continue;
+
+              var pos = cardPositions[i];
+              if (!pos) continue; // Skip if no position stored yet
+
+              var distance = Math.sqrt(
+                Math.pow(x - pos.x, 2) + Math.pow(y - pos.y, 2),
+              );
+              if (distance < minDistance) {
+                return true; // Too close to another card
+              }
+            }
+            return false; // Position is free
+          }
+
+          // Function to generate random messy coordinates with collision avoidance
+          function getRandomTransform(cardIndex, avoidCollision) {
+            var rotate = Math.floor(Math.random() * 70) - 35; // -35deg to 35deg
+            var isMobile = window.innerWidth <= 767;
+            var x, y;
+            var maxAttempts = 20; // Try up to 20 times to find a free spot
+            var minDistance = isMobile ? 120 : 180; // Minimum distance between cards
+
+            if (avoidCollision) {
+              // Try to find a non-overlapping position
+              for (var attempt = 0; attempt < maxAttempts; attempt++) {
+                if (isMobile) {
+                  x = Math.floor(Math.random() * 200) - 100;
+                  y = Math.floor(Math.random() * 250) - 125;
+                } else {
+                  x = Math.floor(Math.random() * 700) - 350;
+                  y = Math.floor(Math.random() * 600) - 300;
+                }
+
+                if (!isPositionOccupied(x, y, minDistance, cardIndex)) {
+                  // Found a free spot!
+                  cardPositions[cardIndex] = { x: x, y: y };
+                  break;
+                }
+              }
+              // If all attempts failed, use the last generated position anyway
+              if (attempt === maxAttempts) {
+                cardPositions[cardIndex] = { x: x, y: y };
+              }
+            } else {
+              // No collision detection (for initial setup)
+              if (isMobile) {
+                x = Math.floor(Math.random() * 200) - 100;
+                y = Math.floor(Math.random() * 250) - 125;
+              } else {
+                x = Math.floor(Math.random() * 700) - 350;
+                y = Math.floor(Math.random() * 600) - 300;
+              }
+              cardPositions[cardIndex] = { x: x, y: y };
+            }
+
+            var scale = isMobile ? 0.75 : 1.5;
+            return (
+              "translate(calc(-50% + " +
+              x +
+              "px), calc(-50% + " +
+              y +
+              "px)) rotate(" +
+              rotate +
+              "deg) scale(" +
+              scale +
+              ")"
+            );
+          }
+
+          // Function to update a card's position in the tracking array
+          function updateCardPosition(cardIndex, x, y) {
+            if (cardPositions[cardIndex]) {
+              cardPositions[cardIndex] = { x: x, y: y };
+            }
+          }
+
+          // Create paper cards
+          mediaFiles.forEach(function (media, index) {
+            var card = document.createElement("div");
+            card.className = "paper-card";
+            card.style.zIndex = index + 1;
+            card.dataset.cardIndex = index; // Store index for later reference
+            card.style.transform = getRandomTransform(index, false); // Initial setup, no collision checking needed
+
+            if (media.type === "video") {
+              var video = document.createElement("video");
+              video.autoplay = true;
+              video.loop = true;
+              video.muted = true;
+              video.playsInline = true;
+
+              var sourceMov = document.createElement("source");
+              sourceMov.src = mediaDir + "/" + media.name + ".mov";
+              sourceMov.type = 'video/mp4; codecs="hvc1"';
+
+              var sourceWebm = document.createElement("source");
+              sourceWebm.src = mediaDir + "/" + media.name + ".webm";
+              sourceWebm.type = "video/webm";
+
+              video.appendChild(sourceMov);
+              video.appendChild(sourceWebm);
+
+              // Ensure video plays
+              video.addEventListener("loadeddata", function () {
+                video.play().catch(function (err) {
+                  console.log("Video autoplay failed:", err);
+                });
+              });
+
+              card.appendChild(video);
+            } else {
+              var img = document.createElement("img");
+              img.src = mediaDir + "/" + media.name;
+              img.alt = "Teaching material";
+              img.onerror = function () {
+                console.error("Failed to load image:", img.src);
+              };
+              img.onload = function () {
+                console.log("Image loaded:", img.src);
+              };
+              card.appendChild(img);
+            }
+
+            paperStack.appendChild(card);
+          });
+
+          var cards = Array.from(paperStack.querySelectorAll(".paper-card"));
+
+          // Don't set any card as active initially - let them all be in messy pile
+
+          // Click handler for individual cards
+          cards.forEach(function (card) {
+            card.addEventListener("click", function (e) {
+              e.stopPropagation(); // Prevent event from bubbling to paperStack
+
+              // If clicking the active card, dismiss it back to the pile
+              if (card.classList.contains("active")) {
+                card.classList.remove("active");
+                var cardIndex = parseInt(card.dataset.cardIndex);
+                card.style.transform = getRandomTransform(cardIndex, true); // Use collision detection
+                // Videos continue playing even when not active
+                return;
+              }
+
+              // Handle old active card
+              var currentActive = paperStack.querySelector(".active");
+              if (currentActive) {
+                currentActive.classList.remove("active");
+                var oldCardIndex = parseInt(currentActive.dataset.cardIndex);
+                currentActive.style.transform = getRandomTransform(
+                  oldCardIndex,
+                  true,
+                ); // Use collision detection
+                // Videos continue playing even when not active
+              }
+
+              // Handle new active card
+              zIndexCounter++;
+              card.style.zIndex = zIndexCounter;
+              card.classList.add("active");
+              // Videos are already autoplaying, no need to trigger play
+            });
+          });
+
+          // Click outside to dismiss active card
+          paperStack.addEventListener("click", function (e) {
+            // Only dismiss if clicking the paperStack itself (not a card)
+            if (e.target === paperStack) {
+              var currentActive = paperStack.querySelector(".active");
+              if (currentActive) {
+                currentActive.classList.remove("active");
+                var cardIndex = parseInt(currentActive.dataset.cardIndex);
+                currentActive.style.transform = getRandomTransform(
+                  cardIndex,
+                  true,
+                ); // Use collision detection
+              }
+            }
           });
         }
       })();
