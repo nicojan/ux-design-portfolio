@@ -71,7 +71,7 @@ html {
 
 body {
   font-family: var(--font-body);
-  font-size: 17px;
+  font-size: 18px;
   line-height: 1.6;
   color: var(--text-dark);
   background-color: var(--color-white);
@@ -305,6 +305,7 @@ p {
   align-items: center;
   justify-content: space-between;
   height: 64px;
+  position: relative;
   background-color: transparent;
   border-radius: 0;
   padding: 0 32px;
@@ -335,10 +336,49 @@ p {
   gap: 12px;
 }
 
+.header__nav-center,
+.header__nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (min-width: 769px) {
+  .header__inner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .header__nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    flex: 1;
+    min-height: 56px;
+    gap: 0;
+  }
+
+  .header__nav-center {
+    grid-column: 2;
+    justify-self: center;
+  }
+
+  .header__nav-right {
+    grid-column: 3;
+    justify-self: end;
+  }
+}
+
 /* Plain text nav links (About, Contact) */
 .header__nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 500;
   color: var(--text-medium);
   text-decoration: none;
@@ -348,21 +388,33 @@ p {
 }
 
 .header__nav-link:hover {
-  color: var(--text-black);
+  color: var(--color-white);
+  background-color: var(--color-green-deep);
+  border-color: var(--color-green-deep);
+  font-weight: 700;
   text-decoration: none;
 }
 
 /* --- Shop button: filled pill --- */
 .header__nav-link--shop {
   background-color: var(--color-orange);
+  border: 2px solid var(--color-orange);
   color: var(--color-white);
   font-weight: 700;
   padding: 10px 24px;
 }
 
 .header__nav-link--shop:hover {
-  background-color: var(--color-orange-dark);
-  color: var(--color-white);
+  background-color: var(--color-white);
+  border: 2px solid var(--color-orange);
+  color: var(--text-black);
+}
+
+.header__nav-link--shop.header__nav-link--active {
+  background-color: var(--color-white);
+  border: 2px solid var(--color-orange);
+  color: var(--text-black);
+  font-weight: 700;
 }
 
 /* --- Find Us button: outlined pill --- */
@@ -375,13 +427,23 @@ p {
 }
 
 .header__nav-link--find-us:hover {
-  border-color: var(--color-orange);
-  color: var(--color-orange);
+  border-color: var(--color-green-deep);
+  background-color: var(--color-green-deep);
+  color: var(--color-white);
+}
+
+.header__nav-link--find-us.header__nav-link--active {
+  border-color: var(--color-green-deep);
+  background-color: var(--color-green-deep);
+  color: var(--color-white);
+  font-weight: 700;
 }
 
 /* Active link underline */
 .header__nav-link--active {
-  position: relative;
+  background-color: rgba(30, 74, 50, 0.12);
+  color: var(--color-green-deep);
+  font-weight: 700;
 }
 
 .header__nav-link--active::after {
@@ -1246,23 +1308,31 @@ main > :nth-child(odd) > .container > p {
 }
 
 .impact.second-section--white .impact__stat--card {
-  background-color: var(--color-orange-light);
+  background-color: var(--color-orange);
+  box-shadow: 0 10px 24px rgba(244, 119, 33, 0.24);
 }
 
 .impact.second-section--white .impact__stat--card:nth-child(2) {
-  background-color: var(--color-green-light);
+  background-color: var(--color-teal);
+  box-shadow: 0 10px 24px rgba(0, 168, 150, 0.24);
 }
 
 .impact.second-section--white .impact__stat--card:nth-child(3) {
-  background-color: var(--color-yellow-light);
+  background-color: var(--color-yellow);
+  box-shadow: 0 10px 24px rgba(255, 217, 61, 0.26);
 }
 
 .impact.second-section--white .impact__number {
-  color: var(--color-green-deep);
+  color: var(--color-white);
 }
 
 .impact.second-section--white .impact__label {
-  color: var(--text-medium);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.impact.second-section--white .impact__stat--card:nth-child(3) .impact__number,
+.impact.second-section--white .impact__stat--card:nth-child(3) .impact__label {
+  color: var(--text-black);
 }
 
 .second-section--white .story-card {
@@ -1376,7 +1446,7 @@ main > :nth-child(odd) > .container > p {
 
 .pdp-hero__image {
   aspect-ratio: 1;
-  background-color: var(--color-cream);
+  background-color: transparent;
   border-radius: 24px;
   border: none;
   display: flex;
@@ -1641,9 +1711,9 @@ main > :nth-child(odd) > .container > p {
   gap: var(--space-md);
   padding: 20px 24px;
   border-radius: 24px;
-  border: 2px solid rgba(0, 0, 0, 0.14);
+  border: 2px solid rgba(244, 119, 33, 0.35);
   border-left: 6px solid var(--color-orange);
-  background-color: var(--color-white);
+  background-color: var(--color-yellow-light);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
   margin-top: var(--space-xl);
 }
@@ -2154,15 +2224,18 @@ main > :nth-child(odd) > .container > p {
 
 /* Distinct pastel backgrounds for each impact card */
 .impact-card:nth-child(1) {
-  background-color: var(--color-orange-light);
+  background-color: var(--color-orange);
+  box-shadow: 0 12px 26px rgba(244, 119, 33, 0.25);
 }
 
 .impact-card:nth-child(2) {
-  background-color: var(--color-green-light);
+  background-color: var(--color-teal);
+  box-shadow: 0 12px 26px rgba(0, 168, 150, 0.25);
 }
 
 .impact-card:nth-child(3) {
-  background-color: var(--color-yellow-light);
+  background-color: var(--color-yellow);
+  box-shadow: 0 12px 26px rgba(255, 217, 61, 0.28);
 }
 
 .impact-card:hover {
@@ -2177,21 +2250,27 @@ main > :nth-child(odd) > .container > p {
 .impact-card__number {
   font-family: var(--font-display);
   font-size: 3.5rem;
-  color: var(--color-orange);
+  color: var(--color-white);
   line-height: 1;
 }
 
 .impact-card__label {
   font-family: var(--font-display);
   font-size: 1.125rem;
-  color: var(--text-black);
+  color: var(--color-white);
   margin-top: var(--space-sm);
 }
 
 .impact-card__detail {
   font-size: 14px;
-  color: var(--text-medium);
+  color: rgba(255, 255, 255, 0.92);
   margin-top: var(--space-sm);
+}
+
+.impact-card:nth-child(3) .impact-card__number,
+.impact-card:nth-child(3) .impact-card__label,
+.impact-card:nth-child(3) .impact-card__detail {
+  color: var(--text-black);
 }
 
 .partner-cta {
@@ -2721,24 +2800,39 @@ main > :nth-child(odd) > .container > p {
 }
 
 .section--find-us-home {
-  background-color: var(--color-green-deep);
+  background-color: var(--color-white);
 }
 
 .section--find-us-home .section__title,
 .section--find-us-home h3 {
-  color: var(--color-white);
+  color: var(--color-green-deep);
+}
+
+.section--find-us-home p {
+  color: var(--text-black);
 }
 
 .section--find-us-home .section__link {
-  color: var(--color-orange-light);
+  color: var(--color-orange);
 }
 
 .section--find-us-home .section__link:hover {
-  color: var(--color-white);
+  color: var(--color-green-deep);
 }
 
 .section--find-us-home .calendar--home .calendar__header {
   background-color: var(--color-pink);
+}
+
+.section--find-us-home .calendar--home {
+  width: 100%;
+}
+
+.section--find-us-home .calendar__day-header,
+.section--find-us-home .calendar__legend,
+.section--find-us-home .calendar__event-name,
+.section--find-us-home .calendar__day-number {
+  color: var(--text-black);
 }
 
 .section--find-us-home .store-card {
@@ -2780,6 +2874,30 @@ main > :nth-child(odd) > .container > p {
   background-color: transparent;
   color: var(--color-white);
   border-color: var(--color-white);
+}
+
+.home-stores-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+@media (max-width: 1024px) {
+  .home-stores-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calendar__event-name {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.calendar__event-location-icon {
+  font-size: 14px;
+  line-height: 1;
+  vertical-align: middle;
 }
 
 .page-find-us .section--find-us-page-stores {

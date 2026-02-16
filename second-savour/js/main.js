@@ -312,6 +312,11 @@ $(function () {
 
   // Calendar instances with independent month state
   var calendarInstances = {};
+  var storeIconMap = {
+    "Whole Foods Market": "location_on",
+    "Choices Markets": "location_on",
+    "Nourish Market": "location_on",
+  };
 
   function initCalendarInstance(containerId, startMonth) {
     calendarInstances[containerId] = {
@@ -429,8 +434,20 @@ $(function () {
             '<div class="calendar__dot calendar__dot--' + ev.type + '"></div>';
         });
         html += "</div>";
+        var eventIcon = "";
+        if (dayEvents[0].type === "popup") {
+          var iconName = storeIconMap[dayEvents[0].location] || "location_on";
+          eventIcon =
+            '<span class="material-icons calendar__event-location-icon">' +
+            iconName +
+            "</span>";
+        }
+
         html +=
-          '<div class="calendar__event-name">' + dayEvents[0].name + "</div>";
+          '<div class="calendar__event-name">' +
+          eventIcon +
+          dayEvents[0].name +
+          "</div>";
       }
 
       html += "</div>";
