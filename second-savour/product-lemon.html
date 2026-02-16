@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body class="page-product">
 
   <!-- ============ HEADER ============ -->
   <header class="header">
@@ -81,7 +81,7 @@
     <!-- PDP HERO -->
     <section class="pdp-hero" style="background-color: rgba(255, 215, 0, 0.08);">
       <div class="container pdp-hero__grid">
-        <div class="pdp-hero__image" style="background-color: var(--bg-lemon);">
+        <div class="pdp-hero__image">
           <img src="images/hero_yellow.webp" alt="Lemon Citrus Treats">
         </div>
         <div class="pdp-hero__info">
@@ -107,53 +107,42 @@
     </section>
 
     <!-- PDP DETAILS -->
-    <div class="pdp-section">
-      <div class="container">
+    <section class="pdp-details-band">
+      <div class="pdp-section">
+        <div class="container">
+          <div class="pdp-info-grid">
+            <div class="pdp-info-card">
+              <h2 class="pdp-info-card__title">Nutrition Facts</h2>
+              <table class="nutrition-table">
+                <tr><td>Serving Size</td><td>1 bag (40g)</td></tr>
+                <tr><td>Calories</td><td>115</td></tr>
+                <tr><td>Total Fat</td><td>0g</td></tr>
+                <tr><td>Sodium</td><td>10mg</td></tr>
+                <tr><td>Total Carbohydrate</td><td>27g</td></tr>
+                <tr class="nutrition-sub"><td>Dietary Fiber</td><td>2g</td></tr>
+                <tr class="nutrition-sub"><td>Total Sugars</td><td>17g</td></tr>
+                <tr><td>Protein</td><td>1g</td></tr>
+              </table>
+            </div>
+            <div class="pdp-info-card">
+              <h2 class="pdp-info-card__title">Ingredients</h2>
+              <p class="ingredients-text">Dried lemon peel, cane sugar, lemon juice concentrate, citric acid, natural lemon flavour, pectin.</p>
+            </div>
+          </div>
 
-        <!-- Nutrition Facts -->
-        <div class="pdp-accordion">
-          <button class="pdp-accordion__header">
-            <span>Nutrition Facts</span>
-            <span class="pdp-accordion__icon">+</span>
-          </button>
-          <div class="pdp-accordion__body">
-            <table class="nutrition-table">
-              <tr><td>Serving Size</td><td>1 bag (40g)</td></tr>
-              <tr><td>Calories</td><td>115</td></tr>
-              <tr><td>Total Fat</td><td>0g</td></tr>
-              <tr><td>Sodium</td><td>10mg</td></tr>
-              <tr><td>Total Carbohydrate</td><td>27g</td></tr>
-              <tr class="nutrition-sub"><td>Dietary Fiber</td><td>2g</td></tr>
-              <tr class="nutrition-sub"><td>Total Sugars</td><td>17g</td></tr>
-              <tr><td>Protein</td><td>1g</td></tr>
-            </table>
+          <div class="sustainability-callout" style="border-left-color: #FFD93D;">
+            <span class="sustainability-callout__icon">&#127807;</span>
+            <p class="sustainability-callout__text">Each bag saves approximately 200g of fruit from going to waste.</p>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- Ingredients -->
-        <div class="pdp-accordion">
-          <button class="pdp-accordion__header">
-            <span>Ingredients</span>
-            <span class="pdp-accordion__icon">+</span>
-          </button>
-          <div class="pdp-accordion__body">
-            <p class="ingredients-text">Dried lemon peel, cane sugar, lemon juice concentrate, citric acid, natural lemon flavour, pectin.</p>
-          </div>
-        </div>
-
-        <!-- Sustainability Callout -->
-        <div class="sustainability-callout" style="border-left-color: #FFD93D;">
-          <span class="sustainability-callout__icon">&#127807;</span>
-          <p class="sustainability-callout__text">Each bag saves approximately 200g of fruit from going to waste.</p>
-        </div>
-
-        <!-- Find In Store -->
-        <div class="pdp-accordion" style="border-bottom: 1px solid rgba(0, 0, 0, 0.12);">
-          <button class="pdp-accordion__header">
-            <span>Find In Store</span>
-            <span class="pdp-accordion__icon">+</span>
-          </button>
-          <div class="pdp-accordion__body">
+    <section class="pdp-find-store-section">
+      <div class="pdp-section">
+        <div class="container">
+          <section class="pdp-find-store">
+            <h2 class="pdp-find-store__title">Find In Store</h2>
             <p style="margin-bottom: 16px;">Want to grab a bag today? Find a retailer near you.</p>
             <div class="store-locator">
               <div class="store-locator__search">
@@ -167,29 +156,28 @@
               <div class="store-locator__results" style="display:none">
                 <div class="store-card">
                   <h4>Whole Foods Market - Cambie</h4>
-                  <p class="store-card__address"><span class="material-icons">location_on</span> <a href="https://www.google.com/maps/search/510+W+8th+Ave+Vancouver" target="_blank" rel="noopener noreferrer">510 W 8th Ave, Vancouver</a></p>
+                  <p class="store-card__address"><a href="https://www.google.com/maps/search/510+W+8th+Ave+Vancouver" target="_blank" rel="noopener noreferrer"><span class="material-icons">location_on</span> 510 W 8th Ave, Vancouver</a></p>
                   <p class="distance">2.3 km away</p>
                 </div>
                 <div class="store-card">
                   <h4>Choices Markets - Kitsilano</h4>
-                  <p class="store-card__address"><span class="material-icons">location_on</span> <a href="https://www.google.com/maps/search/2627+W+16th+Ave+Vancouver" target="_blank" rel="noopener noreferrer">2627 W 16th Ave, Vancouver</a></p>
+                  <p class="store-card__address"><a href="https://www.google.com/maps/search/2627+W+16th+Ave+Vancouver" target="_blank" rel="noopener noreferrer"><span class="material-icons">location_on</span> 2627 W 16th Ave, Vancouver</a></p>
                   <p class="distance">3.1 km away</p>
                 </div>
                 <div class="store-card">
                   <h4>Nourish Market</h4>
-                  <p class="store-card__address"><span class="material-icons">location_on</span> <a href="https://www.google.com/maps/search/3431+W+Broadway+Vancouver" target="_blank" rel="noopener noreferrer">3431 W Broadway, Vancouver</a></p>
+                  <p class="store-card__address"><a href="https://www.google.com/maps/search/3431+W+Broadway+Vancouver" target="_blank" rel="noopener noreferrer"><span class="material-icons">location_on</span> 3431 W Broadway, Vancouver</a></p>
                   <p class="distance">4.5 km away</p>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
         </div>
-
       </div>
-    </div>
+    </section>
 
     <!-- RELATED PRODUCTS -->
-    <section class="related-products">
+    <section class="related-products second-section--white">
       <div class="container">
         <h2>Try another flavour</h2>
         <div class="product-grid">
