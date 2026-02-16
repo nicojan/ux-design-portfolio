@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grapefruit Citrus Treats — Second Savour</title>
+  <meta name="description" content="Made from grapefruits that didn't make the cut for produce aisles. Their loss, your gain. Bold, slightly bitter, and perfectly balanced with just enough sweetness.">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=tanker@400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="header__logo">Second Savour</a>
+      <nav class="header__nav">
+        <a href="shop.html" class="header__nav-link header__nav-link--active">Shop</a>
+        <a href="about.html" class="header__nav-link">About</a>
+        <a href="find-us.html" class="header__nav-link">Find Us</a>
+        <a href="contact.html" class="header__nav-link">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="header__cart-btn" aria-label="Open cart">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="header__cart-badge" data-count="0"></span>
+        </button>
+        <button class="header__mobile-toggle" aria-label="Open menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ MOBILE MENU ============ -->
+  <div class="mobile-menu">
+    <div class="mobile-menu__header">
+      <a href="index.html" class="header__logo">Second Savour</a>
+      <button class="mobile-menu__close" aria-label="Close menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <nav class="mobile-menu__nav">
+      <a href="shop.html" class="mobile-menu__link mobile-menu__link--active">Shop</a>
+      <a href="about.html" class="mobile-menu__link">About</a>
+      <a href="find-us.html" class="mobile-menu__link">Find Us</a>
+      <a href="contact.html" class="mobile-menu__link">Contact</a>
+    </nav>
+  </div>
+
+  <!-- ============ CART DRAWER ============ -->
+  <div class="cart-overlay">
+    <div class="cart-overlay__backdrop"></div>
+    <div class="cart-drawer">
+      <div class="cart-drawer__header">
+        <span class="cart-drawer__title">Your Cart</span>
+        <button class="cart-drawer__close" aria-label="Close cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="cart-drawer__body">
+        <!-- Cart items rendered by JS -->
+      </div>
+      <div class="cart-drawer__footer" style="display:none">
+        <div class="cart-drawer__subtotal">
+          <span class="cart-drawer__subtotal-label">Subtotal</span>
+          <span class="cart-drawer__subtotal-value">$0.00</span>
+        </div>
+        <p class="cart-drawer__shipping">Shipping calculated at checkout</p>
+        <button class="btn btn--primary btn--full">Checkout</button>
+        <a href="#" class="cart-drawer__continue">Continue Shopping</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main>
+
+    <!-- PDP HERO -->
+    <section class="pdp-hero" style="background-color: rgba(255, 107, 107, 0.08);">
+      <div class="container pdp-hero__grid">
+        <div class="pdp-hero__image" style="background-color: #FFE5E5;">
+          <span class="emoji">&#127818;</span>
+          <span class="label">Product photography</span>
+        </div>
+        <div class="pdp-hero__info">
+          <div class="breadcrumb"><a href="shop.html">Shop</a> / Grapefruit Citrus Treats</div>
+          <h1>Grapefruit Citrus Treats</h1>
+          <div class="pdp-hero__price">$8.00</div>
+          <p class="pdp-hero__description">Made from grapefruits that didn't make the cut for produce aisles. Their loss, your gain. Bold, slightly bitter, and perfectly balanced with just enough sweetness.</p>
+          <div class="pdp-hero__add-to-cart">
+            <div class="qty-selector">
+              <button class="qty-selector__btn" data-action="decrease">&minus;</button>
+              <span class="qty-selector__value">1</span>
+              <button class="qty-selector__btn" data-action="increase">+</button>
+            </div>
+            <button class="btn btn--primary js-add-to-cart"
+              data-product-id="grapefruit"
+              data-product-name="Grapefruit Citrus Treats"
+              data-product-price="8.00"
+              data-product-bg="#FFE5E5">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PDP DETAILS -->
+    <div class="pdp-section">
+      <div class="container">
+
+        <!-- Nutrition Facts -->
+        <div class="pdp-accordion">
+          <button class="pdp-accordion__header">
+            <span>Nutrition Facts</span>
+            <span class="pdp-accordion__icon">+</span>
+          </button>
+          <div class="pdp-accordion__body">
+            <table class="nutrition-table">
+              <tr><td>Serving Size</td><td>1 bag (40g)</td></tr>
+              <tr><td>Calories</td><td>110</td></tr>
+              <tr><td>Total Fat</td><td>0g</td></tr>
+              <tr><td>Sodium</td><td>10mg</td></tr>
+              <tr><td>Total Carbohydrate</td><td>26g</td></tr>
+              <tr class="nutrition-sub"><td>Dietary Fiber</td><td>2g</td></tr>
+              <tr class="nutrition-sub"><td>Total Sugars</td><td>16g</td></tr>
+              <tr><td>Protein</td><td>1g</td></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Ingredients -->
+        <div class="pdp-accordion">
+          <button class="pdp-accordion__header">
+            <span>Ingredients</span>
+            <span class="pdp-accordion__icon">+</span>
+          </button>
+          <div class="pdp-accordion__body">
+            <p class="ingredients-text">Dried grapefruit peel, cane sugar, grapefruit juice concentrate, citric acid, natural grapefruit flavour, pectin.</p>
+          </div>
+        </div>
+
+        <!-- Sustainability Callout -->
+        <div class="sustainability-callout" style="border-left-color: #FF6B6B;">
+          <span class="sustainability-callout__icon">&#127807;</span>
+          <p class="sustainability-callout__text">Each bag saves approximately 200g of fruit from going to waste.</p>
+        </div>
+
+        <!-- Find In Store -->
+        <div class="pdp-accordion" style="border-bottom: 2px solid #000;">
+          <button class="pdp-accordion__header">
+            <span>Find In Store</span>
+            <span class="pdp-accordion__icon">+</span>
+          </button>
+          <div class="pdp-accordion__body">
+            <p style="margin-bottom: 16px;">Want to grab a bag today? Find a retailer near you.</p>
+            <div class="store-locator">
+              <div class="store-locator__search">
+                <input type="text" placeholder="Enter your postal code">
+                <button class="btn btn--primary btn--small js-store-search">Search</button>
+              </div>
+              <div class="map-placeholder">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <p>Enter your postal code to find stores near you</p>
+              </div>
+              <div class="store-locator__results" style="display:none">
+                <div class="store-card">
+                  <h4>Whole Foods Market - Cambie</h4>
+                  <p>510 W 8th Ave, Vancouver</p>
+                  <p class="distance">2.3 km away</p>
+                  <a href="https://www.google.com/maps/search/510+W+8th+Ave+Vancouver" target="_blank" rel="noopener noreferrer" class="link">Get Directions &rarr;</a>
+                </div>
+                <div class="store-card">
+                  <h4>Choices Markets - Kitsilano</h4>
+                  <p>2627 W 16th Ave, Vancouver</p>
+                  <p class="distance">3.1 km away</p>
+                  <a href="https://www.google.com/maps/search/2627+W+16th+Ave+Vancouver" target="_blank" rel="noopener noreferrer" class="link">Get Directions &rarr;</a>
+                </div>
+                <div class="store-card">
+                  <h4>Nourish Market</h4>
+                  <p>3431 W Broadway, Vancouver</p>
+                  <p class="distance">4.5 km away</p>
+                  <a href="https://www.google.com/maps/search/3431+W+Broadway+Vancouver" target="_blank" rel="noopener noreferrer" class="link">Get Directions &rarr;</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RELATED PRODUCTS -->
+    <section class="related-products">
+      <div class="container">
+        <h2>Try another flavour</h2>
+        <div class="product-grid" style="grid-template-columns: repeat(3, 1fr);">
+
+          <!-- Orange -->
+          <div class="product-card" style="--card-bg: #FFECD9">
+            <a href="product-orange.html" class="product-card__image" style="background-color: #FFECD9">
+              <span class="product-card__emoji">&#127818;</span>
+            </a>
+            <div class="product-card__info">
+              <a href="product-orange.html" class="product-card__name">Orange Citrus Treats</a>
+              <p class="product-card__desc">Tangy and chewy, from rescued oranges.</p>
+              <div class="product-card__bottom">
+                <span class="product-card__price">$8.00</span>
+                <button
+                  class="btn btn--primary btn--small js-add-to-cart"
+                  data-product-id="orange"
+                  data-product-name="Orange Citrus Treats"
+                  data-product-price="8.00"
+                  data-product-bg="#FFECD9"
+                >Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lemon -->
+          <div class="product-card" style="--card-bg: #FFF8DC">
+            <a href="product-lemon.html" class="product-card__image" style="background-color: #FFF8DC">
+              <span class="product-card__emoji">&#127819;</span>
+            </a>
+            <div class="product-card__info">
+              <a href="product-lemon.html" class="product-card__name">Lemon Citrus Treats</a>
+              <p class="product-card__desc">Tart with a sweet finish. Pucker up.</p>
+              <div class="product-card__bottom">
+                <span class="product-card__price">$8.00</span>
+                <button
+                  class="btn btn--primary btn--small js-add-to-cart"
+                  data-product-id="lemon"
+                  data-product-name="Lemon Citrus Treats"
+                  data-product-price="8.00"
+                  data-product-bg="#FFF8DC"
+                >Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lime (Coming Soon) -->
+          <div class="product-card product-card--coming-soon" style="--card-bg: #E8F5E9">
+            <div class="product-card__image" style="background-color: #E8F5E9">
+              <span class="product-card__emoji">&#127816;</span>
+              <span class="product-card__badge">Coming Soon</span>
+            </div>
+            <div class="product-card__info">
+              <span class="product-card__name">Lime Citrus Treats</span>
+              <p class="product-card__desc">Fresh, zesty, and on its way.</p>
+              <div class="product-card__bottom">
+                <button class="btn btn--coming-soon btn--small">Get Notified</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__logo">Second Savour</div>
+          <p class="footer__tagline">Citrus treats from rescued fruit.</p>
+        </div>
+        <div>
+          <div class="footer__heading">Shop</div>
+          <a href="shop.html" class="footer__link">All Products</a>
+          <a href="product-orange.html" class="footer__link">Orange</a>
+          <a href="product-lemon.html" class="footer__link">Lemon</a>
+          <a href="product-grapefruit.html" class="footer__link">Grapefruit</a>
+        </div>
+        <div>
+          <div class="footer__heading">Company</div>
+          <a href="about.html" class="footer__link">About</a>
+          <a href="find-us.html" class="footer__link">Find Us</a>
+          <a href="contact.html" class="footer__link">Contact</a>
+        </div>
+        <div>
+          <div class="footer__heading">Connect</div>
+          <a href="#" class="footer__link">Instagram</a>
+          <a href="mailto:hello@secondsavour.ca" class="footer__link">Email Us</a>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2026 Second Savour. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

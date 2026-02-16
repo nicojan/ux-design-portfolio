@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Second Savour — Citrus Treats from Rescued Fruit</title>
+  <meta name="description" content="We rescue imperfect citrus and turn it into something worth savouring. Same great fruit, zero waste.">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=tanker@400&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="header">
+    <div class="container header__inner">
+      <a href="index.html" class="header__logo">Second Savour</a>
+      <nav class="header__nav">
+        <a href="shop.html" class="header__nav-link">Shop</a>
+        <a href="about.html" class="header__nav-link">About</a>
+        <a href="find-us.html" class="header__nav-link">Find Us</a>
+        <a href="contact.html" class="header__nav-link">Contact</a>
+      </nav>
+      <div class="header__actions">
+        <button class="header__cart-btn" aria-label="Open cart">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="header__cart-badge" data-count="0"></span>
+        </button>
+        <button class="header__mobile-toggle" aria-label="Open menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ MOBILE MENU ============ -->
+  <div class="mobile-menu">
+    <div class="mobile-menu__header">
+      <a href="index.html" class="header__logo">Second Savour</a>
+      <button class="mobile-menu__close" aria-label="Close menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <nav class="mobile-menu__nav">
+      <a href="shop.html" class="mobile-menu__link">Shop</a>
+      <a href="about.html" class="mobile-menu__link">About</a>
+      <a href="find-us.html" class="mobile-menu__link">Find Us</a>
+      <a href="contact.html" class="mobile-menu__link">Contact</a>
+    </nav>
+  </div>
+
+  <!-- ============ CART DRAWER ============ -->
+  <div class="cart-overlay">
+    <div class="cart-overlay__backdrop"></div>
+    <div class="cart-drawer">
+      <div class="cart-drawer__header">
+        <span class="cart-drawer__title">Your Cart</span>
+        <button class="cart-drawer__close" aria-label="Close cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="cart-drawer__body">
+        <!-- Cart items rendered by JS -->
+      </div>
+      <div class="cart-drawer__footer" style="display:none">
+        <div class="cart-drawer__subtotal">
+          <span class="cart-drawer__subtotal-label">Subtotal</span>
+          <span class="cart-drawer__subtotal-value">$0.00</span>
+        </div>
+        <p class="cart-drawer__shipping">Shipping calculated at checkout</p>
+        <button class="btn btn--primary btn--full">Checkout</button>
+        <a href="#" class="cart-drawer__continue">Continue Shopping</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero__grid">
+        <div class="hero__text">
+          <h1 class="hero__title">Fruit deserves a second chance.</h1>
+          <p class="hero__subtitle">We rescue imperfect citrus and turn it into something worth savouring. Same great fruit, zero waste.</p>
+          <div class="hero__actions">
+            <a href="shop.html" class="btn btn--primary">Shop Citrus Treats</a>
+            <a href="find-us.html" class="hero__link">Find us at a market &rarr;</a>
+          </div>
+        </div>
+        <div class="hero__image">
+          <div class="hero__image-placeholder">&#127818;</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPACT METRICS -->
+    <section class="impact">
+      <div class="container impact__grid">
+        <div class="impact__stat">
+          <span class="impact__number">2,400 kg</span>
+          <span class="impact__label">of fruit rescued from landfills</span>
+        </div>
+        <div class="impact__stat">
+          <span class="impact__number">12,000+</span>
+          <span class="impact__label">treats made from would-be waste</span>
+        </div>
+        <div class="impact__stat">
+          <span class="impact__number">100%</span>
+          <span class="impact__label">of the fruit used, peel to pulp</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT PREVIEW -->
+    <section class="section">
+      <div class="container">
+        <h2 class="section__title text-center">Our citrus lineup</h2>
+        <div class="product-grid">
+
+          <!-- Orange -->
+          <div class="product-card" style="--card-bg: #FFECD9">
+            <a href="product-orange.html" class="product-card__image" style="background-color: #FFECD9">
+              <span class="product-card__emoji">&#127818;</span>
+            </a>
+            <div class="product-card__info">
+              <a href="product-orange.html" class="product-card__name">Orange Citrus Treats</a>
+              <p class="product-card__desc">Bright, tangy, and unapologetically zesty.</p>
+              <div class="product-card__bottom">
+                <span class="product-card__price">$8.00</span>
+                <button
+                  class="btn btn--primary btn--small js-add-to-cart"
+                  data-product-id="orange"
+                  data-product-name="Orange Citrus Treats"
+                  data-product-price="8.00"
+                  data-product-bg="#FFECD9"
+                >Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lemon -->
+          <div class="product-card" style="--card-bg: #FFF8DC">
+            <a href="product-lemon.html" class="product-card__image" style="background-color: #FFF8DC">
+              <span class="product-card__emoji">&#127819;</span>
+            </a>
+            <div class="product-card__info">
+              <a href="product-lemon.html" class="product-card__name">Lemon Citrus Treats</a>
+              <p class="product-card__desc">Tart with a sweet finish. Pucker up.</p>
+              <div class="product-card__bottom">
+                <span class="product-card__price">$8.00</span>
+                <button
+                  class="btn btn--primary btn--small js-add-to-cart"
+                  data-product-id="lemon"
+                  data-product-name="Lemon Citrus Treats"
+                  data-product-price="8.00"
+                  data-product-bg="#FFF8DC"
+                >Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Grapefruit -->
+          <div class="product-card" style="--card-bg: #FFE5E5">
+            <a href="product-grapefruit.html" class="product-card__image" style="background-color: #FFE5E5">
+              <span class="product-card__emoji">&#127818;</span>
+            </a>
+            <div class="product-card__info">
+              <a href="product-grapefruit.html" class="product-card__name">Grapefruit Citrus Treats</a>
+              <p class="product-card__desc">Bold and bittersweet, just like mornings.</p>
+              <div class="product-card__bottom">
+                <span class="product-card__price">$8.00</span>
+                <button
+                  class="btn btn--primary btn--small js-add-to-cart"
+                  data-product-id="grapefruit"
+                  data-product-name="Grapefruit Citrus Treats"
+                  data-product-price="8.00"
+                  data-product-bg="#FFE5E5"
+                >Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lime (Coming Soon) -->
+          <div class="product-card product-card--coming-soon" style="--card-bg: #E8F5E9">
+            <div class="product-card__image" style="background-color: #E8F5E9">
+              <span class="product-card__emoji">&#127816;</span>
+              <span class="product-card__badge">Coming Soon</span>
+            </div>
+            <div class="product-card__info">
+              <span class="product-card__name">Lime Citrus Treats</span>
+              <p class="product-card__desc">Fresh, zesty, and on its way.</p>
+              <div class="product-card__bottom">
+                <button class="btn btn--coming-soon btn--small">Get Notified</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- MISSION TEASER -->
+    <section class="section section--cream">
+      <div class="container text-center">
+        <h2 class="section__title">Why &ldquo;Second Savour&rdquo;?</h2>
+        <p class="section__text">Every year, thousands of kilograms of perfectly good citrus are tossed aside for being too ugly, too small, or too imperfect to sell. We think that's bananas (well, oranges). Second Savour rescues that fruit and transforms it into delicious treats you can feel good about eating.</p>
+        <a href="about.html" class="section__link">Read our story &rarr;</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__logo">Second Savour</div>
+          <p class="footer__tagline">Citrus treats from rescued fruit.</p>
+        </div>
+        <div>
+          <div class="footer__heading">Shop</div>
+          <a href="shop.html" class="footer__link">All Products</a>
+          <a href="product-orange.html" class="footer__link">Orange</a>
+          <a href="product-lemon.html" class="footer__link">Lemon</a>
+          <a href="product-grapefruit.html" class="footer__link">Grapefruit</a>
+        </div>
+        <div>
+          <div class="footer__heading">Company</div>
+          <a href="about.html" class="footer__link">About</a>
+          <a href="find-us.html" class="footer__link">Find Us</a>
+          <a href="contact.html" class="footer__link">Contact</a>
+        </div>
+        <div>
+          <div class="footer__heading">Connect</div>
+          <a href="#" class="footer__link">Instagram</a>
+          <a href="mailto:hello@secondsavour.ca" class="footer__link">Email Us</a>
+        </div>
+      </div>
+      <div class="footer__bottom">&copy; 2026 Second Savour. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
