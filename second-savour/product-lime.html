@@ -7,6 +7,7 @@
   <meta name="description" content="Our newest flavour is almost ready. Bright, zippy, and made from limes that deserved better than the compost bin. Sign up to be the first to try them.">
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=tanker@400&display=swap">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -14,11 +15,11 @@
   <!-- ============ HEADER ============ -->
   <header class="header">
     <div class="container header__inner">
-      <a href="index.html" class="header__logo">Second Savour</a>
+      <a href="index.html" class="header__logo"><img src="images/logo.png" alt="Second Savour" class="header__logo-img"></a>
       <nav class="header__nav">
-        <a href="shop.html" class="header__nav-link header__nav-link--active">Shop</a>
+        <a href="shop.html" class="header__nav-link header__nav-link--shop header__nav-link--active">Shop</a>
+        <a href="find-us.html" class="header__nav-link header__nav-link--find-us">Find Us</a>
         <a href="about.html" class="header__nav-link">About</a>
-        <a href="find-us.html" class="header__nav-link">Find Us</a>
         <a href="contact.html" class="header__nav-link">Contact</a>
       </nav>
       <div class="header__actions">
@@ -36,15 +37,15 @@
   <!-- ============ MOBILE MENU ============ -->
   <div class="mobile-menu">
     <div class="mobile-menu__header">
-      <a href="index.html" class="header__logo">Second Savour</a>
+      <a href="index.html" class="header__logo"><img src="images/logo.png" alt="Second Savour" class="header__logo-img"></a>
       <button class="mobile-menu__close" aria-label="Close menu">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
     <nav class="mobile-menu__nav">
       <a href="shop.html" class="mobile-menu__link mobile-menu__link--active">Shop</a>
-      <a href="about.html" class="mobile-menu__link">About</a>
       <a href="find-us.html" class="mobile-menu__link">Find Us</a>
+      <a href="about.html" class="mobile-menu__link">About</a>
       <a href="contact.html" class="mobile-menu__link">Contact</a>
     </nav>
   </div>
@@ -78,12 +79,10 @@
   <main>
 
     <!-- PDP HERO -->
-    <section class="pdp-hero" style="background-color: rgba(124, 179, 66, 0.08);">
+    <section class="pdp-hero" style="background-color: rgba(1, 90, 46, 0.08);">
       <div class="container pdp-hero__grid">
-        <div class="pdp-hero__image" style="background-color: #E8F5E9;">
-          <span class="emoji">&#127816;</span>
-          <span class="product-card__badge">Coming Soon</span>
-          <span class="label">Product photography</span>
+        <div class="pdp-hero__image" style="background-color: var(--bg-lime);">
+          <img src="images/hero_green_hidden.webp" alt="Lime Citrus Treats">
         </div>
         <div class="pdp-hero__info">
           <div class="breadcrumb"><a href="shop.html">Shop</a> / Lime Citrus Treats</div>
@@ -143,7 +142,7 @@
         </div>
 
         <!-- Find In Store -->
-        <div class="pdp-accordion" style="border-bottom: 2px solid #000;">
+        <div class="pdp-accordion" style="border-bottom: 1px solid rgba(0, 0, 0, 0.12);">
           <button class="pdp-accordion__header">
             <span>Find In Store</span>
             <span class="pdp-accordion__icon">+</span>
@@ -162,21 +161,18 @@
               <div class="store-locator__results" style="display:none">
                 <div class="store-card">
                   <h4>Whole Foods Market - Cambie</h4>
-                  <p>510 W 8th Ave, Vancouver</p>
+                  <p class="store-card__address"><span class="material-icons">location_on</span> <a href="https://www.google.com/maps/search/510+W+8th+Ave+Vancouver" target="_blank" rel="noopener noreferrer">510 W 8th Ave, Vancouver</a></p>
                   <p class="distance">2.3 km away</p>
-                  <a href="https://www.google.com/maps/search/510+W+8th+Ave+Vancouver" target="_blank" rel="noopener noreferrer" class="link">Get Directions &rarr;</a>
                 </div>
                 <div class="store-card">
                   <h4>Choices Markets - Kitsilano</h4>
-                  <p>2627 W 16th Ave, Vancouver</p>
+                  <p class="store-card__address"><span class="material-icons">location_on</span> <a href="https://www.google.com/maps/search/2627+W+16th+Ave+Vancouver" target="_blank" rel="noopener noreferrer">2627 W 16th Ave, Vancouver</a></p>
                   <p class="distance">3.1 km away</p>
-                  <a href="https://www.google.com/maps/search/2627+W+16th+Ave+Vancouver" target="_blank" rel="noopener noreferrer" class="link">Get Directions &rarr;</a>
                 </div>
                 <div class="store-card">
                   <h4>Nourish Market</h4>
-                  <p>3431 W Broadway, Vancouver</p>
+                  <p class="store-card__address"><span class="material-icons">location_on</span> <a href="https://www.google.com/maps/search/3431+W+Broadway+Vancouver" target="_blank" rel="noopener noreferrer">3431 W Broadway, Vancouver</a></p>
                   <p class="distance">4.5 km away</p>
-                  <a href="https://www.google.com/maps/search/3431+W+Broadway+Vancouver" target="_blank" rel="noopener noreferrer" class="link">Get Directions &rarr;</a>
                 </div>
               </div>
             </div>
@@ -190,68 +186,49 @@
     <section class="related-products">
       <div class="container">
         <h2>Try another flavour</h2>
-        <div class="product-grid" style="grid-template-columns: repeat(3, 1fr);">
+        <div class="product-grid">
 
           <!-- Orange -->
-          <div class="product-card" style="--card-bg: #FFECD9">
-            <a href="product-orange.html" class="product-card__image" style="background-color: #FFECD9">
-              <span class="product-card__emoji">&#127818;</span>
+          <div class="product-card" style="background-color: var(--bg-orange);">
+            <a href="product-orange.html" class="product-card__image" style="background-color: var(--bg-orange);">
+              <img src="images/hero_orange.webp" alt="Orange Citrus Treats">
             </a>
             <div class="product-card__info">
               <a href="product-orange.html" class="product-card__name">Orange Citrus Treats</a>
               <p class="product-card__desc">Tangy and chewy, from rescued oranges.</p>
               <div class="product-card__bottom">
                 <span class="product-card__price">$8.00</span>
-                <button
-                  class="btn btn--primary btn--small js-add-to-cart"
-                  data-product-id="orange"
-                  data-product-name="Orange Citrus Treats"
-                  data-product-price="8.00"
-                  data-product-bg="#FFECD9"
-                >Add to Cart</button>
+                <button class="btn btn--primary btn--small js-add-to-cart" data-product-id="orange" data-product-name="Orange Citrus Treats" data-product-price="8.00" data-product-bg="#FFFFFF">Add to Cart</button>
               </div>
             </div>
           </div>
 
           <!-- Lemon -->
-          <div class="product-card" style="--card-bg: #FFF8DC">
-            <a href="product-lemon.html" class="product-card__image" style="background-color: #FFF8DC">
-              <span class="product-card__emoji">&#127819;</span>
+          <div class="product-card" style="background-color: var(--bg-lemon);">
+            <a href="product-lemon.html" class="product-card__image" style="background-color: var(--bg-lemon);">
+              <img src="images/hero_yellow.webp" alt="Lemon Citrus Treats">
             </a>
             <div class="product-card__info">
               <a href="product-lemon.html" class="product-card__name">Lemon Citrus Treats</a>
               <p class="product-card__desc">Tart with a sweet finish. Pucker up.</p>
               <div class="product-card__bottom">
                 <span class="product-card__price">$8.00</span>
-                <button
-                  class="btn btn--primary btn--small js-add-to-cart"
-                  data-product-id="lemon"
-                  data-product-name="Lemon Citrus Treats"
-                  data-product-price="8.00"
-                  data-product-bg="#FFF8DC"
-                >Add to Cart</button>
+                <button class="btn btn--primary btn--small js-add-to-cart" data-product-id="lemon" data-product-name="Lemon Citrus Treats" data-product-price="8.00" data-product-bg="#FFFFFF">Add to Cart</button>
               </div>
             </div>
           </div>
 
-          <!-- Grapefruit -->
-          <div class="product-card" style="--card-bg: #FFE5E5">
-            <a href="product-grapefruit.html" class="product-card__image" style="background-color: #FFE5E5">
-              <span class="product-card__emoji">&#127818;</span>
-            </a>
+          <!-- Grapefruit (Coming Soon) -->
+          <div class="product-card product-card--coming-soon" style="background-color: var(--bg-grapefruit);">
+            <div class="product-card__image" style="background-color: var(--bg-grapefruit);">
+              <img src="images/hero_red_hidden.webp" alt="Coming soon">
+            </div>
             <div class="product-card__info">
-              <a href="product-grapefruit.html" class="product-card__name">Grapefruit Citrus Treats</a>
-              <p class="product-card__desc">Bold and bittersweet, just like mornings.</p>
-              <div class="product-card__bottom">
-                <span class="product-card__price">$8.00</span>
-                <button
-                  class="btn btn--primary btn--small js-add-to-cart"
-                  data-product-id="grapefruit"
-                  data-product-name="Grapefruit Citrus Treats"
-                  data-product-price="8.00"
-                  data-product-bg="#FFE5E5"
-                >Add to Cart</button>
-              </div>
+              <p class="product-card__desc">Something new is coming.</p>
+            </div>
+            <div class="product-card__overlay">
+              <span class="product-card__badge">Coming Soon</span>
+              <button class="btn btn--coming-soon">Get Notified</button>
             </div>
           </div>
 
@@ -266,7 +243,7 @@
     <div class="container">
       <div class="footer__grid">
         <div>
-          <div class="footer__logo">Second Savour</div>
+          <div class="footer__logo"><img src="images/logo.png" alt="Second Savour" class="footer__logo-img"></div>
           <p class="footer__tagline">Citrus treats from rescued fruit.</p>
         </div>
         <div>
