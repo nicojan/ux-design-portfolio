@@ -418,6 +418,7 @@ $(function () {
         '" data-calendar="' +
         containerId +
         '">';
+      html += '<div class="calendar__day-top">';
       if (isToday) {
         html +=
           '<div class="calendar__day-number calendar__day-number--today">' +
@@ -434,6 +435,10 @@ $(function () {
             '<div class="calendar__dot calendar__dot--' + ev.type + '"></div>';
         });
         html += "</div>";
+      }
+      html += "</div>";
+
+      if (hasEvent) {
         var eventIcon = "";
         if (dayEvents[0].type === "popup") {
           var iconName = storeIconMap[dayEvents[0].location] || "location_on";

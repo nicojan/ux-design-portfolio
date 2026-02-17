@@ -6,31 +6,31 @@
 /* --- CSS Variables --- */
 :root {
   /* Primary Colors */
-  --color-orange: #F47721;
-  --color-orange-dark: #E56A1A;
-  --color-teal: #00A896;
-  --color-pink: #FF6B6B;
-  --color-yellow: #FFD93D;
-  --color-green: #7CB342;
+  --color-orange: #f47721;
+  --color-orange-dark: #e56a1a;
+  --color-teal: #00a896;
+  --color-pink: #ff6b6b;
+  --color-yellow: #ffd93d;
+  --color-green: #7cb342;
 
   /* Greens */
-  --color-green-deep: #1E4A32;
+  --color-green-deep: #1e4a32;
 
   /* Backgrounds */
-  --color-white: #FFFFFF;
-  --color-cream: #FFF8F0;
+  --color-white: #ffffff;
+  --color-cream: #fff8f0;
   --color-black: #000000;
 
   /* New tint variables */
-  --color-cream-light: #FFFDF8;
-  --color-orange-light: #FFF3E8;
-  --color-green-light: #EDF7EE;
-  --color-yellow-light: #FFF9E6;
+  --color-cream-light: #fffdf8;
+  --color-orange-light: #fff3e8;
+  --color-green-light: #edf7ee;
+  --color-yellow-light: #fff9e6;
 
   /* Text */
-  --text-black: #1A1A1A;
-  --text-dark: #1A1A1A;
-  --text-medium: #4A4A4A;
+  --text-black: #1a1a1a;
+  --text-dark: #1a1a1a;
+  --text-medium: #4a4a4a;
 
   /* Product Backgrounds — vibrant product colours */
   --bg-orange: rgb(255, 120, 13);
@@ -39,8 +39,8 @@
   --bg-lime: rgb(1, 90, 46);
 
   /* Typography */
-  --font-display: 'Tanker', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
+  --font-display: "Tanker", sans-serif;
+  --font-body: "DM Sans", sans-serif;
 
   /* Spacing */
   --space-xs: 4px;
@@ -50,7 +50,6 @@
   --space-xl: 48px;
   --space-xxl: 80px;
 }
-
 
 /* ============================================================
    RESET & BASE
@@ -98,21 +97,36 @@ a:hover {
   outline-offset: 2px;
 }
 
-
 /* ============================================================
    TYPOGRAPHY
    ============================================================ */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: 400;
   color: var(--color-green-deep);
   line-height: 1.1;
 }
 
-h1 { font-size: 3.5rem; }
-h2 { font-size: 2.5rem; line-height: 1.2; }
-h3 { font-size: 1.75rem; line-height: 1.3; }
-h4 { font-size: 1.25rem; line-height: 1.4; }
+h1 {
+  font-size: 3.5rem;
+}
+h2 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+h3 {
+  font-size: 1.75rem;
+  line-height: 1.3;
+}
+h4 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
 
 p {
   color: var(--text-dark);
@@ -132,11 +146,16 @@ p {
 }
 
 @media (max-width: 768px) {
-  h1 { font-size: 2.25rem; }
-  h2 { font-size: 1.75rem; }
-  h3 { font-size: 1.375rem; }
+  h1 {
+    font-size: 2.25rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+  }
+  h3 {
+    font-size: 1.375rem;
+  }
 }
-
 
 /* ============================================================
    LAYOUT UTILITIES
@@ -188,13 +207,23 @@ p {
   gap: var(--space-lg);
 }
 
-.grid--2 { grid-template-columns: 1fr 1fr; }
-.grid--3 { grid-template-columns: repeat(3, 1fr); }
-.grid--4 { grid-template-columns: repeat(4, 1fr); }
+.grid--2 {
+  grid-template-columns: 1fr 1fr;
+}
+.grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.grid--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
 
 @media (max-width: 1024px) {
-  .grid--4 { grid-template-columns: repeat(2, 1fr); }
-  .grid--3 { grid-template-columns: repeat(2, 1fr); }
+  .grid--4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid--3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
@@ -208,7 +237,6 @@ p {
     padding: var(--space-xl) 0;
   }
 }
-
 
 /* ============================================================
    BUTTONS
@@ -285,7 +313,6 @@ p {
   cursor: not-allowed;
   pointer-events: none;
 }
-
 
 /* ============================================================
    HEADER / NAVIGATION
@@ -382,7 +409,10 @@ p {
   font-weight: 500;
   color: var(--text-medium);
   text-decoration: none;
-  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
   padding: 8px 16px;
   border-radius: 9999px;
 }
@@ -447,7 +477,7 @@ p {
 }
 
 .header__nav-link--active::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 2px;
   left: 50%;
@@ -530,7 +560,6 @@ p {
   }
 }
 
-
 /* ============================================================
    MOBILE MENU
    ============================================================ */
@@ -592,7 +621,6 @@ p {
   color: var(--color-orange);
   text-decoration: none;
 }
-
 
 /* ============================================================
    CART DRAWER
@@ -822,7 +850,6 @@ p {
   color: var(--color-orange);
 }
 
-
 /* ============================================================
    HERO SECTION
    ============================================================ */
@@ -831,6 +858,19 @@ p {
   background-color: var(--color-orange);
   position: relative;
   overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../images/frame.png");
+  background-size: 30vw auto;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.35));
+  z-index: 0;
+  pointer-events: none;
 }
 
 .hero h1,
@@ -872,6 +912,7 @@ p {
 
 .hero__title {
   margin-bottom: var(--space-lg);
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 
 .hero__subtitle {
@@ -879,6 +920,7 @@ p {
   color: var(--text-dark);
   max-width: 480px;
   line-height: 1.6;
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
 .hero__actions {
@@ -898,7 +940,7 @@ p {
   align-items: center;
   justify-content: center;
   border: none;
-  overflow: hidden;
+  overflow: visible;
   padding: 32px;
   position: relative;
 }
@@ -923,6 +965,7 @@ p {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.35));
 }
 
 .hero__image-placeholder .emoji {
@@ -937,12 +980,14 @@ p {
 
 .hero__text {
   max-width: 560px;
+  order: 2;
 }
 
 .hero__image {
   display: flex;
   align-items: center;
   justify-content: center;
+  order: 1;
 }
 
 .hero__link {
@@ -965,8 +1010,15 @@ p {
     grid-template-columns: 1fr;
     gap: 32px;
   }
-}
 
+  .hero__text {
+    order: 1;
+  }
+
+  .hero__image {
+    order: 2;
+  }
+}
 
 /* ============================================================
    IMPACT METRICS
@@ -987,7 +1039,7 @@ p {
 .impact__number {
   font-family: var(--font-display);
   font-size: 3rem;
-  color: #FFFFFF;
+  color: #ffffff;
   line-height: 1.1;
 }
 
@@ -1001,7 +1053,9 @@ p {
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 32px 24px;
-  transition: transform 0.25s ease, background-color 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease;
 }
 
 .impact__stat--card:hover {
@@ -1015,7 +1069,6 @@ p {
     gap: 32px;
   }
 }
-
 
 /* ============================================================
    PRODUCT CARDS
@@ -1043,7 +1096,9 @@ p {
   overflow: hidden;
   border: none;
   background-color: var(--card-bg, var(--bg-orange));
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -1200,12 +1255,11 @@ p {
   transform: scale(1.05);
 }
 
-
 /* ============================================================
    MISSION TEASER
    ============================================================ */
 .mission-card {
-  background-color: var(--color-green-deep);
+  background-color: var(--color-white);
   border-radius: 24px;
   padding: 48px 40px;
   max-width: 800px;
@@ -1214,11 +1268,11 @@ p {
 
 .mission-card h2,
 .mission-card .section__title {
-  color: var(--color-white);
+  color: var(--color-green-deep);
 }
 
 .mission-card .section__text {
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--color-green-deep);
 }
 
 .mission-card .section__link {
@@ -1260,17 +1314,17 @@ p {
   color: var(--color-white);
 }
 
-main > :nth-child(odd) {
+body:not(.page-about) main > :nth-child(odd) {
   background-color: var(--color-green-deep) !important;
 }
 
-main > :nth-child(even) {
+body:not(.page-about) main > :nth-child(even) {
   background-color: var(--color-white) !important;
 }
 
-main > :nth-child(odd) > .container > h2,
-main > :nth-child(odd) > .container > h3,
-main > :nth-child(odd) > .container > p {
+body:not(.page-about) main > :nth-child(odd) > .container > h2,
+body:not(.page-about) main > :nth-child(odd) > .container > h3,
+body:not(.page-about) main > :nth-child(odd) > .container > p {
   color: rgba(255, 255, 255, 0.9) !important;
 }
 
@@ -1287,19 +1341,19 @@ main > :nth-child(odd) > .container > p {
   border-top: 3px solid transparent;
 }
 
-.second-section--white .product-card:nth-child(4n+1) .product-card__info {
+.second-section--white .product-card:nth-child(4n + 1) .product-card__info {
   border-top-color: var(--color-orange);
 }
 
-.second-section--white .product-card:nth-child(4n+2) .product-card__info {
+.second-section--white .product-card:nth-child(4n + 2) .product-card__info {
   border-top-color: var(--color-green);
 }
 
-.second-section--white .product-card:nth-child(4n+3) .product-card__info {
+.second-section--white .product-card:nth-child(4n + 3) .product-card__info {
   border-top-color: var(--color-pink);
 }
 
-.second-section--white .product-card:nth-child(4n+4) .product-card__info {
+.second-section--white .product-card:nth-child(4n + 4) .product-card__info {
   border-top-color: var(--color-yellow);
 }
 
@@ -1336,7 +1390,11 @@ main > :nth-child(odd) > .container > p {
 }
 
 .second-section--white .story-card {
-  background: linear-gradient(135deg, var(--color-orange-light), var(--color-yellow-light));
+  background: linear-gradient(
+    135deg,
+    var(--color-orange-light),
+    var(--color-yellow-light)
+  );
   border: 2px solid rgba(244, 119, 33, 0.2);
 }
 
@@ -1359,7 +1417,6 @@ main > :nth-child(odd) > .container > p {
   color: rgba(255, 255, 255, 0.92);
   background-color: rgba(255, 255, 255, 0.06);
 }
-
 
 /* ============================================================
    PAGE HEADER
@@ -1395,7 +1452,6 @@ main > :nth-child(odd) > .container > p {
 .page-header--orange p {
   color: rgba(255, 255, 255, 0.9);
 }
-
 
 /* ============================================================
    PRODUCT DETAIL PAGE
@@ -1523,7 +1579,6 @@ main > :nth-child(odd) > .container > p {
   }
 }
 
-
 /* ============================================================
    QUANTITY SELECTOR
    ============================================================ */
@@ -1550,7 +1605,9 @@ main > :nth-child(odd) > .container > p {
   cursor: pointer;
   font-size: 18px;
   color: var(--text-black);
-  transition: color 0.15s ease, background-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .qty-selector__btn:hover {
@@ -1580,7 +1637,6 @@ main > :nth-child(odd) > .container > p {
   background-color: rgba(244, 119, 33, 0.12);
   color: var(--color-orange);
 }
-
 
 /* ============================================================
    NUTRITION & INGREDIENTS (PDP)
@@ -1701,7 +1757,6 @@ main > :nth-child(odd) > .container > p {
   line-height: 1.7;
 }
 
-
 /* ============================================================
    SUSTAINABILITY CALLOUT
    ============================================================ */
@@ -1742,7 +1797,6 @@ main > :nth-child(odd) > .container > p {
   color: var(--text-black);
   margin-bottom: var(--space-md);
 }
-
 
 /* ============================================================
    STORE LOCATOR (PDP & Find Us Page)
@@ -1788,13 +1842,31 @@ main > :nth-child(odd) > .container > p {
   margin-bottom: var(--space-sm);
 }
 
+.page-find-us .grid--2 {
+  align-items: stretch;
+}
+
+.page-find-us .store-locator {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-find-us .map-placeholder {
+  height: auto;
+  flex: 1;
+  min-height: 280px;
+}
+
 .store-card {
   padding: 20px;
   border: none;
   border-left: 3px solid var(--color-orange);
   border-radius: 24px;
   margin-top: var(--space-md);
-  transition: transform 0.25s ease, background-color 0.2s ease;
+  transition:
+    transform 0.25s ease,
+    background-color 0.2s ease;
   background-color: var(--color-cream);
 }
 
@@ -1829,7 +1901,6 @@ main > :nth-child(odd) > .container > p {
   font-weight: 500;
   margin-top: var(--space-sm);
 }
-
 
 /* ============================================================
    COMING SOON NOTIFY
@@ -1872,7 +1943,6 @@ main > :nth-child(odd) > .container > p {
   margin-top: var(--space-sm);
 }
 
-
 /* ============================================================
    RELATED PRODUCTS
    ============================================================ */
@@ -1894,7 +1964,6 @@ main > :nth-child(odd) > .container > p {
     grid-template-columns: 1fr;
   }
 }
-
 
 /* ============================================================
    CALENDAR (Find Us Page)
@@ -1928,20 +1997,20 @@ main > :nth-child(odd) > .container > p {
   justify-content: center;
   cursor: pointer;
   font-size: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
   transition: all 0.15s ease;
 }
 
 .calendar__nav-btn:hover {
   background-color: var(--color-orange);
   border-color: var(--color-orange);
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .calendar__month-label {
   font-family: var(--font-display);
   font-size: 1.5rem;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .calendar__day-headers {
@@ -1970,7 +2039,7 @@ main > :nth-child(odd) > .container > p {
 }
 
 .calendar__day {
-  min-height: 80px;
+  min-height: 96px;
   padding: 8px;
   border-radius: 0;
   border: none;
@@ -1983,7 +2052,7 @@ main > :nth-child(odd) > .container > p {
 }
 
 .calendar__day--empty {
-  background-color: #FAFAF7;
+  background-color: #fafaf7;
 }
 
 .calendar__day--has-event {
@@ -1995,11 +2064,11 @@ main > :nth-child(odd) > .container > p {
 }
 
 .calendar__day--market {
-  background-color: #FFE8D0;
+  background-color: #ffe8d0;
 }
 
 .calendar__day--popup {
-  background-color: #EDF7EE;
+  background-color: #edf7ee;
 }
 
 .calendar__day--selected {
@@ -2011,6 +2080,12 @@ main > :nth-child(odd) > .container > p {
   font-size: 14px;
   font-weight: 500;
   color: var(--text-black);
+}
+
+.calendar__day-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .calendar__day-number--today {
@@ -2027,7 +2102,7 @@ main > :nth-child(odd) > .container > p {
 .calendar__event-dots {
   display: flex;
   gap: 4px;
-  margin-top: 4px;
+  margin-top: 0;
   flex-wrap: wrap;
 }
 
@@ -2047,7 +2122,7 @@ main > :nth-child(odd) > .container > p {
 }
 
 .calendar__event-name {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-medium);
   margin-top: 2px;
   white-space: nowrap;
@@ -2057,7 +2132,7 @@ main > :nth-child(odd) > .container > p {
 
 @media (max-width: 768px) {
   .calendar__day {
-    min-height: 48px;
+    min-height: 56px;
     padding: 4px;
   }
 
@@ -2083,7 +2158,6 @@ main > :nth-child(odd) > .container > p {
   align-items: center;
   gap: 8px;
 }
-
 
 /* ============================================================
    EVENT DETAIL PANEL
@@ -2177,7 +2251,6 @@ main > :nth-child(odd) > .container > p {
   font-weight: 500;
 }
 
-
 /* ============================================================
    ABOUT PAGE
    ============================================================ */
@@ -2212,6 +2285,115 @@ main > :nth-child(odd) > .container > p {
   font-size: 1.0625rem;
   line-height: 1.7;
   margin-bottom: var(--space-lg);
+}
+
+.about-split {
+  padding: var(--space-xl) 0;
+}
+
+.about-split--white {
+  background-color: transparent !important;
+}
+
+.about-split__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: stretch;
+}
+
+.about-split__grid--reverse .about-split__text {
+  order: 2;
+}
+
+.about-split__grid--reverse .about-split__image {
+  order: 1;
+}
+
+.about-split__text {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0;
+}
+
+.about-split__text p {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  font-weight: 400;
+  color: var(--text-black);
+  margin: 0;
+}
+
+.about-split__image {
+  height: 100%;
+  display: flex;
+  min-height: 260px;
+}
+
+.about-split__media-card {
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  border: 10px solid rgba(244, 119, 33);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  background-color: var(--color-white);
+  overflow: hidden;
+  display: flex;
+}
+
+.about-split__media {
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  display: block;
+  object-fit: cover;
+}
+
+.about-split__media--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(255, 255, 255, 0.6);
+  border: none;
+}
+
+.about-split--accent-orange {
+  background-color: transparent !important;
+}
+
+.about-split--accent-yellow {
+  background-color: transparent !important;
+}
+
+.page-about .about-split:nth-of-type(1) .about-split__media-card {
+  border-color: var(--color-orange);
+}
+
+.page-about .about-split:nth-of-type(2) .about-split__media-card {
+  border-color: var(--color-yellow);
+}
+
+.page-about .about-split:nth-of-type(3) .about-split__media-card {
+  border-color: var(--color-pink);
+}
+
+.page-about .about-split:nth-of-type(4) .about-split__media-card {
+  border-color: var(--color-green);
+}
+
+@media (max-width: 900px) {
+  .about-split__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-split__grid--reverse .about-split__text,
+  .about-split__grid--reverse .about-split__image {
+    order: initial;
+  }
 }
 
 .impact-card {
@@ -2296,7 +2478,6 @@ main > :nth-child(odd) > .container > p {
 .partner-cta .btn {
   margin-top: var(--space-lg);
 }
-
 
 /* ============================================================
    CONTACT PAGE
@@ -2475,7 +2656,6 @@ main > :nth-child(odd) > .container > p {
   color: var(--color-white);
 }
 
-
 /* ============================================================
    FOOTER
    ============================================================ */
@@ -2548,7 +2728,6 @@ main > :nth-child(odd) > .container > p {
   }
 }
 
-
 /* ============================================================
    HOMEPAGE: FIND US GRID (1/3 stores + 2/3 calendar)
    ============================================================ */
@@ -2561,7 +2740,6 @@ main > :nth-child(odd) > .container > p {
     grid-template-columns: 1fr;
   }
 }
-
 
 /* ============================================================
    STORE CARD: LOCATION ICON
@@ -2610,17 +2788,27 @@ main > :nth-child(odd) > .container > p {
   margin-right: 2px;
 }
 
-
 /* ============================================================
    PLAYFUL ANIMATIONS
    ============================================================ */
 
 /* Bounce-in for cards on scroll (JS adds .animate-in) */
 @keyframes bounceUp {
-  0%   { opacity: 0; transform: translateY(40px) scale(0.96); }
-  60%  { opacity: 1; transform: translateY(-6px) scale(1.02); }
-  80%  { transform: translateY(2px) scale(0.99); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.02);
+  }
+  80% {
+    transform: translateY(2px) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .animate-in {
@@ -2628,15 +2816,28 @@ main > :nth-child(odd) > .container > p {
 }
 
 /* Stagger children for grids */
-.animate-in:nth-child(1) { animation-delay: 0ms; }
-.animate-in:nth-child(2) { animation-delay: 80ms; }
-.animate-in:nth-child(3) { animation-delay: 160ms; }
-.animate-in:nth-child(4) { animation-delay: 240ms; }
+.animate-in:nth-child(1) {
+  animation-delay: 0ms;
+}
+.animate-in:nth-child(2) {
+  animation-delay: 80ms;
+}
+.animate-in:nth-child(3) {
+  animation-delay: 160ms;
+}
+.animate-in:nth-child(4) {
+  animation-delay: 240ms;
+}
 
 /* Pulse for hero emoji */
 @keyframes gentlePulse {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.04); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
 }
 
 .hero__image-placeholder {
@@ -2664,8 +2865,14 @@ main > :nth-child(odd) > .container > p {
 
 /* Slide-up for section titles */
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .section__title {
@@ -2684,7 +2891,9 @@ main > :nth-child(odd) > .container > p {
 
 /* Calendar day pop on hover */
 .calendar__day--has-event {
-  transition: background-color 0.15s ease, transform 0.2s ease;
+  transition:
+    background-color 0.15s ease,
+    transform 0.2s ease;
 }
 
 .calendar__day--has-event:hover {
@@ -2694,10 +2903,18 @@ main > :nth-child(odd) > .container > p {
 
 /* Cart badge bounce when updated */
 @keyframes badgePop {
-  0%   { transform: scale(1); }
-  40%  { transform: scale(1.4); }
-  70%  { transform: scale(0.9); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.4);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .header__cart-badge--pop {
@@ -2706,8 +2923,13 @@ main > :nth-child(odd) > .container > p {
 
 /* Floating animation for sustainability callout icon */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-4px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
 }
 
 .sustainability-callout__icon {
@@ -2724,7 +2946,6 @@ main > :nth-child(odd) > .container > p {
 .footer__logo:hover {
   transform: rotate(-3deg) scale(1.05);
 }
-
 
 /* ============================================================
    FLOATING DECORATIVE FRUIT
@@ -2777,7 +2998,7 @@ main > :nth-child(odd) > .container > p {
 }
 
 .mission-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -30%;
   right: -20%;
@@ -2895,7 +3116,7 @@ main > :nth-child(odd) > .container > p {
 }
 
 .calendar__event-location-icon {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1;
   vertical-align: middle;
 }
@@ -2914,15 +3135,15 @@ main > :nth-child(odd) > .container > p {
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
-.page-find-us .store-card:nth-child(4n+2) {
+.page-find-us .store-card:nth-child(4n + 2) {
   background-color: var(--color-yellow);
 }
 
-.page-find-us .store-card:nth-child(4n+3) {
+.page-find-us .store-card:nth-child(4n + 3) {
   background-color: var(--color-pink);
 }
 
-.page-find-us .store-card:nth-child(4n+4) {
+.page-find-us .store-card:nth-child(4n + 4) {
   background-color: var(--color-green);
 }
 
@@ -3004,7 +3225,6 @@ main > :nth-child(odd) > .container > p {
   background-color: var(--color-white) !important;
 }
 
-
 /* ============================================================
    UTILITIES
    ============================================================ */
@@ -3025,6 +3245,10 @@ main > :nth-child(odd) > .container > p {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
