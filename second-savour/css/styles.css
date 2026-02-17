@@ -1136,6 +1136,38 @@ p {
   object-fit: contain;
 }
 
+.product-card--orange {
+  --card-bg: var(--bg-orange);
+}
+
+.product-card--orange .product-card__image {
+  background-color: var(--bg-orange);
+}
+
+.product-card--lemon {
+  --card-bg: var(--bg-lemon);
+}
+
+.product-card--lemon .product-card__image {
+  background-color: var(--bg-lemon);
+}
+
+.product-card--grapefruit {
+  --card-bg: var(--bg-grapefruit);
+}
+
+.product-card--grapefruit .product-card__image {
+  background-color: var(--bg-grapefruit);
+}
+
+.product-card--lime {
+  --card-bg: var(--bg-lime);
+}
+
+.product-card--lime .product-card__image {
+  background-color: var(--bg-lime);
+}
+
 .product-card__placeholder-label {
   font-size: 14px;
   color: var(--text-medium);
@@ -1314,17 +1346,17 @@ p {
   color: var(--color-white);
 }
 
-body:not(.page-about) main > :nth-child(odd) {
+body:not(.page-about):not(.page-product) main > :nth-child(odd) {
   background-color: var(--color-green-deep) !important;
 }
 
-body:not(.page-about) main > :nth-child(even) {
+body:not(.page-about):not(.page-product) main > :nth-child(even) {
   background-color: var(--color-white) !important;
 }
 
-body:not(.page-about) main > :nth-child(odd) > .container > h2,
-body:not(.page-about) main > :nth-child(odd) > .container > h3,
-body:not(.page-about) main > :nth-child(odd) > .container > p {
+body:not(.page-about):not(.page-product) main > :nth-child(odd) > .container > h2,
+body:not(.page-about):not(.page-product) main > :nth-child(odd) > .container > h3,
+body:not(.page-about):not(.page-product) main > :nth-child(odd) > .container > p {
   color: rgba(255, 255, 255, 0.9) !important;
 }
 
@@ -3190,12 +3222,20 @@ body:not(.page-about) main > :nth-child(odd) > .container > p {
   background-color: var(--color-pink);
 }
 
-.page-product main > :nth-child(odd) {
+.page-product {
+  --pdp-accent: var(--color-green-deep);
+}
+
+.page-product main > :nth-child(1) {
   background-color: var(--color-white) !important;
 }
 
-.page-product main > :nth-child(even) {
-  background-color: var(--color-green-deep) !important;
+.page-product main > :nth-child(2) {
+  background-color: var(--pdp-accent) !important;
+}
+
+.page-product main > :nth-child(3) {
+  background-color: var(--color-white) !important;
 }
 
 .page-product .pdp-hero {
@@ -3229,8 +3269,20 @@ body:not(.page-about) main > :nth-child(odd) > .container > p {
   padding-bottom: var(--space-xl);
 }
 
-.page-product .pdp-details-band {
-  background-color: var(--color-green-deep) !important;
+.page-product--orange {
+  --pdp-accent: var(--bg-orange);
+}
+
+.page-product--lemon {
+  --pdp-accent: var(--bg-lemon);
+}
+
+.page-product--grapefruit {
+  --pdp-accent: var(--bg-grapefruit);
+}
+
+.page-product--lime {
+  --pdp-accent: var(--bg-lime);
 }
 
 .page-product .pdp-find-store-section {
