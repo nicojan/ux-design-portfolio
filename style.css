@@ -1526,6 +1526,10 @@ ol {
   padding: var(--section-gap-mobile) 1.5rem;
 }
 
+#contact {
+  scroll-margin-top: 100px;
+}
+
 .contact-inner {
   max-width: var(--max-content);
   margin: 0 auto;
@@ -1671,6 +1675,14 @@ ol {
 
 /* ─── Tablet & below: stack about page columns ─── */
 @media (max-width: 767px) {
+  .projects-scroll {
+    scroll-snap-type: none;
+  }
+
+  .project-slide {
+    scroll-snap-align: none;
+  }
+
   .about-page-inner {
     flex-direction: column;
     gap: 2.5rem;
@@ -1710,6 +1722,10 @@ ol {
 }
 
 @media (max-width: 639px) {
+  #contact {
+    scroll-margin-top: 136px;
+  }
+
   .nav-links {
     display: none;
   }

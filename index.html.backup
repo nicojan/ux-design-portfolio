@@ -439,7 +439,7 @@
       <!-- /projects-scroll -->
 
       <!-- CONTACT (loaded from partial) -->
-      <div data-include="partials/contact.html"></div>
+      <div data-include="partials/contact-cta.html"></div>
     </main>
 
     <!-- FOOTER (loaded from partial) -->

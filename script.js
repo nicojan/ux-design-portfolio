@@ -57,6 +57,42 @@
     document.addEventListener("includes:loaded", initNav);
   }
 
+  function initMobileContactScrollFix() {
+    var contactLinks = document.querySelectorAll('a[href="#contact"]');
+    if (!contactLinks.length) return;
+
+    contactLinks.forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        if (window.innerWidth > 767) return;
+
+        var target = document.getElementById("contact");
+        if (!target) return;
+
+        e.preventDefault();
+        var header = document.getElementById("site-header");
+        var headerOffset = header ? header.getBoundingClientRect().height : 0;
+        var top =
+          window.pageYOffset +
+          target.getBoundingClientRect().top -
+          headerOffset -
+          16;
+
+        window.scrollTo({
+          top: Math.max(0, Math.round(top)),
+          behavior: "smooth",
+        });
+
+        if (window.history && window.history.pushState) {
+          window.history.pushState(null, "", "#contact");
+        } else {
+          window.location.hash = "contact";
+        }
+      });
+    });
+  }
+
+  initMobileContactScrollFix();
+
   /* ─── Scroll-triggered reveal animations ─── */
   var reveals = document.querySelectorAll(
     ".reveal, .reveal-left, .reveal-scale",
