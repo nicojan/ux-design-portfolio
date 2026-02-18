@@ -57,37 +57,80 @@
     document.addEventListener("includes:loaded", initNav);
   }
 
+  function normalizePathname(pathname) {
+    var normalized = (pathname || "/").replace(/\/+$/, "");
+    if (!normalized) normalized = "/";
+    if (normalized.slice(-11) === "/index.html") {
+      normalized = normalized.slice(0, -10) || "/";
+    }
+    return normalized;
+  }
+
+  function scrollToContactOnMobile() {
+    if (window.innerWidth > 767) return false;
+    var target = document.getElementById("contact");
+    if (!target) return false;
+
+    var header = document.getElementById("site-header");
+    var headerOffset = header ? header.getBoundingClientRect().height : 0;
+    var top =
+      window.pageYOffset + target.getBoundingClientRect().top - headerOffset - 16;
+
+    window.scrollTo({
+      top: Math.max(0, Math.round(top)),
+      behavior: "smooth",
+    });
+
+    return true;
+  }
+
   function initMobileContactScrollFix() {
-    var contactLinks = document.querySelectorAll('a[href="#contact"]');
+    var contactLinks = document.querySelectorAll('a[href*="#contact"]');
     if (!contactLinks.length) return;
+
+    function isCurrentPageContactLink(link) {
+      var rawHref = link.getAttribute("href");
+      if (!rawHref) return false;
+      if (rawHref === "#contact") return true;
+
+      var parsed = null;
+      try {
+        parsed = new URL(rawHref, window.location.href);
+      } catch (_err) {
+        return false;
+      }
+      if (parsed.hash !== "#contact") return false;
+
+      return (
+        normalizePathname(parsed.pathname) ===
+        normalizePathname(window.location.pathname)
+      );
+    }
 
     contactLinks.forEach(function (link) {
       link.addEventListener("click", function (e) {
-        if (window.innerWidth > 767) return;
-
-        var target = document.getElementById("contact");
-        if (!target) return;
+        if (!isCurrentPageContactLink(link)) return;
+        if (!scrollToContactOnMobile()) return;
 
         e.preventDefault();
-        var header = document.getElementById("site-header");
-        var headerOffset = header ? header.getBoundingClientRect().height : 0;
-        var top =
-          window.pageYOffset +
-          target.getBoundingClientRect().top -
-          headerOffset -
-          16;
-
-        window.scrollTo({
-          top: Math.max(0, Math.round(top)),
-          behavior: "smooth",
-        });
-
         if (window.history && window.history.pushState) {
           window.history.pushState(null, "", "#contact");
         } else {
           window.location.hash = "contact";
         }
       });
+    });
+
+    if (window.location.hash === "#contact") {
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(scrollToContactOnMobile);
+      });
+    }
+
+    window.addEventListener("hashchange", function () {
+      if (window.location.hash === "#contact") {
+        scrollToContactOnMobile();
+      }
     });
   }
 
@@ -575,6 +618,7 @@
     var cardStartY = 0;
     var isDragging = false;
     var activeTouchId = null;
+    var touchDragLocked = false;
 
     cards.forEach(function (card) {
       // Mouse events
@@ -612,6 +656,7 @@
         draggedCard = card;
         var touch = e.touches[0];
         activeTouchId = touch.identifier;
+        touchDragLocked = false;
         dragStartX = touch.clientX;
         dragStartY = touch.clientY;
 
@@ -719,17 +764,31 @@
         }
         if (!touch) return;
 
-        // Prevent page scroll while a card is being dragged on touch devices.
-        if (e.cancelable) {
-          e.preventDefault();
-        }
-
         var deltaX = touch.clientX - dragStartX;
         var deltaY = touch.clientY - dragStartY;
 
-        // If moved more than 5px, consider it a drag
-        if (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5) {
+        // Only lock into card dragging when movement is intentional.
+        if (!touchDragLocked) {
+          if (Math.abs(deltaX) < 8 && Math.abs(deltaY) < 8) {
+            return;
+          }
+
+          // Let vertical swipes scroll the page instead of hijacking touch.
+          if (Math.abs(deltaY) > Math.abs(deltaX)) {
+            draggedCard.style.transition = "";
+            draggedCard = null;
+            activeTouchId = null;
+            isDragging = false;
+            return;
+          }
+
+          touchDragLocked = true;
           isDragging = true;
+        }
+
+        // Prevent page scroll only after a drag has been locked in.
+        if (e.cancelable) {
+          e.preventDefault();
         }
 
         var newX = cardStartX + deltaX;
@@ -781,6 +840,7 @@
         draggedCard.style.transition = "";
         draggedCard = null;
         activeTouchId = null;
+        touchDragLocked = false;
 
         // Reset isDragging after a short delay to prevent click from firing
         setTimeout(function () {
@@ -794,6 +854,7 @@
         draggedCard.style.transition = "";
         draggedCard = null;
         activeTouchId = null;
+        touchDragLocked = false;
         isDragging = false;
       }
     });

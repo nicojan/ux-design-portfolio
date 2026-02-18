@@ -643,6 +643,16 @@ ol {
    snap-type does the alignment work */
 }
 
+@media (hover: none) and (pointer: coarse) {
+  .projects-scroll {
+    scroll-snap-type: none;
+  }
+
+  .project-slide {
+    scroll-snap-align: none;
+  }
+}
+
 .project-slide {
   min-height: 100vh;
   display: flex;
