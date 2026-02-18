@@ -8,6 +8,19 @@
       name="description"
       content="Portfolio of Nico Jan, a UX designer and researcher in Vancouver, BC. Eight years of teaching experience applied to designing clear, usable digital experiences."
     />
+    <meta name="author" content="Nico Jan" />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <meta
+      name="googlebot"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+    <link rel="canonical" href="https://nicojan.com/" />
+    <link rel="alternate" hreflang="en-CA" href="https://nicojan.com/" />
+    <meta property="og:site_name" content="Nico Jan" />
+    <meta property="og:url" content="https://nicojan.com/" />
     <meta property="og:title" content="Nico Jan — UX Designer & Researcher" />
     <meta
       property="og:description"
@@ -15,7 +28,36 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_CA" />
-    <link rel="icon" href="favicon.ico" />
+    <meta
+      property="og:image"
+      content="https://nicojan.com/assets/portrait.png"
+    />
+    <meta property="og:image:alt" content="Portrait of UX designer Nico Jan" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nico Jan — UX Designer & Researcher" />
+    <meta
+      name="twitter:description"
+      content="Portfolio of Nico Jan, a UX designer and researcher in Vancouver, BC."
+    />
+    <meta
+      name="twitter:image"
+      content="https://nicojan.com/assets/portrait.png"
+    />
+    <link rel="me" href="https://www.linkedin.com/in/nicojan/" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="/assets/site.webmanifest" />
 
     <!-- Fonts: Inter for body, plus Instrument Serif for display contrast -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -38,6 +80,86 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css"
     />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://nicojan.com/#website",
+            "url": "https://nicojan.com/",
+            "name": "Nico Jan",
+            "description": "Portfolio of Nico Jan, a UX designer and researcher in Vancouver, BC.",
+            "inLanguage": "en-CA",
+            "publisher": {
+              "@id": "https://nicojan.com/#person"
+            }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://nicojan.com/#person",
+            "name": "Nico Jan",
+            "url": "https://nicojan.com/",
+            "jobTitle": "UX Designer and Researcher",
+            "description": "UX designer and researcher in Vancouver, BC with eight years of teaching experience.",
+            "email": "mailto:hi@nicojan.com",
+            "homeLocation": {
+              "@type": "Place",
+              "name": "Vancouver, BC, Canada"
+            },
+            "sameAs": ["https://www.linkedin.com/in/nicojan/"],
+            "knowsAbout": [
+              "UX design",
+              "User research",
+              "Interaction design",
+              "Information architecture",
+              "Usability testing",
+              "Front-end development"
+            ]
+          },
+          {
+            "@type": "ItemList",
+            "@id": "https://nicojan.com/#projects",
+            "name": "Selected Projects",
+            "itemListElement": [
+              {
+                "@type": "CreativeWork",
+                "position": 1,
+                "name": "Useful Words",
+                "url": "https://classwith.nicojan.com/usefulwords/",
+                "description": "A bilingual reference tool for language learners."
+              },
+              {
+                "@type": "CreativeWork",
+                "position": 2,
+                "name": "WatchMeType",
+                "url": "https://github.com/0xff-r4bbit/watchmetype",
+                "description": "A macOS app that simulates human typing."
+              },
+              {
+                "@type": "CreativeWork",
+                "position": 3,
+                "name": "Pocket Dystopia",
+                "url": "https://classwith.nicojan.com/pocket-dystopia/",
+                "description": "A randomized premise generator for fiction writers."
+              },
+              {
+                "@type": "CreativeWork",
+                "position": 4,
+                "name": "Aoni Campaigns",
+                "description": "Audience research and campaign strategy for North American market entry."
+              },
+              {
+                "@type": "CreativeWork",
+                "position": 5,
+                "name": "Curriculum Design",
+                "description": "Research-informed curriculum and information design across eight years of teaching."
+              }
+            ]
+          }
+        ]
+      }
+    </script>
     <link rel="stylesheet" href="style.css" />
   </head>
 
@@ -94,11 +216,17 @@
           <div class="project-slide-inner">
             <article class="project-card reveal-scale">
               <h3 class="project-title">Useful Words</h3>
+              <div class="project-tags">
+                <span class="project-tag">UX Design</span>
+                <span class="project-tag">User Research</span>
+                <span class="project-tag">Front-End Development</span>
+              </div>
               <p class="project-desc">
-                a bilingual vocabulary reference for ESL students, built
-                mobile-first so they can check transitions while writing
+                A bilingual reference tool that helps language learners find and
+                apply vocabulary while writing. Built mobile-first, with layout
+                decisions informed by observing how students actually hold their
+                phones mid-task.
               </p>
-              <p class="project-tools">Webflow, jQuery</p>
               <div class="project-links">
                 <a
                   href="#"
@@ -150,12 +278,14 @@
           <div class="project-slide-inner">
             <article class="project-card reveal-scale">
               <h3 class="project-title">WatchMeType</h3>
+              <div class="project-tags">
+                <span class="project-tag">Product Design</span>
+                <span class="project-tag">Interaction Design</span>
+                <span class="project-tag">SwiftUI</span>
+              </div>
               <p class="project-desc">
-                a shipped macOS app that simulates human typing, built as both a
-                working tool and a question about how schools respond to AI
-              </p>
-              <p class="project-tools">
-                SwiftUI, AppKit, CoreGraphics, macOS Accessibility APIs
+                A shipped macOS app that simulates human typing, built as both a
+                working tool and a question about how schools respond to AI.
               </p>
               <div class="project-links">
                 <a
@@ -208,10 +338,16 @@
           <div class="project-slide-inner">
             <article class="project-card reveal-scale">
               <h3 class="project-title">Pocket Dystopia</h3>
+              <div class="project-tags">
+                <span class="project-tag">Interaction Design</span>
+                <span class="project-tag">Usability Testing</span>
+                <span class="project-tag">Front-End Development</span>
+              </div>
               <p class="project-desc">
-                a shipped dystopian premise generator for beginner writers
+                A randomized premise generator for beginner fiction writers,
+                tested with real users and revised based on what felt confusing
+                or flat.
               </p>
-              <p class="project-tools">vanilla HTML, CSS, JavaScript</p>
               <div class="project-links">
                 <a
                   href="#"
@@ -263,10 +399,15 @@
           <div class="project-slide-inner">
             <article class="project-card reveal-scale">
               <h3 class="project-title">Aoni Campaigns</h3>
+              <div class="project-tags">
+                <span class="project-tag">Audience Research</span>
+                <span class="project-tag">Copywriting</span>
+                <span class="project-tag">Campaign Strategy</span>
+              </div>
               <p class="project-desc">
-                audience research and copywriting for a Hong Kong condom brand
-                entering North America, achieving over 30,000 interactions
-                within the first month
+                A Hong Kong condom brand needed to enter the North American
+                market. The client wanted direct messaging. The audience wanted
+                humour. Our top campaign hit 30,000 interactions.
               </p>
               <div class="project-links">
                 <a
@@ -334,10 +475,16 @@
           <div class="project-slide-inner">
             <article class="project-card reveal-scale">
               <h3 class="project-title">Curriculum Design</h3>
+              <div class="project-tags">
+                <span class="project-tag">Information Architecture</span>
+                <span class="project-tag">Iterative Design</span>
+                <span class="project-tag">User Research</span>
+              </div>
               <p class="project-desc">
-                eight years of handouts, assessments, and materials designed
-                through the same loop: observe confusion, restructure, test
-                again
+                Eight years of designing how people encounter complex
+                information. Every handout and assessment followed the same
+                process: observe where users struggle, restructure the material,
+                test whether the change worked.
               </p>
               <div class="project-links">
                 <a

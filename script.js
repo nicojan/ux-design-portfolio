@@ -246,25 +246,86 @@
 
     // Touch/swipe support
     var touchStartX = 0;
+    var touchStartY = 0;
     var touchEndX = 0;
     var swipeThreshold = 50;
+    var carouselTouchId = null;
+    var isCarouselSwiping = false;
 
     instagramCarousel.addEventListener(
       "touchstart",
       function (e) {
-        touchStartX = e.changedTouches[0].screenX;
+        if (!e.touches || e.touches.length === 0) return;
+        var touch = e.touches[0];
+        carouselTouchId = touch.identifier;
+        isCarouselSwiping = false;
+        touchStartX = touch.screenX;
+        touchStartY = touch.screenY;
       },
       { passive: true },
+    );
+
+    instagramCarousel.addEventListener(
+      "touchmove",
+      function (e) {
+        if (carouselTouchId === null) return;
+
+        var touch = null;
+        for (var i = 0; i < e.touches.length; i++) {
+          if (e.touches[i].identifier === carouselTouchId) {
+            touch = e.touches[i];
+            break;
+          }
+        }
+        if (!touch) return;
+
+        var deltaX = touch.screenX - touchStartX;
+        var deltaY = touch.screenY - touchStartY;
+
+        if (!isCarouselSwiping) {
+          if (Math.abs(deltaX) > 8 && Math.abs(deltaX) > Math.abs(deltaY)) {
+            isCarouselSwiping = true;
+          }
+        }
+
+        if (isCarouselSwiping && e.cancelable) {
+          e.preventDefault();
+        }
+      },
+      { passive: false },
     );
 
     instagramCarousel.addEventListener(
       "touchend",
       function (e) {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
+        if (carouselTouchId === null) return;
+
+        var touch = null;
+        for (var i = 0; i < e.changedTouches.length; i++) {
+          if (e.changedTouches[i].identifier === carouselTouchId) {
+            touch = e.changedTouches[i];
+            break;
+          }
+        }
+        if (!touch) {
+          touch = e.changedTouches[0];
+        }
+        if (!touch) return;
+
+        touchEndX = touch.screenX;
+        if (isCarouselSwiping) {
+          handleSwipe();
+        }
+        carouselTouchId = null;
+        isCarouselSwiping = false;
       },
       { passive: true },
     );
+
+    instagramCarousel.addEventListener("touchcancel", function () {
+      carouselTouchId = null;
+      isCarouselSwiping = false;
+    });
 
     function handleSwipe() {
       var swipeDistance = touchStartX - touchEndX;
@@ -477,6 +538,7 @@
     var cardStartX = 0;
     var cardStartY = 0;
     var isDragging = false;
+    var activeTouchId = null;
 
     cards.forEach(function (card) {
       // Mouse events
@@ -508,10 +570,12 @@
       card.addEventListener("touchstart", function (e) {
         // Don't start drag if clicking the active (enlarged) card
         if (card.classList.contains("active")) return;
+        if (!e.touches || e.touches.length === 0) return;
 
         isDragging = false;
         draggedCard = card;
         var touch = e.touches[0];
+        activeTouchId = touch.identifier;
         dragStartX = touch.clientX;
         dragStartY = touch.clientY;
 
@@ -607,7 +671,23 @@
       function (e) {
         if (!draggedCard) return;
 
-        var touch = e.touches[0];
+        var touch = null;
+        for (var i = 0; i < e.touches.length; i++) {
+          if (e.touches[i].identifier === activeTouchId) {
+            touch = e.touches[i];
+            break;
+          }
+        }
+        if (!touch) {
+          touch = e.touches[0];
+        }
+        if (!touch) return;
+
+        // Prevent page scroll while a card is being dragged on touch devices.
+        if (e.cancelable) {
+          e.preventDefault();
+        }
+
         var deltaX = touch.clientX - dragStartX;
         var deltaY = touch.clientY - dragStartY;
 
@@ -643,7 +723,7 @@
         // Update position in tracking array
         cardPositions[cardIndex] = { x: newX, y: newY };
       },
-      { passive: true },
+      { passive: false },
     );
 
     // Mouse up
@@ -664,11 +744,21 @@
       if (draggedCard) {
         draggedCard.style.transition = "";
         draggedCard = null;
+        activeTouchId = null;
 
         // Reset isDragging after a short delay to prevent click from firing
         setTimeout(function () {
           isDragging = false;
         }, 10);
+      }
+    });
+
+    document.addEventListener("touchcancel", function () {
+      if (draggedCard) {
+        draggedCard.style.transition = "";
+        draggedCard = null;
+        activeTouchId = null;
+        isDragging = false;
       }
     });
 
