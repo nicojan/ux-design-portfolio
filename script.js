@@ -58,29 +58,51 @@
   }
 
   function normalizePathname(pathname) {
-    var normalized = (pathname || "/").replace(/\/+$/, "");
+    var normalized = pathname || "/";
+    normalized = normalized.replace(/\/index\.html$/, "");
+    normalized = normalized.replace(/\/+$/, "");
     if (!normalized) normalized = "/";
-    if (normalized.slice(-11) === "/index.html") {
-      normalized = normalized.slice(0, -10) || "/";
-    }
     return normalized;
+  }
+
+  function getContactScrollTop() {
+    var target = document.getElementById("contact");
+    if (!target) return null;
+
+    var header = document.getElementById("site-header");
+    var headerOffset = header ? header.getBoundingClientRect().height : 0;
+    return Math.max(
+      0,
+      Math.round(
+        window.pageYOffset +
+          target.getBoundingClientRect().top -
+          headerOffset -
+          16,
+      ),
+    );
+  }
+
+  function settleContactScrollPosition() {
+    var top = getContactScrollTop();
+    if (top === null) return false;
+    // Use numeric scrollTo signature to force an immediate final position.
+    window.scrollTo(0, top);
+    return true;
   }
 
   function scrollToContactOnMobile() {
     if (window.innerWidth > 767) return false;
-    var target = document.getElementById("contact");
-    if (!target) return false;
-
-    var header = document.getElementById("site-header");
-    var headerOffset = header ? header.getBoundingClientRect().height : 0;
-    var top =
-      window.pageYOffset + target.getBoundingClientRect().top - headerOffset - 16;
+    var top = getContactScrollTop();
+    if (top === null) return false;
 
     window.scrollTo({
-      top: Math.max(0, Math.round(top)),
+      top: top,
       behavior: "smooth",
     });
 
+    // Re-apply exact final offset in case another scroll system interrupts.
+    window.setTimeout(settleContactScrollPosition, 550);
+    window.setTimeout(settleContactScrollPosition, 1200);
     return true;
   }
 
@@ -110,9 +132,9 @@
     contactLinks.forEach(function (link) {
       link.addEventListener("click", function (e) {
         if (!isCurrentPageContactLink(link)) return;
-        if (!scrollToContactOnMobile()) return;
 
         e.preventDefault();
+        if (!scrollToContactOnMobile()) return;
         if (window.history && window.history.pushState) {
           window.history.pushState(null, "", "#contact");
         } else {
