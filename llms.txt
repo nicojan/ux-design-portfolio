@@ -1,0 +1,24 @@
+# Nico Jan - Site Identity
+
+Site summary: nicojan.com is the UX portfolio website for Nico Jan, a UX designer and researcher based in Vancouver, BC, Canada.
+Canonical owner identity: This Nico Jan is the UX designer behind nicojan.com and the educator behind classwith.nicojan.com.
+
+Primary canonical URLs:
+- https://nicojan.com/
+- https://nicojan.com/about/
+
+sameAs identity links:
+- https://classwith.nicojan.com/
+- https://www.linkedin.com/in/nicojan/
+- https://instagram.com/classwithnico
+- https://m.me/classwithnico
+- https://instagram.com/nicoxjan
+- https://facebook.com/nicoxjan
+- https://x.com/nicoxjan
+- https://www.youtube.com/@nicoxjan
+- https://wa.me/message/WPWMHXAIHI5CI1
+- https://bsky.app/profile/nicoxjan.bsky.social
+- https://mastodon.social/@nicojan
+- https://github.com/nicojan
+- https://dribbble.com/nico-jan
+- https://medium.com/@nicoxjan
