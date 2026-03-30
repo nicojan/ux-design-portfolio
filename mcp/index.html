@@ -87,8 +87,8 @@
       <main id="main">
         <h1>A Guide to Nico's MCP Servers</h1>
         <p class="subtitle">
-          How I give Claude persistent memory of my brand, design system, and
-          teaching work.
+          how I give Claude persistent memory of my brand, design system, and
+          teaching work
         </p>
 
         <!-- ── What Are MCPs? ─────────────────────────────────── -->
@@ -108,15 +108,15 @@
           <li>
             A server exposes <span class="kw-tool">tools</span> (functions
             Claude can call) and returns
-            <span class="kw-data">data</span> (JSON, text, whatever you need)
+            <span class="kw-data">data</span> (JSON, text, whatever you need).
           </li>
           <li>
             Claude discovers what&rsquo;s available, picks the right tool, calls
-            it, uses the result
+            it, uses the result.
           </li>
           <li>
-            Without MCP you&rsquo;d paste your brand rules into every
-            conversation. With it, Claude just pulls what it needs on the fly
+            Without MCP, you&rsquo;d paste your brand rules into every
+            conversation. With it, Claude just pulls what it needs on the fly.
           </li>
         </ul>
 
@@ -129,19 +129,19 @@
 
         <ul>
           <li>
-            <strong>Consistency</strong> &mdash; same rules, every conversation,
+            <strong>consistency</strong> &mdash; same rules, every conversation,
             no drift
           </li>
           <li>
-            <strong>Single source of truth</strong> &mdash; change a colour hex
+            <strong>single source of truth</strong> &mdash; change a colour hex
             once; it propagates everywhere
           </li>
           <li>
-            <strong>Token efficiency</strong> &mdash; Claude grabs the slice it
+            <strong>token efficiency</strong> &mdash; Claude grabs the slice it
             needs, not your whole style guide
           </li>
           <li>
-            <strong>Version control</strong> &mdash; rules live in Git, not
+            <strong>version control</strong> &mdash; rules live in Git, not
             copy-pasted prompt fragments
           </li>
         </ul>
@@ -168,16 +168,16 @@
         </p>
 
         <ul>
-          <li>Runs via <code>npx</code> &mdash; nothing to deploy or host</li>
+          <li>runs via <code>npx</code> &mdash; nothing to deploy or host</li>
           <li>
-            Needs a
+            needs a
             <a
               href="https://github.com/southleft/figma-console-mcp?tab=readme-ov-file#-npx-setup-recommended"
               >Figma access token</a
             >
             set as an environment variable
           </li>
-          <li>Works in Claude Desktop, Claude.ai, and Claude Code</li>
+          <li>works in Claude Desktop, Claude.ai, and Claude Code</li>
         </ul>
 
         <div class="callout">
@@ -331,26 +331,26 @@
         <p>Same pattern for every server:</p>
 
         <ul>
-          <li><strong>Language</strong> &mdash; Python 3.12</li>
+          <li><strong>language</strong> &mdash; Python 3.12</li>
           <li>
-            <strong>Framework</strong> &mdash;
+            <strong>framework</strong> &mdash;
             <a href="https://gofastmcp.com">FastMCP</a> (<code>mcp</code>
             package)
           </li>
-          <li><strong>Transport</strong> &mdash; Streamable HTTP</li>
+          <li><strong>transport</strong> &mdash; Streamable HTTP</li>
           <li>
-            <strong>Data</strong> &mdash; JSON files, Git-tracked, in a
+            <strong>data</strong> &mdash; JSON files, Git-tracked, in a
             <code>/data</code> directory
           </li>
           <li>
-            <strong>Container</strong> &mdash; Docker, managed through Portainer
+            <strong>container</strong> &mdash; Docker, managed through Portainer
           </li>
           <li>
-            <strong>Hosting</strong> &mdash; NAS (always on, low power draw)
+            <strong>hosting</strong> &mdash; NAS (always on, low power draw)
           </li>
-          <li><strong>Public access</strong> &mdash; Cloudflare Tunnel</li>
+          <li><strong>public access</strong> &mdash; Cloudflare Tunnel</li>
           <li>
-            <strong>Auth</strong> &mdash; Cloudflare Access &mdash; no app-level
+            <strong>auth</strong> &mdash; Cloudflare Access &mdash; no app-level
             auth code needed
           </li>
         </ul>
@@ -410,7 +410,8 @@
           class="diagram"
           role="img"
           aria-label="Data flow: Claude to Cloudflare Tunnel to MCP Server on NAS, backed by Git-tracked JSON synced with GitHub"
->┌───────────┐  HTTPS  ┌──────────────────┐  Docker  ┌────────────┐
+        >
+┌───────────┐  HTTPS  ┌──────────────────┐  Docker  ┌────────────┐
 │ Claude.ai │───────&gt;│ Cloudflare Tunnel │────────&gt;│ MCP Server │
 │ or Claude │  MCP   │  + Access (auth)  │  local   │  on NAS    │
 │   Code    │  calls │                   │          │            │
@@ -425,7 +426,8 @@
                                                    ┌─────┴──────┐
                                                    │   GitHub   │
                                                    │   (sync)   │
-                                                   └────────────┘</div>
+                                                   └────────────┘
+        </div>
 
         <ol class="steps">
           <li>
@@ -435,11 +437,11 @@
           <li>Cloudflare Tunnel routes it to the NAS</li>
           <li>Cloudflare Access checks authorization</li>
           <li>
-            The server reads its <span class="kw-data">JSON data</span>, returns
+            the server reads its <span class="kw-data">JSON data</span>, returns
             a response
           </li>
           <li>
-            Write operations save to JSON, commit to Git, and push to GitHub
+            write operations save to JSON, commit to Git, and push to GitHub
             automatically
           </li>
         </ol>
@@ -455,13 +457,13 @@
 
         <ol>
           <li>
-            Seeds the <code>/data</code> directory from bundled defaults if
+            seeds the <code>/data</code> directory from bundled defaults if
             files are missing
           </li>
           <li>
-            Initialises a local Git repo so write operations can auto-commit
+            initialises a local Git repo so write operations can auto-commit
           </li>
-          <li>Starts the server</li>
+          <li>starts the server</li>
         </ol>
 
         <p>
@@ -573,15 +575,15 @@
 
         <ul>
           <li>
-            <strong>Always-on machine</strong> &mdash; NAS, VPS, Raspberry Pi,
+            <strong>always-on machine</strong> &mdash; NAS, VPS, Raspberry Pi,
             or just your Mac if you leave it running
           </li>
           <li>
             <strong>Docker</strong> &mdash; keeps deployments reproducible
           </li>
           <li>
-            <strong>A tunnel</strong> &mdash; Cloudflare Tunnel (free), ngrok,
-            or Tailscale Funnel for a public URL. Without one, only Claude Code
+            <strong>a tunnel</strong> &mdash; Cloudflare Tunnel (free), ngrok,
+            or Tailscale Funnel for a public URL; without one, only Claude Code
             on your local network can reach the server
           </li>
           <li>
@@ -597,7 +599,7 @@
           Steps
         </h3>
 
-        <h4>1. Start with one server</h4>
+        <h4>1. Start with one server.</h4>
 
         <p>
           Pick the single domain that eats the most time. Brand guidelines,
@@ -605,7 +607,7 @@
           re-explain. Don&rsquo;t try to build six at once.
         </p>
 
-        <h4>2. Pick a framework</h4>
+        <h4>2. Pick a framework.</h4>
 
         <ul>
           <li>
@@ -616,7 +618,7 @@
             <code>@modelcontextprotocol/sdk</code> (TypeScript) &mdash; the
             official SDK
           </li>
-          <li>Anything that can serve HTTP and return JSON works</li>
+          <li>anything that can serve HTTP and return JSON works</li>
         </ul>
 
         <h4>3. Put your knowledge in JSON</h4>
@@ -649,7 +651,7 @@
 }</code></pre>
         </div>
 
-        <h4>4. Serve slices, not the whole file</h4>
+        <h4>4. Serve slices, not the whole file.</h4>
 
         <p>
           This is the design choice that matters most.
@@ -681,7 +683,7 @@ async def get_colours(role: str | None = None) -&gt; dict:
 
         <p>Keeps token usage low. Also makes responses noticeably faster.</p>
 
-        <h4>5. Containerise and deploy</h4>
+        <h4>5. Containerise and deploy.</h4>
 
         <div class="code-block">
           <div class="code-header">
@@ -712,7 +714,7 @@ ENV PYTHONPATH=/app
 ENTRYPOINT ["./entrypoint.sh"]</code></pre>
         </div>
 
-        <h4>6. Connect to Claude</h4>
+        <h4>6. Connect to Claude.</h4>
 
         <ul>
           <li>
@@ -737,44 +739,44 @@ ENTRYPOINT ["./entrypoint.sh"]</code></pre>
 
         <ul>
           <li>
-            <span class="kw-warn">Never</span> use <code>mcp.run()</code> in
+            <span class="kw-warn">never</span> use <code>mcp.run()</code> in
             production &mdash; use <code>uvicorn.run()</code> with
             <code>streamable_http_app()</code> instead
           </li>
           <li>
-            <span class="kw-warn">Never</span> use
+            <span class="kw-warn">never</span> use
             <code>BaseHTTPMiddleware</code> with FastMCP &mdash; it corrupts the
-            MCP stream. Silently. You&rsquo;ll waste hours debugging it
+            MCP stream silently, and you&rsquo;ll waste hours debugging it
           </li>
           <li>
-            <span class="kw-rec">Always</span> disable DNS rebinding protection
+            <span class="kw-rec">always</span> disable DNS rebinding protection
             when behind a reverse proxy &mdash; FastMCP&rsquo;s
             <code>TransportSecuritySettings</code> handles this
           </li>
           <li>
-            <span class="kw-rec">Always</span> set
+            <span class="kw-rec">always</span> set
             <code>PYTHONPATH=/app</code> in your Dockerfile, or Python
             won&rsquo;t find your modules and the error message won&rsquo;t tell
             you why
           </li>
           <li>
-            <span class="kw-rec">Always</span> Git-track your
+            <span class="kw-rec">always</span> Git-track your
             <code>/data</code> directory &mdash; you get version history and a
             sync mechanism for free
           </li>
           <li>
-            <span class="kw-rec">Always</span> use
+            <span class="kw-rec">always</span> use
             <code>ensure_ascii=False</code> when writing JSON with non-ASCII
-            content. Otherwise your Chinese characters turn into
+            content, otherwise your Chinese characters turn into
             <code>\u</code> escape sequences and become unreadable in the file
           </li>
           <li>
-            <span class="kw-rec">Always</span> keep it to one server per domain
+            <span class="kw-rec">always</span> keep it to one server per domain
             &mdash; a monolith sounds easier until you need to update one thing
             without breaking everything else
           </li>
           <li>
-            <span class="kw-rec">Always</span> prefix tool names when running
+            <span class="kw-rec">always</span> prefix tool names when running
             multiple servers &mdash; <code>humanizer_get_rules</code> vs
             <code>style_get_rules</code> &mdash; or they&rsquo;ll collide and
             only one will register
@@ -872,7 +874,7 @@ ENTRYPOINT ["./entrypoint.sh"]</code></pre>
 
       Alternative frameworks if the user prefers TypeScript:
       - `@modelcontextprotocol/sdk` — official SDK
-      - Any language that serves HTTP and returns JSON works, but FastMCP has the smoothest developer experience for Python
+      - any language that serves HTTP and returns JSON works, but FastMCP has the smoothest developer experience for Python
 
       ## Project Structure
 
@@ -913,10 +915,10 @@ ENTRYPOINT ["./entrypoint.sh"]</code></pre>
 
       This is the most important phase. Get the data right and everything else follows.
 
-      - Help the user structure their domain knowledge into JSON files
-      - One file per concern (e.g., `colours.json`, `typography.json`, `tone.json`)
-      - Ask: "If Claude needed to write in your brand voice, what rules would you give it?" Then turn those answers into structured JSON
-      - Use `ensure_ascii=False` for non-ASCII content (Chinese, accented characters, etc.)
+      - help the user structure their domain knowledge into JSON files
+      - one file per concern (e.g., `colours.json`, `typography.json`, `tone.json`)
+      - ask: "If Claude needed to write in your brand voice, what rules would you give it?" then turn those answers into structured JSON
+      - use `ensure_ascii=False` for non-ASCII content (Chinese, accented characters, etc.)
 
       Example data file:
 
@@ -933,9 +935,9 @@ ENTRYPOINT ["./entrypoint.sh"]</code></pre>
 
       The most important design principle: **tools should return the minimum data Claude needs**. Never build a `get_everything` tool. Build focused tools with filter parameters.
 
-      - **Read tools** go in `src/tools/read.py` — these are the majority of tools
-      - **Write tools** go in `src/tools/updates.py` — for adding/updating data, must auto-commit to Git
-      - Every tool should accept optional filter parameters
+      - **read tools** go in `src/tools/read.py` — these are the majority of tools
+      - **write tools** go in `src/tools/updates.py` — for adding/updating data, must auto-commit to Git
+      - every tool should accept optional filter parameters
 
       Template for a read tool:
 
@@ -1137,8 +1139,8 @@ ENTRYPOINT ["./entrypoint.sh"]</code></pre>
       ### Phase 5: Connect to Claude
 
       - **Claude.ai / Desktop**: Settings → Connectors → Add custom connector. URL is the server's public endpoint (e.g., `https://your-server.example.com/mcp`)
-      - **Claude Code**: Add the server to project settings with streamable HTTP transport
-      - **Local development**: Run `python src/server.py` and connect Claude Code to `http://localhost:8080/mcp`
+      - **Claude Code**: Add the server to project settings with streamable HTTP transport.
+      - **Local development**: Run `python src/server.py` and connect Claude Code to `http://localhost:8080/mcp`.
 
       Ask the user which Claude interface they use and tailor the connection instructions.
 
@@ -1146,9 +1148,9 @@ ENTRYPOINT ["./entrypoint.sh"]</code></pre>
 
       If the user needs a public URL:
 
-      1. Set up Cloudflare Tunnel (free) pointing to the Docker container's port
-      2. Add Cloudflare Access policy to restrict who can reach the server
-      3. No app-level auth needed — Cloudflare handles it
+      1. set up Cloudflare Tunnel (free) pointing to the Docker container's port
+      2. add Cloudflare Access policy to restrict who can reach the server
+      3. no app-level auth needed — Cloudflare handles it
 
       If local-only, skip this — Claude Code can connect to `localhost` directly.
 
