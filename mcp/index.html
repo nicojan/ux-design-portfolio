@@ -1,0 +1,1139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Guide to Nico's MCP Servers</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <button
+      class="nav-toggle"
+      aria-label="Toggle navigation"
+      aria-expanded="false"
+    >
+      &#9776;
+    </button>
+    <div class="nav-overlay" aria-hidden="true"></div>
+
+    <div class="page">
+      <!-- ── Side Navigation ───────────────────────────────── -->
+      <nav class="nav" aria-label="Table of contents">
+        <div class="nav-scroll">
+          <div class="nav-title">On this page</div>
+          <ul class="nav-list" role="list">
+            <li>
+              <a class="nav-link" href="#what-are-mcps">What Are MCPs?</a>
+            </li>
+            <li>
+              <a class="nav-link" href="#figma-console">Figma Console MCP</a>
+            </li>
+            <li><a class="nav-link" href="#ecosystem">My Custom Servers</a></li>
+            <li>
+              <a class="nav-link sub" href="#server-details">What Each Does</a>
+            </li>
+            <li><a class="nav-link" href="#architecture">Architecture</a></li>
+            <li><a class="nav-link sub" href="#stack">Stack</a></li>
+            <li>
+              <a class="nav-link sub" href="#project-structure"
+                >Project Structure</a
+              >
+            </li>
+            <li><a class="nav-link sub" href="#data-flow">Data Flow</a></li>
+            <li><a class="nav-link sub" href="#data-sync">Data Sync</a></li>
+            <li><a class="nav-link" href="#day-in-the-life">In Practice</a></li>
+            <li><a class="nav-link sub" href="#as-teacher">Teaching</a></li>
+            <li><a class="nav-link sub" href="#as-designer">Design</a></li>
+            <li>
+              <a class="nav-link" href="#setup-your-own">Build Your Own</a>
+            </li>
+            <li>
+              <a class="nav-link sub" href="#what-you-need">Prerequisites</a>
+            </li>
+            <li><a class="nav-link sub" href="#step-by-step">Steps</a></li>
+            <li>
+              <a class="nav-link sub" href="#lessons-learned"
+                >Lessons Learned</a
+              >
+            </li>
+            <li>
+              <a class="nav-link" href="#further-reading">Further Reading</a>
+            </li>
+          </ul>
+        </div>
+        <div class="nav-cta">
+          <button class="cta-btn" id="download-guide">
+            <span class="material-symbols-outlined" aria-hidden="true"
+              >download</span
+            >
+            Download Guide for Claude
+          </button>
+        </div>
+      </nav>
+
+      <!-- ── Main Content ───────────────────────────────────── -->
+      <main id="main">
+        <h1>A Guide to Nico's MCP Servers</h1>
+        <p class="subtitle">
+          How I give Claude persistent memory of my brand, design system, and
+          teaching work.
+        </p>
+
+        <!-- ── What Are MCPs? ─────────────────────────────────── -->
+        <h2 id="what-are-mcps">
+          <span class="material-symbols-outlined" aria-hidden="true">hub</span>
+          What Are MCPs?
+        </h2>
+
+        <p>
+          <strong>Model Context Protocol</strong> &mdash; an open standard from
+          Anthropic. It lets Claude call <span class="kw-tool">tools</span> on
+          external servers you control and pull back
+          <span class="kw-data">structured data</span>.
+        </p>
+
+        <ul>
+          <li>
+            A server exposes <span class="kw-tool">tools</span> (functions
+            Claude can call) and returns
+            <span class="kw-data">data</span> (JSON, text, whatever you need)
+          </li>
+          <li>
+            Claude discovers what&rsquo;s available, picks the right tool, calls
+            it, uses the result
+          </li>
+          <li>
+            Without MCP you&rsquo;d paste your brand rules into every
+            conversation. With it, Claude just pulls what it needs on the fly
+          </li>
+        </ul>
+
+        <h3>
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >help_outline</span
+          >
+          Why build custom servers?
+        </h3>
+
+        <ul>
+          <li>
+            <strong>Consistency</strong> &mdash; same rules, every conversation,
+            no drift
+          </li>
+          <li>
+            <strong>Single source of truth</strong> &mdash; change a colour hex
+            once; it propagates everywhere
+          </li>
+          <li>
+            <strong>Token efficiency</strong> &mdash; Claude grabs the slice it
+            needs, not your whole style guide
+          </li>
+          <li>
+            <strong>Version control</strong> &mdash; rules live in Git, not
+            copy-pasted prompt fragments
+          </li>
+        </ul>
+
+        <hr />
+
+        <!-- ── Figma Console MCP ──────────────────────────────── -->
+        <h2 id="figma-console">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >design_services</span
+          >
+          Figma Console MCP
+        </h2>
+
+        <p>
+          Before getting into my custom servers &mdash; one off-the-shelf MCP
+          worth knowing about.
+          <a
+            href="https://github.com/southleft/figma-console-mcp?tab=readme-ov-file#-npx-setup-recommended"
+            >Figma Console MCP</a
+          >
+          connects Claude to Figma so it can read your design files, inspect
+          components, and pull tokens directly.
+        </p>
+
+        <ul>
+          <li>Runs via <code>npx</code> &mdash; nothing to deploy or host</li>
+          <li>
+            Needs a
+            <a
+              href="https://github.com/southleft/figma-console-mcp?tab=readme-ov-file#-npx-setup-recommended"
+              >Figma access token</a
+            >
+            set as an environment variable
+          </li>
+          <li>Works in Claude Desktop, Claude.ai, and Claude Code</li>
+        </ul>
+
+        <div class="callout">
+          <div class="callout-label">Quick start</div>
+          See
+          <a
+            href="https://github.com/southleft/figma-console-mcp?tab=readme-ov-file#-npx-setup-recommended"
+            >Figma Console MCP &rarr; NPX Setup</a
+          >
+          for install instructions. Takes about two minutes.
+        </div>
+
+        <hr />
+
+        <!-- ── My Custom Servers ──────────────────────────────── -->
+        <h2 id="ecosystem">
+          <span class="material-symbols-outlined" aria-hidden="true">dns</span>
+          My Custom Servers
+        </h2>
+
+        <p>
+          Six servers. Each owns one domain of knowledge, nothing more. I built
+          them for my day-to-day as a bilingual educator and freelance UI/UX
+          designer.
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Server</th>
+                <th>Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="kw-server">builder-of-mcps</span></td>
+                <td>
+                  Scaffolds new MCP servers (the &ldquo;meta&rdquo; server)
+                </td>
+              </tr>
+              <tr>
+                <td><span class="kw-server">builder-of-decks</span></td>
+                <td>Reveal.js slide templates, layouts, design rules</td>
+              </tr>
+              <tr>
+                <td><span class="kw-server">writer-for-brand</span></td>
+                <td>
+                  Linguistic style &mdash; tone, word choice, bilingual glossary
+                </td>
+              </tr>
+              <tr>
+                <td><span class="kw-server">designer-for-brand</span></td>
+                <td>
+                  Visual design system &mdash; colours, type, spacing,
+                  components
+                </td>
+              </tr>
+              <tr>
+                <td><span class="kw-server">humanizer</span></td>
+                <td>Psycholinguistic rules for human-sounding writing</td>
+              </tr>
+              <tr>
+                <td><span class="kw-server">writer-for-design</span></td>
+                <td>Client communication guide for freelance design</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="server-details">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >view_list</span
+          >
+          What Each Does
+        </h3>
+
+        <ul class="def-list">
+          <li>
+            <span class="kw-server">builder-of-mcps</span> &mdash;
+            Infrastructure config, file templates, deployment checklists,
+            lessons learned. It keeps a port registry so servers don&rsquo;t
+            collide. When I need a new server, Claude calls this one and gets a
+            fully resolved scaffold &mdash; file names, directory structure,
+            config values, the lot.
+          </li>
+
+          <li>
+            <span class="kw-server">builder-of-decks</span> &mdash; Slide
+            layouts, theme tokens, CSS classes, Chart.js chart patterns, speaker
+            notes rules, quality checklists. One
+            <code>get_deck_scaffold</code> call gives Claude a working Reveal.js
+            deck with the brand theme baked in.
+          </li>
+
+          <li>
+            <span class="kw-server">writer-for-brand</span> &mdash; English
+            writing rules, Traditional Chinese writing rules, tone calibration,
+            a bilingual glossary, word-choice guidance, formatting rules.
+            <code>get_style_for_task</code> returns only what applies to a given
+            task type, language, and audience &mdash; so Claude doesn&rsquo;t
+            burn tokens loading rules it won&rsquo;t use.
+          </li>
+
+          <li>
+            <span class="kw-server">designer-for-brand</span> &mdash; Colour
+            palette (hex/RGB/HSL + WCAG contrast ratios), typography (5 fonts,
+            11-step fluid type scale), spacing, elevation, motion, icons, 12 UI
+            components, 11 behaviour patterns, imagery direction, dark-mode
+            overrides, accessibility standards. The composite
+            <span class="kw-tool">tool</span>
+            <code>get_visual_for_task</code> pulls all of that together for a
+            given design task in a single call.
+          </li>
+
+          <li>
+            <span class="kw-server">humanizer</span> &mdash; Lexical,
+            structural, sentiment, discourse, and psycholinguistic texture
+            rules, plus content profiles and anti-patterns. The goal: AI-written
+            text that doesn&rsquo;t read like AI wrote it. Works across any
+            content type, not just brand copy.
+          </li>
+
+          <li>
+            <span class="kw-server">writer-for-design</span> &mdash;
+            Communication principles, audience-aware guidance (design-literate
+            vs. non-designer clients), context-specific rules for proposals,
+            feedback sessions, scope conversations, and the awkward ones too.
+            Includes vocabulary with plain-language equivalents and patterns to
+            avoid.
+          </li>
+        </ul>
+
+        <hr />
+
+        <!-- ── Architecture ────────────────────────────────────── -->
+        <h2 id="architecture">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >account_tree</span
+          >
+          Architecture
+        </h2>
+
+        <h3 id="stack">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >layers</span
+          >
+          Stack
+        </h3>
+
+        <p>Same pattern for every server:</p>
+
+        <ul>
+          <li><strong>Language</strong> &mdash; Python 3.12</li>
+          <li>
+            <strong>Framework</strong> &mdash;
+            <a href="https://gofastmcp.com">FastMCP</a> (<code>mcp</code>
+            package)
+          </li>
+          <li><strong>Transport</strong> &mdash; Streamable HTTP</li>
+          <li>
+            <strong>Data</strong> &mdash; JSON files, Git-tracked, in a
+            <code>/data</code> directory
+          </li>
+          <li>
+            <strong>Container</strong> &mdash; Docker, managed through Portainer
+          </li>
+          <li>
+            <strong>Hosting</strong> &mdash; NAS (always on, low power draw)
+          </li>
+          <li><strong>Public access</strong> &mdash; Cloudflare Tunnel</li>
+          <li>
+            <strong>Auth</strong> &mdash; Cloudflare Access &mdash; no app-level
+            auth code needed
+          </li>
+        </ul>
+
+        <h3 id="project-structure">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >folder_open</span
+          >
+          Project Structure
+        </h3>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>plaintext</span>
+            <button class="copy-btn" aria-label="Copy code">
+              <svg viewBox="0 0 24 24">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+              </svg>
+              Copy
+            </button>
+          </div>
+          <pre><code>mcp-[name]/
+├── CLAUDE.md              # Context file for Claude Code
+├── docs/
+│   ├── PRD.md             # Product requirements
+│   ├── DATA_SCHEMA.md     # JSON data file schemas
+│   ├── API_SPEC.md        # Tool specs
+│   └── DEPLOYMENT.md      # Deployment runbook
+├── src/
+│   ├── __init__.py
+│   ├── server.py          # FastMCP entry point
+│   ├── tools/
+│   │   ├── __init__.py
+│   │   ├── read.py        # Read-only tools
+│   │   └── updates.py     # Write tools (auto-commits to Git)
+│   └── storage/
+│       ├── __init__.py
+│       └── json_store.py  # JSON I/O + Git commit helper
+├── data/
+│   └── *.json             # Domain data
+├── Dockerfile
+├── docker-compose.yml
+├── entrypoint.sh          # Startup script — seeds data, initialises Git
+├── requirements.txt
+└── .gitignore</code></pre>
+        </div>
+
+        <h3 id="data-flow">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >swap_horiz</span
+          >
+          Data Flow
+        </h3>
+
+        <div
+          class="diagram"
+          role="img"
+          aria-label="Data flow: Claude to Cloudflare Tunnel to MCP Server on NAS, backed by Git-tracked JSON synced with GitHub"
+>┌───────────┐  HTTPS  ┌──────────────────┐  Docker  ┌────────────┐
+│ Claude.ai │───────&gt;│ Cloudflare Tunnel │────────&gt;│ MCP Server │
+│ or Claude │  MCP   │  + Access (auth)  │  local   │  on NAS    │
+│   Code    │  calls │                   │          │            │
+│           │&lt;───────│                   │&lt;────────│            │
+└───────────┘  JSON  └──────────────────┘          └─────┬──────┘
+                                                         │
+                                                   ┌─────┴──────┐
+                                                   │/data/*.json│
+                                                   │(Git-tracked)│
+                                                   └─────┬──────┘
+                                                         │
+                                                   ┌─────┴──────┐
+                                                   │   GitHub   │
+                                                   │   (sync)   │
+                                                   └────────────┘</div>
+
+        <ol class="steps">
+          <li>
+            Claude fires an MCP <span class="kw-tool">tool</span> call over
+            HTTPS
+          </li>
+          <li>Cloudflare Tunnel routes it to the NAS</li>
+          <li>Cloudflare Access checks authorization</li>
+          <li>
+            The server reads its <span class="kw-data">JSON data</span>, returns
+            a response
+          </li>
+          <li>
+            Write operations save to JSON, commit to Git, and push to GitHub
+            automatically
+          </li>
+        </ol>
+
+        <h3 id="data-sync">
+          <span class="material-symbols-outlined" aria-hidden="true">sync</span>
+          Data Sync
+        </h3>
+
+        <p>
+          Each container runs an <code>entrypoint.sh</code> script on startup:
+        </p>
+
+        <ol>
+          <li>
+            Seeds the <code>/data</code> directory from bundled defaults if
+            files are missing
+          </li>
+          <li>
+            Initialises a local Git repo so write operations can auto-commit
+          </li>
+          <li>Starts the server</li>
+        </ol>
+
+        <p>
+          For remote sync, add a <code>git pull</code> step to
+          <code>entrypoint.sh</code> that fetches from your GitHub repo before
+          starting the server. A daily scheduled container restart keeps data
+          fresh without manual intervention.
+        </p>
+
+        <hr />
+
+        <!-- ── In Practice ─────────────────────────────────────── -->
+        <h2 id="day-in-the-life">
+          <span class="material-symbols-outlined" aria-hidden="true">bolt</span>
+          In Practice
+        </h2>
+
+        <h3 id="as-teacher">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >school</span
+          >
+          Teaching
+        </h3>
+
+        <blockquote>
+          &ldquo;Create a 12-slide deck on narrative structure for Grade
+          8.&rdquo;
+        </blockquote>
+
+        <ol class="steps">
+          <li>
+            <span class="kw-server">builder-of-decks</span> &rarr;
+            <code>get_deck_scaffold</code> &mdash; a working Reveal.js deck with
+            the brand theme
+          </li>
+          <li>
+            <span class="kw-server">builder-of-decks</span> &rarr;
+            <code>suggest_layouts</code> &mdash; picks a layout for each slide
+          </li>
+          <li>
+            <span class="kw-server">designer-for-brand</span> &rarr;
+            <code>get_visual_for_task</code> &mdash; colours, fonts, spacing
+          </li>
+          <li>
+            <span class="kw-server">writer-for-brand</span> &rarr;
+            <code>get_style_for_task</code> &mdash; tone and language rules
+          </li>
+          <li>
+            <span class="kw-server">humanizer</span> &mdash; keeps the speaker
+            notes from sounding robotic
+          </li>
+        </ol>
+
+        <p>
+          What comes back is a deck that actually looks and reads like the
+          brand. Not a generic template with my logo slapped on top.
+        </p>
+
+        <h3 id="as-designer">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >brush</span
+          >
+          Design
+        </h3>
+
+        <blockquote>
+          &ldquo;Draft a project proposal email about the website
+          redesign.&rdquo;
+        </blockquote>
+
+        <ol class="steps">
+          <li>
+            <span class="kw-server">writer-for-design</span> &rarr;
+            <code>get_communication_guide</code> &mdash; proposal rules matched
+            to client literacy
+          </li>
+          <li>
+            <span class="kw-server">humanizer</span> &mdash; psycholinguistic
+            rules so it reads like a person wrote it
+          </li>
+          <li>
+            <span class="kw-server">designer-for-brand</span> &rarr;
+            <code>get_brand_foundation</code> &mdash; if the proposal references
+            the practice itself
+          </li>
+        </ol>
+
+        <p>
+          The output adjusts automatically. Non-designer client? No jargon.
+          Design-literate? Precise terminology. Same principles either way.
+        </p>
+
+        <hr />
+
+        <!-- ── Build Your Own ──────────────────────────────────── -->
+        <h2 id="setup-your-own">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >construction</span
+          >
+          Build Your Own
+        </h2>
+
+        <h3 id="what-you-need">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >task_alt</span
+          >
+          Prerequisites
+        </h3>
+
+        <ul>
+          <li>
+            <strong>Always-on machine</strong> &mdash; NAS, VPS, Raspberry Pi,
+            or just your Mac if you leave it running
+          </li>
+          <li>
+            <strong>Docker</strong> &mdash; keeps deployments reproducible
+          </li>
+          <li>
+            <strong>A tunnel</strong> &mdash; Cloudflare Tunnel (free), ngrok,
+            or Tailscale Funnel for a public URL. Without one, only Claude Code
+            on your local network can reach the server
+          </li>
+          <li>
+            <strong>Git hosting</strong> &mdash; GitHub, GitLab, whatever you
+            use
+          </li>
+        </ul>
+
+        <h3 id="step-by-step">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >rocket_launch</span
+          >
+          Steps
+        </h3>
+
+        <h4>1. Start with one server</h4>
+
+        <p>
+          Pick the single domain that eats the most time. Brand guidelines,
+          writing style, component library &mdash; whichever hurts most to
+          re-explain. Don&rsquo;t try to build six at once.
+        </p>
+
+        <h4>2. Pick a framework</h4>
+
+        <ul>
+          <li>
+            <a href="https://gofastmcp.com">FastMCP</a> (Python) &mdash; what I
+            use
+          </li>
+          <li>
+            <code>@modelcontextprotocol/sdk</code> (TypeScript) &mdash; the
+            official SDK
+          </li>
+          <li>Anything that can serve HTTP and return JSON works</li>
+        </ul>
+
+        <h4>3. Put your knowledge in JSON</h4>
+
+        <p>
+          One <code>/data</code> directory. One file per concern. This is your
+          source of truth.
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>json</span>
+            <button class="copy-btn" aria-label="Copy code">
+              <svg viewBox="0 0 24 24">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+              </svg>
+              Copy
+            </button>
+          </div>
+          <pre><code>{
+  "brand_colours": {
+    "primary": "#2D5A3D",
+    "secondary": "#8B6F47"
+  },
+  "tone": {
+    "default": "warm, direct, encouraging",
+    "formal": "respectful, precise, understated"
+  }
+}</code></pre>
+        </div>
+
+        <h4>4. Serve slices, not the whole file</h4>
+
+        <p>
+          This is the design choice that matters most.
+          <span class="kw-tool">Tools</span> should return the minimum
+          <span class="kw-data">data</span> Claude actually needs. Add filters
+          so it can ask for just the piece it wants:
+        </p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>python</span>
+            <button class="copy-btn" aria-label="Copy code">
+              <svg viewBox="0 0 24 24">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+              </svg>
+              Copy
+            </button>
+          </div>
+          <pre><code>@mcp.tool()
+async def get_colours(role: str | None = None) -&gt; dict:
+    """Get brand colours, optionally filtered by role."""
+    colours = load_json("colours.json")
+    if role:
+        return {k: v for k, v in colours.items()
+                if v.get("role") == role}
+    return colours</code></pre>
+        </div>
+
+        <p>Keeps token usage low. Also makes responses noticeably faster.</p>
+
+        <h4>5. Containerise and deploy</h4>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>dockerfile</span>
+            <button class="copy-btn" aria-label="Copy code">
+              <svg viewBox="0 0 24 24">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+              </svg>
+              Copy
+            </button>
+          </div>
+          <pre><code>FROM python:3.12-slim
+
+RUN apt-get update &amp;&amp; apt-get install -y git \
+    &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+COPY data/ ./data-defaults/
+
+ENV PYTHONPATH=/app
+ENTRYPOINT ["./entrypoint.sh"]</code></pre>
+        </div>
+
+        <h4>6. Connect to Claude</h4>
+
+        <ul>
+          <li>
+            <strong>Claude.ai / Desktop</strong> &mdash; Settings &rarr;
+            Connectors &rarr; Add custom connector with your server&rsquo;s
+            public URL
+          </li>
+          <li>
+            <strong>Claude Code</strong> &mdash; Add it to your project settings
+            with the streamable HTTP transport
+          </li>
+        </ul>
+
+        <h3 id="lessons-learned">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >lightbulb</span
+          >
+          Lessons Learned
+        </h3>
+
+        <p>Things I figured out the hard way:</p>
+
+        <ul>
+          <li>
+            <span class="kw-warn">Never</span> use <code>mcp.run()</code> in
+            production &mdash; use <code>uvicorn.run()</code> with
+            <code>streamable_http_app()</code> instead
+          </li>
+          <li>
+            <span class="kw-warn">Never</span> use
+            <code>BaseHTTPMiddleware</code> with FastMCP &mdash; it corrupts the
+            MCP stream. Silently. You&rsquo;ll waste hours debugging it
+          </li>
+          <li>
+            <span class="kw-rec">Always</span> disable DNS rebinding protection
+            when behind a reverse proxy &mdash; FastMCP&rsquo;s
+            <code>TransportSecuritySettings</code> handles this
+          </li>
+          <li>
+            <span class="kw-rec">Always</span> set
+            <code>PYTHONPATH=/app</code> in your Dockerfile, or Python
+            won&rsquo;t find your modules and the error message won&rsquo;t tell
+            you why
+          </li>
+          <li>
+            <span class="kw-rec">Always</span> Git-track your
+            <code>/data</code> directory &mdash; you get version history and a
+            sync mechanism for free
+          </li>
+          <li>
+            <span class="kw-rec">Always</span> use
+            <code>ensure_ascii=False</code> when writing JSON with non-ASCII
+            content. Otherwise your Chinese characters turn into
+            <code>\u</code> escape sequences and become unreadable in the file
+          </li>
+          <li>
+            <span class="kw-rec">Always</span> keep it to one server per domain
+            &mdash; a monolith sounds easier until you need to update one thing
+            without breaking everything else
+          </li>
+          <li>
+            <span class="kw-rec">Always</span> prefix tool names when running
+            multiple servers &mdash; <code>humanizer_get_rules</code> vs
+            <code>style_get_rules</code> &mdash; or they&rsquo;ll collide and
+            only one will register
+          </li>
+        </ul>
+
+        <hr />
+
+        <!-- ── Further Reading ─────────────────────────────────── -->
+        <h2 id="further-reading">
+          <span class="material-symbols-outlined" aria-hidden="true"
+            >menu_book</span
+          >
+          Further Reading
+        </h2>
+
+        <ul>
+          <li>
+            <a href="https://modelcontextprotocol.io"
+              >Model Context Protocol spec</a
+            >
+          </li>
+          <li><a href="https://gofastmcp.com">FastMCP docs</a></li>
+          <li>
+            <a href="https://modelcontextprotocol.io/quickstart"
+              >MCP quickstart guide</a
+            >
+          </li>
+          <li>
+            <a href="https://docs.anthropic.com/en/docs/claude-code"
+              >Claude Code docs</a
+            >
+          </li>
+          <li>
+            <a href="https://github.com/southleft/figma-console-mcp"
+              >Figma Console MCP</a
+            >
+          </li>
+        </ul>
+      </main>
+    </div>
+
+    <!-- ── Embedded Markdown for Download ─────────────────── -->
+    <script id="guide-md" type="text/plain">
+      > **HOW TO USE THIS FILE**
+      >
+      > Drag and drop this file into a Claude project (Project Knowledge) or paste
+      > it into a chat. Then tell Claude what domain you want to build an MCP server
+      > for — your brand guidelines, design system, writing style, whatever — and
+      > it will walk you through the whole process.
+
+      # Build Your Own MCP Server
+
+      You are helping the user build a custom MCP (Model Context Protocol) server. MCP is an open standard from Anthropic that lets Claude call tools on external servers and pull back structured data — giving you persistent access to domain knowledge like brand guidelines, design systems, or style rules without the user pasting context into every conversation.
+
+      This document contains everything you need: the architecture pattern, project structure, code templates, deployment steps, and hard-won lessons from a production ecosystem of six MCP servers. Use it to guide the user from idea to deployed server.
+
+      ## Your Role
+
+      Walk the user through building their MCP server step by step. Don't dump the whole process at once — work through it conversationally.
+
+      ### Before writing any code, ask these questions:
+
+      **Domain discovery** — figure out what the server should know:
+
+      1. What domain of knowledge should this server own? (e.g., brand guidelines, writing style, design tokens, component library, communication rules)
+      2. Who will consume the data — Claude.ai, Claude Code, or both?
+      3. What does the user find themselves re-explaining or re-pasting most often? That's probably the best starting point.
+      4. Is the content in one language or multilingual?
+
+      **Data structure** — figure out what the JSON files should look like:
+
+      5. Can the user share examples of the rules, guidelines, or reference material they want to encode? Even a rough bullet list works.
+      6. Are there natural categories in the data? (e.g., "colours vs. typography vs. spacing" for a design system, or "tone vs. word choice vs. formatting" for a style guide)
+      7. Will Claude need the full dataset for every task, or just slices? (Almost always slices — this matters for tool design.)
+
+      **Infrastructure** — figure out where it will run:
+
+      8. Does the user have an always-on machine? (NAS, VPS, Raspberry Pi, Mac that stays on)
+      9. Are they comfortable with Docker, or do they need guidance on containerisation?
+      10. Do they need Claude.ai access (requires a public URL via tunnel) or just Claude Code on their local network?
+
+      You don't need answers to all of these upfront. Ask the first few, then let the conversation guide which follow-ups matter.
+
+      ## Architecture Pattern
+
+      Every server in this ecosystem follows the same stack. Recommend this pattern unless the user has a strong reason to diverge:
+
+      - **Python 3.12** + FastMCP (`mcp` package) — https://gofastmcp.com
+      - **Streamable HTTP** transport (not stdio)
+      - **JSON data files** in a Git-tracked `/data` directory
+      - **Docker** container
+      - **Cloudflare Tunnel** for public access (free)
+      - **Cloudflare Access** for auth — no app-level auth code needed
+
+      Alternative frameworks if the user prefers TypeScript:
+      - `@modelcontextprotocol/sdk` — official SDK
+      - Any language that serves HTTP and returns JSON works, but FastMCP has the smoothest developer experience for Python
+
+      ## Project Structure
+
+      Generate this structure for every new server. Replace `[name]` with the server's purpose (e.g., `mcp-style-guide`, `mcp-design-tokens`):
+
+      ```
+      mcp-[name]/
+      ├── CLAUDE.md              # Context file for Claude Code sessions
+      ├── docs/
+      │   ├── PRD.md             # Product requirements
+      │   ├── DATA_SCHEMA.md     # JSON data file schemas
+      │   ├── API_SPEC.md        # Tool specs
+      │   └── DEPLOYMENT.md      # Deployment runbook
+      ├── src/
+      │   ├── __init__.py
+      │   ├── server.py          # FastMCP entry point
+      │   ├── tools/
+      │   │   ├── __init__.py
+      │   │   ├── read.py        # Read-only tools
+      │   │   └── updates.py     # Write tools (auto-commits to Git)
+      │   └── storage/
+      │       ├── __init__.py
+      │       └── json_store.py  # JSON I/O + Git commit helper
+      ├── data/
+      │   └── *.json             # Domain data files
+      ├── Dockerfile
+      ├── docker-compose.yml
+      ├── entrypoint.sh          # Startup script — seeds data, initialises Git
+      ├── requirements.txt
+      └── .gitignore
+      ```
+
+      ## Build Sequence
+
+      Guide the user through these phases in order. Confirm each phase works before moving on.
+
+      ### Phase 1: Data Design
+
+      This is the most important phase. Get the data right and everything else follows.
+
+      - Help the user structure their domain knowledge into JSON files
+      - One file per concern (e.g., `colours.json`, `typography.json`, `tone.json`)
+      - Ask: "If Claude needed to write in your brand voice, what rules would you give it?" Then turn those answers into structured JSON
+      - Use `ensure_ascii=False` for non-ASCII content (Chinese, accented characters, etc.)
+
+      Example data file:
+
+      ```json
+      {
+        "brand_colours": {
+          "primary": { "hex": "#2D5A3D", "role": "primary", "usage": "Headlines, CTAs, key UI elements" },
+          "secondary": { "hex": "#8B6F47", "role": "secondary", "usage": "Accents, supporting elements" }
+        }
+      }
+      ```
+
+      ### Phase 2: Tool Design
+
+      The most important design principle: **tools should return the minimum data Claude needs**. Never build a `get_everything` tool. Build focused tools with filter parameters.
+
+      - **Read tools** go in `src/tools/read.py` — these are the majority of tools
+      - **Write tools** go in `src/tools/updates.py` — for adding/updating data, must auto-commit to Git
+      - Every tool should accept optional filter parameters
+
+      Template for a read tool:
+
+      ```python
+      from mcp.server.fastmcp import FastMCP
+
+      @mcp.tool()
+      async def get_colours(role: str | None = None) -> dict:
+          """Get brand colours, optionally filtered by role."""
+          colours = load_json("colours.json")
+          if role:
+              return {k: v for k, v in colours.items()
+                      if v.get("role") == role}
+          return colours
+      ```
+
+      Suggest a **composite tool** (like `get_style_for_task` or `get_visual_for_task`) that assembles data from multiple JSON files for common tasks. This saves the user from making five tool calls when one will do.
+
+      ### Phase 3: Server Infrastructure
+
+      Use this `server.py` template:
+
+      ```python
+      import os
+      import uvicorn
+      from mcp.server.fastmcp import FastMCP
+      from mcp.server.fastmcp.server import Settings
+
+      HOST = os.getenv("HOST", "0.0.0.0")
+      PORT = int(os.getenv("PORT", "8080"))
+
+      mcp = FastMCP(
+          "[server-name]",
+          settings=Settings(port=PORT, host=HOST),
+      )
+
+      # Import tools so they register with the mcp instance
+      from src.tools import read, updates  # noqa: F401, E402
+
+      app = mcp.streamable_http_app()
+
+      if __name__ == "__main__":
+          uvicorn.run(app, host=HOST, port=PORT)
+      ```
+
+      Use this `json_store.py` template for the storage layer:
+
+      ```python
+      import json
+      import subprocess
+      from pathlib import Path
+
+      DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
+
+      def load_json(filename: str) -> dict:
+          path = DATA_DIR / filename
+          return json.loads(path.read_text(encoding="utf-8"))
+
+      def save_json(filename: str, data: dict, message: str) -> None:
+          path = DATA_DIR / filename
+          path.write_text(
+              json.dumps(data, indent=2, ensure_ascii=False) + "\n",
+              encoding="utf-8",
+          )
+          # Auto-commit
+          subprocess.run(["git", "add", str(path)], cwd=DATA_DIR.parent)
+          subprocess.run(["git", "commit", "-m", message], cwd=DATA_DIR.parent)
+      ```
+
+      ### Phase 4: Containerisation
+
+      Dockerfile:
+
+      ```dockerfile
+      FROM python:3.12-slim
+
+      RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+
+      WORKDIR /app
+      COPY requirements.txt .
+      RUN pip install --no-cache-dir -r requirements.txt
+
+      COPY . .
+      COPY data/ ./data-defaults/
+
+      ENV PYTHONPATH=/app
+      ENTRYPOINT ["./entrypoint.sh"]
+      ```
+
+      docker-compose.yml (adjust port and paths):
+
+      ```yaml
+      services:
+        mcp-server:
+          build: .
+          restart: unless-stopped
+          environment:
+            - PORT=8080
+            - HOST=0.0.0.0
+            - TZ=America/Vancouver
+          ports:
+            - "8080:8080"
+          volumes:
+            - ./data:/app/data
+      ```
+
+      requirements.txt:
+
+      ```
+      mcp>=1.9.0
+      uvicorn>=0.34.0
+      httpx>=0.28.0
+      pydantic>=2.11.0
+      ```
+
+      entrypoint.sh:
+
+      ```bash
+      #!/bin/bash
+      set -e
+
+      # Seed data directory from defaults if empty
+      for f in /app/data-defaults/*; do
+        base=$(basename "$f")
+        [ -f "/app/data/$base" ] || cp "$f" "/app/data/$base"
+      done
+
+      # Initialise Git in project root if needed
+      cd /app
+      if [ ! -d ".git" ]; then
+        git init
+        git config user.name "MCP Server"
+        git config user.email "mcp@localhost"
+        git add -A
+        git commit -m "Initial commit"
+      fi
+
+      exec python src/server.py
+      ```
+
+      Make sure `entrypoint.sh` is executable (`chmod +x entrypoint.sh`).
+
+      `.gitignore`:
+
+      ```
+      __pycache__/
+      *.pyc
+      .env
+      .venv/
+      *.egg-info/
+      dist/
+      ```
+
+      ### Phase 5: Connect to Claude
+
+      - **Claude.ai / Desktop**: Settings → Connectors → Add custom connector. URL is the server's public endpoint (e.g., `https://your-server.example.com/mcp`)
+      - **Claude Code**: Add the server to project settings with streamable HTTP transport
+      - **Local development**: Run `python src/server.py` and connect Claude Code to `http://localhost:8080/mcp`
+
+      Ask the user which Claude interface they use and tailor the connection instructions.
+
+      ### Phase 6: Deployment (if needed)
+
+      If the user needs a public URL:
+
+      1. Set up Cloudflare Tunnel (free) pointing to the Docker container's port
+      2. Add Cloudflare Access policy to restrict who can reach the server
+      3. No app-level auth needed — Cloudflare handles it
+
+      If local-only, skip this — Claude Code can connect to `localhost` directly.
+
+      ## Critical Rules
+
+      Follow these without exception. They come from production experience.
+
+      ### Never
+
+      - Use `mcp.run()` — use `uvicorn.run()` with `streamable_http_app()`. The `mcp.run()` method doesn't support streamable HTTP properly.
+      - Use `BaseHTTPMiddleware` with FastMCP — it silently corrupts MCP streaming. You'll get intermittent failures that are very hard to debug.
+      - Pass unsupported kwargs to `FastMCP()` — check the FastMCP docs for valid parameters.
+      - Hardcode secrets in any committed file — use environment variables.
+      - Use `--global` for git config in Docker — use repo-level config only.
+
+      ### Always
+
+      - Disable DNS rebinding protection via `TransportSecuritySettings` when running behind a reverse proxy or tunnel.
+      - Set `PYTHONPATH=/app` in the Dockerfile — without it, Python can't find modules in `src/` and the error message won't point you to the cause.
+      - Use `ensure_ascii=False` in `json.dumps()` — otherwise non-ASCII characters become `\u` escape sequences.
+      - Git-track the `/data` directory — you get version history, rollback, and a sync mechanism for free.
+      - Prefix tool names when building multiple servers (e.g., `style_get_rules` vs `design_get_colours`) to avoid name collisions.
+      - Use Pydantic `BaseModel` with `Field()` for tool input validation.
+      - Use `httpx` (async) instead of `requests` (sync) for any HTTP calls.
+      - Strip `meta` blocks from JSON responses to save tokens.
+
+      ## Naming Convention
+
+      All servers follow `mcp-[purpose]` naming (e.g., `mcp-style-guide`, `mcp-design-tokens`, `mcp-slides`). Suggest a name based on the user's domain.
+
+      ## References
+
+      - MCP spec: https://modelcontextprotocol.io
+      - FastMCP docs: https://gofastmcp.com
+      - MCP quickstart: https://modelcontextprotocol.io/quickstart
+      - Figma Console MCP (good first MCP to try): https://github.com/southleft/figma-console-mcp
+      - Claude Code docs: https://docs.anthropic.com/en/docs/claude-code
+    </script>
+
+    <script src="script.js"></script>
+  </body>
+</html>
