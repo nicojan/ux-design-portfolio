@@ -237,6 +237,32 @@ body {
   background: var(--nav-bg);
 }
 
+.nav-credit {
+  margin-top: var(--sp-2);
+  text-align: center;
+  font-size: var(--text-caption-2);
+  color: var(--text-tertiary);
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.nav-credit .material-symbols-outlined {
+  font-size: 0.95rem;
+  line-height: 1;
+  vertical-align: -0.12em;
+  color: var(--red);
+  font-variation-settings: "FILL" 1;
+}
+
+.nav-credit a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.nav-credit a:hover {
+  color: var(--blue);
+}
+
 .cta-btn {
   display: flex;
   align-items: center;

@@ -9,6 +9,18 @@ const COPY_ICON =
 const CHECK_ICON =
   '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
 
+/* ── External Tab Behavior ────────────────────────────── */
+
+document.querySelectorAll("a").forEach((link) => {
+  link.target = "_blank";
+  const relValues = new Set(
+    (link.getAttribute("rel") || "").split(/\s+/).filter(Boolean),
+  );
+  relValues.add("noopener");
+  relValues.add("noreferrer");
+  link.setAttribute("rel", Array.from(relValues).join(" "));
+});
+
 document.querySelectorAll(".copy-btn").forEach((btn) => {
   btn.addEventListener("click", async () => {
     const code = btn.closest(".code-block").querySelector("code");
