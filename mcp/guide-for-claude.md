@@ -120,15 +120,18 @@ Template for a read tool:
 
 ```python
 from mcp.server.fastmcp import FastMCP
+from src.storage.json_store import load_json
 
-@mcp.tool()
-async def get_colours(role: str | None = None) -> dict:
-    """Get brand colours, optionally filtered by role."""
-    colours = load_json("colours.json")
-    if role:
-        return {k: v for k, v in colours.items()
-                if v.get("role") == role}
-    return colours
+
+def register_read_tools(mcp: FastMCP):
+    @mcp.tool()
+    async def get_colours(role: str | None = None) -> dict:
+        """Get brand colours, optionally filtered by role."""
+        colours = load_json("colours.json")
+        if role:
+            return {k: v for k, v in colours.items()
+                    if v.get("role") == role}
+        return colours
 ```
 
 Suggest a **composite tool** (like `get_style_for_task` or `get_visual_for_task`) that assembles data from multiple JSON files for common tasks. This saves the user from making five tool calls when one will do.
@@ -141,22 +144,28 @@ Use this `server.py` template:
 import os
 import uvicorn
 from mcp.server.fastmcp import FastMCP
-from mcp.server.fastmcp.server import Settings
+from mcp.server.transport_security import TransportSecuritySettings
+
+from src.storage.json_store import init_storage
+from src.tools.read import register_read_tools
+from src.tools.updates import register_write_tools
 
 HOST = os.getenv("HOST", "0.0.0.0")
 PORT = int(os.getenv("PORT", "8080"))
 
 mcp = FastMCP(
     "[server-name]",
-    settings=Settings(port=PORT, host=HOST),
+    transport_security=TransportSecuritySettings(
+        enable_dns_rebinding_protection=False,
+    ),
 )
 
-# Import tools so they register with the mcp instance
-from src.tools import read, updates  # noqa: F401, E402
-
-app = mcp.streamable_http_app()
+init_storage()
+register_read_tools(mcp)
+register_write_tools(mcp)
 
 if __name__ == "__main__":
+    app = mcp.streamable_http_app()
     uvicorn.run(app, host=HOST, port=PORT)
 ```
 
@@ -167,11 +176,33 @@ import json
 import subprocess
 from pathlib import Path
 
-DATA_DIR = Path(__file__).resolve().parent.parent.parent / "data"
+DATA_DIR = Path("/app/data")
+
+
+def init_storage() -> None:
+    """Initialise data directory and Git repo. Call once at startup."""
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    if not (DATA_DIR / ".git").exists():
+        subprocess.run(["git", "init"], cwd=DATA_DIR, capture_output=True)
+    subprocess.run(
+        ["git", "config", "user.name", "[server-name]"],
+        cwd=DATA_DIR, capture_output=True,
+    )
+    subprocess.run(
+        ["git", "config", "user.email", "[server-name]@localhost"],
+        cwd=DATA_DIR, capture_output=True,
+    )
+    # Required when running as a mapped user in Docker
+    subprocess.run(
+        ["git", "config", "safe.directory", str(DATA_DIR)],
+        cwd=DATA_DIR, capture_output=True,
+    )
+
 
 def load_json(filename: str) -> dict:
     path = DATA_DIR / filename
     return json.loads(path.read_text(encoding="utf-8"))
+
 
 def save_json(filename: str, data: dict, message: str) -> None:
     path = DATA_DIR / filename
@@ -179,9 +210,16 @@ def save_json(filename: str, data: dict, message: str) -> None:
         json.dumps(data, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
-    # Auto-commit
-    subprocess.run(["git", "add", str(path)], cwd=DATA_DIR.parent)
-    subprocess.run(["git", "commit", "-m", message], cwd=DATA_DIR.parent)
+    subprocess.run(["git", "add", "."], cwd=DATA_DIR, capture_output=True)
+    result = subprocess.run(
+        ["git", "status", "--porcelain"],
+        cwd=DATA_DIR, capture_output=True, text=True,
+    )
+    if result.stdout.strip():
+        subprocess.run(
+            ["git", "commit", "-m", message],
+            cwd=DATA_DIR, capture_output=True,
+        )
 ```
 
 ### Phase 4: Containerisation
@@ -197,8 +235,10 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY src/ ./src/
 COPY data/ ./data-defaults/
+COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
 
 ENV PYTHONPATH=/app
 ENTRYPOINT ["./entrypoint.sh"]
@@ -214,11 +254,16 @@ services:
     environment:
       - PORT=8080
       - HOST=0.0.0.0
-      - TZ=America/Vancouver
+      - TZ=UTC
+      # Optional: enable GitHub push from write tools
+      # - GITHUB_TOKEN=${GITHUB_TOKEN}
+      # - GITHUB_REPO=your-org/mcp-server-name
     ports:
       - "8080:8080"
     volumes:
       - ./data:/app/data
+    # Uncomment for NAS — match your system's user/group IDs
+    # user: "1000:1000"
 ```
 
 requirements.txt:
@@ -236,21 +281,15 @@ entrypoint.sh:
 #!/bin/bash
 set -e
 
-# Seed data directory from defaults if empty
-for f in /app/data-defaults/*; do
+# Seed data directory from defaults if files are missing
+for f in /app/data-defaults/*.json; do
+  [ -f "$f" ] || continue
   base=$(basename "$f")
   [ -f "/app/data/$base" ] || cp "$f" "/app/data/$base"
 done
 
-# Initialise Git in project root if needed
-cd /app
-if [ ! -d ".git" ]; then
-  git init
-  git config user.name "MCP Server"
-  git config user.email "mcp@localhost"
-  git add -A
-  git commit -m "Initial commit"
-fi
+# Git initialisation is handled by init_storage() in Python —
+# it runs inside /app/data so the repo persists through the bind mount.
 
 exec python src/server.py
 ```
@@ -262,10 +301,16 @@ Make sure `entrypoint.sh` is executable (`chmod +x entrypoint.sh`).
 ```
 __pycache__/
 *.pyc
+*.pyo
 .env
 .venv/
+venv/
 *.egg-info/
 dist/
+build/
+data/.git/
+.DS_Store
+.pytest_cache/
 ```
 
 ### Phase 5: Connect to Claude
@@ -304,6 +349,8 @@ Follow these without exception. They come from production experience.
 - Set `PYTHONPATH=/app` in the Dockerfile — without it, Python can't find modules in `src/` and the error message won't point you to the cause.
 - Use `ensure_ascii=False` in `json.dumps()` — otherwise non-ASCII characters become `\u` escape sequences.
 - Git-track the `/data` directory — you get version history, rollback, and a sync mechanism for free.
+- Initialise Git inside `/data`, not in the project root — this ensures the Git history persists through the Docker bind mount.
+- Set `git config safe.directory` inside Docker — required when the container runs as a mapped user (e.g., `1000:1000`).
 - Prefix tool names when building multiple servers (e.g., `style_get_rules` vs `design_get_colours`) to avoid name collisions.
 - Use Pydantic `BaseModel` with `Field()` for tool input validation.
 - Use `httpx` (async) instead of `requests` (sync) for any HTTP calls.
