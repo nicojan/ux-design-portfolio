@@ -738,7 +738,8 @@ code:not(pre code) {
     font-size: var(--text-caption-2);
   }
   .chartjs-flow {
-    height: 16rem;
+    height: clamp(21rem, 78vw, 24rem);
+    padding: var(--sp-1);
   }
 }
 

@@ -184,14 +184,22 @@ function initDataFlowChart() {
 
       const monoFont =
         'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
+      const isCompactLayout = width < 560;
       // Use the Apple HIG type tokens already defined in CSS.
-      const titleSize = toPx("--text-subhead", 14);
-      const subSize = toPx("--text-caption-1", 12);
-      const labelSize = toPx("--text-caption-1", 12);
+      const titleSize = isCompactLayout
+        ? toPx("--text-caption-2", 11)
+        : toPx("--text-subhead", 14);
+      const subSize = isCompactLayout
+        ? toPx("--text-caption-2", 11)
+        : toPx("--text-caption-1", 12);
+      const labelSize = isCompactLayout
+        ? toPx("--text-caption-2", 11)
+        : toPx("--text-caption-1", 12);
 
       function drawArrow(start, end, options = {}) {
         const {
           label = null,
+          labelOffsetX = 0,
           labelOffsetY = -10,
           stroke = edgeColor || "#636366",
           arrowHead = stroke,
@@ -225,7 +233,7 @@ function initDataFlowChart() {
 
         if (label) {
           const mid = {
-            x: (start.x + end.x) / 2,
+            x: (start.x + end.x) / 2 + labelOffsetX,
             y: (start.y + end.y) / 2 + labelOffsetY,
           };
           ctx.font = `600 ${labelSize}px ${monoFont}`;
@@ -292,48 +300,91 @@ function initDataFlowChart() {
         ctx.restore();
       }
 
-      const nodes = {
-        claude: {
-          x: 15,
-          y: 28,
-          w: 20,
-          h: 20,
-          color: palette.blue,
-          lines: ["Claude.ai", "or Claude Code"],
-        },
-        tunnel: {
-          x: 45,
-          y: 28,
-          w: 24,
-          h: 20,
-          color: palette.purple,
-          lines: ["Cloudflare Tunnel", "+ Access (auth)"],
-        },
-        mcp: {
-          x: 75,
-          y: 28,
-          w: 20,
-          h: 20,
-          color: palette.teal,
-          lines: ["MCP Server", "on NAS"],
-        },
-        data: {
-          x: 75,
-          y: 58,
-          w: 24,
-          h: 16,
-          color: palette.green,
-          lines: ["/data/*.json", "(Git-tracked)"],
-        },
-        github: {
-          x: 75,
-          y: 81,
-          w: 20,
-          h: 12,
-          color: palette.orange,
-          lines: ["GitHub", "(sync)"],
-        },
-      };
+      const nodes = isCompactLayout
+        ? {
+            claude: {
+              x: 27,
+              y: 13,
+              w: 30,
+              h: 12,
+              color: palette.blue,
+              lines: ["Claude.ai", "or Claude Code"],
+            },
+            tunnel: {
+              x: 27,
+              y: 35,
+              w: 36,
+              h: 18,
+              color: palette.purple,
+              lines: ["Cloudflare", "Tunnel", "+ Access (auth)"],
+            },
+            mcp: {
+              x: 73,
+              y: 35,
+              w: 34,
+              h: 15,
+              color: palette.teal,
+              lines: ["MCP Server", "on NAS"],
+            },
+            data: {
+              x: 73,
+              y: 61,
+              w: 34,
+              h: 14,
+              color: palette.green,
+              lines: ["/data/*.json", "(Git-tracked)"],
+            },
+            github: {
+              x: 73,
+              y: 81,
+              w: 28,
+              h: 10,
+              color: palette.orange,
+              lines: ["GitHub", "(sync)"],
+            },
+          }
+        : {
+            claude: {
+              x: 15,
+              y: 28,
+              w: 20,
+              h: 20,
+              color: palette.blue,
+              lines: ["Claude.ai", "or Claude Code"],
+            },
+            tunnel: {
+              x: 45,
+              y: 28,
+              w: 24,
+              h: 20,
+              color: palette.purple,
+              lines: ["Cloudflare Tunnel", "+ Access (auth)"],
+            },
+            mcp: {
+              x: 75,
+              y: 28,
+              w: 20,
+              h: 20,
+              color: palette.teal,
+              lines: ["MCP Server", "on NAS"],
+            },
+            data: {
+              x: 75,
+              y: 58,
+              w: 24,
+              h: 16,
+              color: palette.green,
+              lines: ["/data/*.json", "(Git-tracked)"],
+            },
+            github: {
+              x: 75,
+              y: 81,
+              w: 20,
+              h: 12,
+              color: palette.orange,
+              lines: ["GitHub", "(sync)"],
+            },
+          };
 
       function box(node) {
         const c = px(node.x, node.y);
@@ -356,74 +407,133 @@ function initDataFlowChart() {
         data: box(nodes.data),
         github: box(nodes.github),
       };
+      const neutralStroke = withAlpha(edgeColor || "#636366", 0.88);
+      const neutralHead = withAlpha(edgeColor || "#636366", 0.95);
 
       // Draw nodes first so connector labels remain legible above node edges.
       Object.values(nodes).forEach(drawNode);
 
-      drawArrow(
-        { x: b.claude.right, y: b.claude.cy },
-        { x: b.tunnel.left, y: b.tunnel.cy },
-        {
-          label: "HTTPS / MCP calls",
-          labelOffsetY: -24,
-          stroke: withAlpha(palette.red, 0.88),
-          arrowHead: withAlpha(palette.red, 0.95),
-          labelText: palette.red,
-          labelFill: withAlpha(palette.red, 0.14),
-        },
-      );
-      drawArrow(
-        { x: b.tunnel.right, y: b.tunnel.cy },
-        { x: b.mcp.left, y: b.mcp.cy },
-        {
-          label: "Docker local",
-          labelOffsetY: -24,
-          stroke: withAlpha(palette.indigo, 0.9),
-          arrowHead: withAlpha(palette.indigo, 0.96),
-          labelText: palette.indigo,
-          labelFill: withAlpha(palette.indigo, 0.14),
-        },
-      );
-      drawArrow(
-        { x: b.mcp.left, y: b.mcp.cy + 11 },
-        { x: b.tunnel.right, y: b.tunnel.cy + 11 },
-        {
-          label: "JSON",
-          labelOffsetY: 20,
-          stroke: withAlpha(palette.mint, 0.95),
-          arrowHead: withAlpha(palette.mint, 0.98),
-          labelText: palette.mint,
-          labelFill: withAlpha(palette.mint, 0.14),
-        },
-      );
-      drawArrow(
-        { x: b.tunnel.left, y: b.tunnel.cy + 11 },
-        { x: b.claude.right, y: b.claude.cy + 11 },
-        {
-          label: "JSON",
-          labelOffsetY: 20,
-          stroke: withAlpha(palette.mint, 0.95),
-          arrowHead: withAlpha(palette.mint, 0.98),
-          labelText: palette.mint,
-          labelFill: withAlpha(palette.mint, 0.14),
-        },
-      );
-      drawArrow(
-        { x: b.mcp.cx, y: b.mcp.bottom },
-        { x: b.data.cx, y: b.data.top },
-        {
-          stroke: withAlpha(edgeColor || "#636366", 0.88),
-          arrowHead: withAlpha(edgeColor || "#636366", 0.95),
-        },
-      );
-      drawArrow(
-        { x: b.data.cx, y: b.data.bottom },
-        { x: b.github.cx, y: b.github.top },
-        {
-          stroke: withAlpha(edgeColor || "#636366", 0.88),
-          arrowHead: withAlpha(edgeColor || "#636366", 0.95),
-        },
-      );
+      if (isCompactLayout) {
+        drawArrow(
+          { x: b.claude.cx + 4, y: b.claude.bottom },
+          { x: b.tunnel.cx + 4, y: b.tunnel.top },
+          {
+            label: "HTTPS / MCP calls",
+            labelOffsetX: 56,
+            labelOffsetY: -8,
+            stroke: withAlpha(palette.red, 0.88),
+            arrowHead: withAlpha(palette.red, 0.95),
+            labelText: palette.red,
+            labelFill: withAlpha(palette.red, 0.14),
+          },
+        );
+        drawArrow(
+          { x: b.tunnel.right, y: b.tunnel.cy - 6 },
+          { x: b.mcp.left, y: b.mcp.cy - 6 },
+          {
+            label: "Docker local",
+            labelOffsetY: -17,
+            stroke: withAlpha(palette.indigo, 0.9),
+            arrowHead: withAlpha(palette.indigo, 0.96),
+            labelText: palette.indigo,
+            labelFill: withAlpha(palette.indigo, 0.14),
+          },
+        );
+        drawArrow(
+          { x: b.mcp.left, y: b.mcp.cy + 6 },
+          { x: b.tunnel.right, y: b.tunnel.cy + 6 },
+          {
+            label: "JSON",
+            labelOffsetY: 16,
+            stroke: withAlpha(palette.mint, 0.95),
+            arrowHead: withAlpha(palette.mint, 0.98),
+            labelText: palette.mint,
+            labelFill: withAlpha(palette.mint, 0.14),
+          },
+        );
+        drawArrow(
+          { x: b.tunnel.cx - 4, y: b.tunnel.top },
+          { x: b.claude.cx - 4, y: b.claude.bottom },
+          {
+            label: "JSON",
+            labelOffsetX: -56,
+            labelOffsetY: 8,
+            stroke: withAlpha(palette.mint, 0.95),
+            arrowHead: withAlpha(palette.mint, 0.98),
+            labelText: palette.mint,
+            labelFill: withAlpha(palette.mint, 0.14),
+          },
+        );
+        drawArrow(
+          { x: b.mcp.cx, y: b.mcp.bottom },
+          { x: b.data.cx, y: b.data.top },
+          { stroke: neutralStroke, arrowHead: neutralHead },
+        );
+        drawArrow(
+          { x: b.data.cx, y: b.data.bottom },
+          { x: b.github.cx, y: b.github.top },
+          { stroke: neutralStroke, arrowHead: neutralHead },
+        );
+      } else {
+        drawArrow(
+          { x: b.claude.right, y: b.claude.cy },
+          { x: b.tunnel.left, y: b.tunnel.cy },
+          {
+            label: "HTTPS / MCP calls",
+            labelOffsetY: -24,
+            stroke: withAlpha(palette.red, 0.88),
+            arrowHead: withAlpha(palette.red, 0.95),
+            labelText: palette.red,
+            labelFill: withAlpha(palette.red, 0.14),
+          },
+        );
+        drawArrow(
+          { x: b.tunnel.right, y: b.tunnel.cy },
+          { x: b.mcp.left, y: b.mcp.cy },
+          {
+            label: "Docker local",
+            labelOffsetY: -24,
+            stroke: withAlpha(palette.indigo, 0.9),
+            arrowHead: withAlpha(palette.indigo, 0.96),
+            labelText: palette.indigo,
+            labelFill: withAlpha(palette.indigo, 0.14),
+          },
+        );
+        drawArrow(
+          { x: b.mcp.left, y: b.mcp.cy + 11 },
+          { x: b.tunnel.right, y: b.tunnel.cy + 11 },
+          {
+            label: "JSON",
+            labelOffsetY: 20,
+            stroke: withAlpha(palette.mint, 0.95),
+            arrowHead: withAlpha(palette.mint, 0.98),
+            labelText: palette.mint,
+            labelFill: withAlpha(palette.mint, 0.14),
+          },
+        );
+        drawArrow(
+          { x: b.tunnel.left, y: b.tunnel.cy + 11 },
+          { x: b.claude.right, y: b.claude.cy + 11 },
+          {
+            label: "JSON",
+            labelOffsetY: 20,
+            stroke: withAlpha(palette.mint, 0.95),
+            arrowHead: withAlpha(palette.mint, 0.98),
+            labelText: palette.mint,
+            labelFill: withAlpha(palette.mint, 0.14),
+          },
+        );
+        drawArrow(
+          { x: b.mcp.cx, y: b.mcp.bottom },
+          { x: b.data.cx, y: b.data.top },
+          { stroke: neutralStroke, arrowHead: neutralHead },
+        );
+        drawArrow(
+          { x: b.data.cx, y: b.data.bottom },
+          { x: b.github.cx, y: b.github.top },
+          { stroke: neutralStroke, arrowHead: neutralHead },
+        );
+      }
     },
   };
 
