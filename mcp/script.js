@@ -23,17 +23,24 @@ document.querySelectorAll("a").forEach((link) => {
 
 document.querySelectorAll(".copy-btn").forEach((btn) => {
   btn.addEventListener("click", async () => {
-    const code = btn.closest(".code-block").querySelector("code");
+    const targetSelector = btn.getAttribute("data-copy-target");
+    const targetEl = targetSelector ? document.querySelector(targetSelector) : null;
+    const codeEl = btn.closest(".code-block")?.querySelector("code");
+    const textToCopy = targetEl?.textContent || codeEl?.textContent || "";
+    if (!textToCopy) return;
+
     try {
-      await navigator.clipboard.writeText(code.textContent);
+      await navigator.clipboard.writeText(textToCopy);
     } catch {
-      const r = document.createRange();
-      r.selectNodeContents(code);
-      const s = window.getSelection();
-      s.removeAllRanges();
-      s.addRange(r);
+      const ta = document.createElement("textarea");
+      ta.value = textToCopy;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
       document.execCommand("copy");
-      s.removeAllRanges();
+      document.body.removeChild(ta);
     }
     const orig = btn.innerHTML;
     btn.innerHTML = CHECK_ICON + " Copied!";
@@ -93,6 +100,390 @@ const obs = new IntersectionObserver(
 );
 
 sections.forEach((s) => obs.observe(s));
+
+/* ── Data Flow (Chart.js) ────────────────────────────── */
+
+let dataFlowChart = null;
+
+function drawRoundedRect(ctx, x, y, width, height, radius) {
+  const r = Math.min(radius, width / 2, height / 2);
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + width - r, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + r);
+  ctx.lineTo(x + width, y + height - r);
+  ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+  ctx.lineTo(x + r, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - r);
+  ctx.lineTo(x, y + r);
+  ctx.quadraticCurveTo(x, y, x + r, y);
+  ctx.closePath();
+}
+
+function initDataFlowChart() {
+  const wrapper = document.querySelector(".chartjs-flow");
+  const canvas = document.getElementById("data-flow-chart");
+  if (!wrapper || !canvas || typeof Chart === "undefined") return;
+
+  const flowPlugin = {
+    id: "flowDiagramRenderer",
+    afterDraw(chart) {
+      const { ctx, chartArea } = chart;
+      if (!chartArea) return;
+
+      const rootStyles = getComputedStyle(document.documentElement);
+      const nodeFill = rootStyles.getPropertyValue("--bg-secondary").trim();
+      const nodeStroke = rootStyles.getPropertyValue("--separator").trim();
+      const edgeColor = rootStyles.getPropertyValue("--text-tertiary").trim();
+      const textColor = rootStyles.getPropertyValue("--text").trim();
+      const labelBg = rootStyles.getPropertyValue("--bg").trim();
+      const palette = {
+        blue: rootStyles.getPropertyValue("--blue").trim() || "#007aff",
+        blueHover: rootStyles.getPropertyValue("--blue-hover").trim() || "#0056b3",
+        indigo: rootStyles.getPropertyValue("--indigo").trim() || "#5856d6",
+        purple: rootStyles.getPropertyValue("--purple").trim() || "#af52de",
+        teal: rootStyles.getPropertyValue("--teal").trim() || "#5ac8fa",
+        green: rootStyles.getPropertyValue("--green").trim() || "#34c759",
+        orange: rootStyles.getPropertyValue("--orange").trim() || "#ff9500",
+        red: rootStyles.getPropertyValue("--red").trim() || "#ff3b30",
+        yellow: rootStyles.getPropertyValue("--yellow").trim() || "#ffd60a",
+        mint: rootStyles.getPropertyValue("--mint").trim() || "#00c7be",
+      };
+      const rootFontSize =
+        parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      const toPx = (token, fallbackPx) => {
+        const raw = rootStyles.getPropertyValue(token).trim();
+        if (!raw) return fallbackPx;
+        if (raw.endsWith("rem")) return parseFloat(raw) * rootFontSize;
+        if (raw.endsWith("px")) return parseFloat(raw);
+        const numeric = parseFloat(raw);
+        return Number.isFinite(numeric) ? numeric : fallbackPx;
+      };
+      const withAlpha = (color, alpha) => {
+        if (!color) return `rgba(0, 0, 0, ${alpha})`;
+        if (color.startsWith("#")) {
+          let hex = color.slice(1);
+          if (hex.length === 3) hex = hex.split("").map((c) => c + c).join("");
+          if (hex.length === 6) {
+            const int = parseInt(hex, 16);
+            const r = (int >> 16) & 255;
+            const g = (int >> 8) & 255;
+            const b = int & 255;
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+          }
+        }
+        return color;
+      };
+
+      const width = chartArea.right - chartArea.left;
+      const height = chartArea.bottom - chartArea.top;
+      const px = (x, y) => ({
+        x: chartArea.left + (x / 100) * width,
+        y: chartArea.top + (y / 100) * height,
+      });
+
+      const monoFont =
+        'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
+      // Use the Apple HIG type tokens already defined in CSS.
+      const titleSize = toPx("--text-subhead", 14);
+      const subSize = toPx("--text-caption-1", 12);
+      const labelSize = toPx("--text-caption-1", 12);
+
+      function drawArrow(start, end, options = {}) {
+        const {
+          label = null,
+          labelOffsetY = -10,
+          stroke = edgeColor || "#636366",
+          arrowHead = stroke,
+          labelText = stroke,
+          labelFill = labelBg || "#ffffff",
+        } = options;
+
+        ctx.save();
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = 1.75;
+        ctx.beginPath();
+        ctx.moveTo(start.x, start.y);
+        ctx.lineTo(end.x, end.y);
+        ctx.stroke();
+
+        const angle = Math.atan2(end.y - start.y, end.x - start.x);
+        const headLen = 8;
+        ctx.fillStyle = arrowHead;
+        ctx.beginPath();
+        ctx.moveTo(end.x, end.y);
+        ctx.lineTo(
+          end.x - headLen * Math.cos(angle - Math.PI / 6),
+          end.y - headLen * Math.sin(angle - Math.PI / 6),
+        );
+        ctx.lineTo(
+          end.x - headLen * Math.cos(angle + Math.PI / 6),
+          end.y - headLen * Math.sin(angle + Math.PI / 6),
+        );
+        ctx.closePath();
+        ctx.fill();
+
+        if (label) {
+          const mid = {
+            x: (start.x + end.x) / 2,
+            y: (start.y + end.y) / 2 + labelOffsetY,
+          };
+          ctx.font = `600 ${labelSize}px ${monoFont}`;
+          const textWidth = ctx.measureText(label).width;
+          const padX = 6;
+          const padY = 3;
+          const boxW = textWidth + padX * 2;
+          const boxH = labelSize + padY * 2;
+          ctx.fillStyle = labelFill;
+          drawRoundedRect(
+            ctx,
+            mid.x - boxW / 2,
+            mid.y - boxH / 2,
+            boxW,
+            boxH,
+            4,
+          );
+          ctx.fill();
+
+          ctx.fillStyle = labelText;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillText(label, mid.x, mid.y + 0.5);
+        }
+        ctx.restore();
+      }
+
+      function drawNode(node) {
+        const c = px(node.x, node.y);
+        const boxW = (node.w / 100) * width;
+        const boxH = (node.h / 100) * height;
+        const x = c.x - boxW / 2;
+        const y = c.y - boxH / 2;
+
+        ctx.save();
+        ctx.fillStyle = withAlpha(node.color || nodeFill || "#f2f2f7", 0.12);
+        ctx.strokeStyle = withAlpha(node.color || nodeStroke || "#c6c6c8", 0.6);
+        ctx.lineWidth = 1.5;
+        drawRoundedRect(ctx, x, y, boxW, boxH, 8);
+        ctx.fill();
+        ctx.stroke();
+
+        // Subtle accent rail for stronger visual grouping by node.
+        ctx.fillStyle = withAlpha(node.color || "#007aff", 0.28);
+        drawRoundedRect(ctx, x + 1.5, y + 1.5, boxW - 3, 4, 3);
+        ctx.fill();
+
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        const lines = node.lines;
+        const lineGap = 2;
+        const linesHeight = titleSize + (lines.length - 1) * (subSize + lineGap);
+        let yCursor = c.y - linesHeight / 2 + titleSize / 2;
+
+        lines.forEach((line, index) => {
+          ctx.fillStyle = index === 0 ? node.color || textColor : textColor;
+          ctx.font =
+            index === 0
+              ? `600 ${titleSize}px ${monoFont}`
+              : `500 ${subSize}px ${monoFont}`;
+          ctx.fillText(line, c.x, yCursor);
+          yCursor += subSize + lineGap;
+        });
+        ctx.restore();
+      }
+
+      const nodes = {
+        claude: {
+          x: 15,
+          y: 28,
+          w: 20,
+          h: 20,
+          color: palette.blue,
+          lines: ["Claude.ai", "or Claude Code"],
+        },
+        tunnel: {
+          x: 45,
+          y: 28,
+          w: 24,
+          h: 20,
+          color: palette.purple,
+          lines: ["Cloudflare Tunnel", "+ Access (auth)"],
+        },
+        mcp: {
+          x: 75,
+          y: 28,
+          w: 20,
+          h: 20,
+          color: palette.teal,
+          lines: ["MCP Server", "on NAS"],
+        },
+        data: {
+          x: 75,
+          y: 58,
+          w: 24,
+          h: 16,
+          color: palette.green,
+          lines: ["/data/*.json", "(Git-tracked)"],
+        },
+        github: {
+          x: 75,
+          y: 81,
+          w: 20,
+          h: 12,
+          color: palette.orange,
+          lines: ["GitHub", "(sync)"],
+        },
+      };
+
+      function box(node) {
+        const c = px(node.x, node.y);
+        const w = (node.w / 100) * width;
+        const h = (node.h / 100) * height;
+        return {
+          cx: c.x,
+          cy: c.y,
+          left: c.x - w / 2,
+          right: c.x + w / 2,
+          top: c.y - h / 2,
+          bottom: c.y + h / 2,
+        };
+      }
+
+      const b = {
+        claude: box(nodes.claude),
+        tunnel: box(nodes.tunnel),
+        mcp: box(nodes.mcp),
+        data: box(nodes.data),
+        github: box(nodes.github),
+      };
+
+      // Draw nodes first so connector labels remain legible above node edges.
+      Object.values(nodes).forEach(drawNode);
+
+      drawArrow(
+        { x: b.claude.right, y: b.claude.cy },
+        { x: b.tunnel.left, y: b.tunnel.cy },
+        {
+          label: "HTTPS / MCP calls",
+          labelOffsetY: -24,
+          stroke: withAlpha(palette.red, 0.88),
+          arrowHead: withAlpha(palette.red, 0.95),
+          labelText: palette.red,
+          labelFill: withAlpha(palette.red, 0.14),
+        },
+      );
+      drawArrow(
+        { x: b.tunnel.right, y: b.tunnel.cy },
+        { x: b.mcp.left, y: b.mcp.cy },
+        {
+          label: "Docker local",
+          labelOffsetY: -24,
+          stroke: withAlpha(palette.indigo, 0.9),
+          arrowHead: withAlpha(palette.indigo, 0.96),
+          labelText: palette.indigo,
+          labelFill: withAlpha(palette.indigo, 0.14),
+        },
+      );
+      drawArrow(
+        { x: b.mcp.left, y: b.mcp.cy + 11 },
+        { x: b.tunnel.right, y: b.tunnel.cy + 11 },
+        {
+          label: "JSON",
+          labelOffsetY: 20,
+          stroke: withAlpha(palette.mint, 0.95),
+          arrowHead: withAlpha(palette.mint, 0.98),
+          labelText: palette.mint,
+          labelFill: withAlpha(palette.mint, 0.14),
+        },
+      );
+      drawArrow(
+        { x: b.tunnel.left, y: b.tunnel.cy + 11 },
+        { x: b.claude.right, y: b.claude.cy + 11 },
+        {
+          label: "JSON",
+          labelOffsetY: 20,
+          stroke: withAlpha(palette.mint, 0.95),
+          arrowHead: withAlpha(palette.mint, 0.98),
+          labelText: palette.mint,
+          labelFill: withAlpha(palette.mint, 0.14),
+        },
+      );
+      drawArrow(
+        { x: b.mcp.cx, y: b.mcp.bottom },
+        { x: b.data.cx, y: b.data.top },
+        {
+          stroke: withAlpha(edgeColor || "#636366", 0.88),
+          arrowHead: withAlpha(edgeColor || "#636366", 0.95),
+        },
+      );
+      drawArrow(
+        { x: b.data.cx, y: b.data.bottom },
+        { x: b.github.cx, y: b.github.top },
+        {
+          stroke: withAlpha(edgeColor || "#636366", 0.88),
+          arrowHead: withAlpha(edgeColor || "#636366", 0.95),
+        },
+      );
+    },
+  };
+
+  if (dataFlowChart) dataFlowChart.destroy();
+
+  dataFlowChart = new Chart(canvas, {
+    type: "scatter",
+    data: {
+      datasets: [
+        {
+          data: [
+            { x: 0, y: 0 },
+            { x: 100, y: 100 },
+          ],
+          pointRadius: 0,
+          borderWidth: 0,
+          showLine: false,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: {
+        duration: 450,
+      },
+      events: [],
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: false },
+      },
+      layout: {
+        padding: { top: 1, right: 1, bottom: 1, left: 1 },
+      },
+      scales: {
+        x: {
+          type: "linear",
+          min: 0,
+          max: 100,
+          display: false,
+          grid: { display: false },
+          border: { display: false },
+        },
+        y: {
+          type: "linear",
+          min: 0,
+          max: 100,
+          display: false,
+          grid: { display: false },
+          border: { display: false },
+        },
+      },
+    },
+    plugins: [flowPlugin],
+  });
+
+  wrapper.classList.add("is-chart-ready");
+}
+
+initDataFlowChart();
 
 /* ── Download Guide ───────────────────────────────────── */
 

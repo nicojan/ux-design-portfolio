@@ -616,7 +616,7 @@ code:not(pre code) {
   font-size: inherit;
 }
 
-/* ── ASCII Diagram ────────────────────────────────────── */
+/* ── Data Flow Diagram ────────────────────────────────── */
 .diagram {
   margin-bottom: var(--sp-3);
   padding: var(--sp-4);
@@ -624,9 +624,42 @@ code:not(pre code) {
   border: 1px solid var(--code-border);
   border-radius: 8px;
   overflow-x: auto;
+}
+
+.chartjs-flow {
+  position: relative;
+  height: clamp(18rem, 46vw, 26rem);
+  padding: var(--sp-2);
+  overflow: hidden;
+}
+
+.chartjs-flow canvas {
+  display: none;
+  width: 100%;
+  height: 100% !important;
+}
+
+.diagram-copy-btn {
+  position: absolute;
+  top: var(--sp-2);
+  right: var(--sp-2);
+  z-index: 2;
+}
+
+.chartjs-flow.is-chart-ready canvas {
+  display: block;
+}
+
+.diagram-fallback {
+  margin: 0;
+  white-space: pre;
   font-size: var(--text-caption-1);
   line-height: 1.45;
-  white-space: pre;
+  color: var(--text-secondary);
+}
+
+.chartjs-flow.is-chart-ready .diagram-fallback {
+  display: none;
 }
 
 /* ── Numbered Steps ───────────────────────────────────── */
@@ -701,8 +734,11 @@ code:not(pre code) {
   main {
     padding: var(--sp-12) var(--sp-4) var(--sp-8);
   }
-  .diagram {
+  .diagram-fallback {
     font-size: var(--text-caption-2);
+  }
+  .chartjs-flow {
+    height: 16rem;
   }
 }
 

@@ -407,10 +407,23 @@
         </h3>
 
         <div
-          class="diagram"
+          class="diagram chartjs-flow"
           role="img"
           aria-label="Data flow: Claude to Cloudflare Tunnel to MCP Server on NAS, backed by Git-tracked JSON synced with GitHub"
         >
+          <button
+            class="copy-btn diagram-copy-btn"
+            data-copy-target="#data-flow-fallback"
+            aria-label="Copy ASCII diagram"
+          >
+            <svg viewBox="0 0 24 24">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+            </svg>
+            Copy
+          </button>
+          <canvas id="data-flow-chart" aria-hidden="true"></canvas>
+          <pre class="diagram-fallback" id="data-flow-fallback">
 ┌───────────┐  HTTPS  ┌──────────────────┐  Docker  ┌────────────┐
 │ Claude.ai │───────&gt;│ Cloudflare Tunnel │────────&gt;│ MCP Server │
 │ or Claude │  MCP   │  + Access (auth)  │  local   │  on NAS    │
@@ -427,6 +440,7 @@
                                                    │   GitHub   │
                                                    │   (sync)   │
                                                    └────────────┘
+          </pre>
         </div>
 
         <ol class="steps">
@@ -1192,6 +1206,7 @@ ENTRYPOINT ["./entrypoint.sh"]</code></pre>
       - Claude Code docs: https://docs.anthropic.com/en/docs/claude-code
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
