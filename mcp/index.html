@@ -91,6 +91,15 @@
           teaching work
         </p>
 
+        <div class="callout">
+          <div class="callout-label">Updated 7 Apr 2025</div>
+          <ul>
+            <li>renamed servers to match actual deployments: <span class="kw-server">writer-for-human</span>, <span class="kw-server">designer-for-human</span>, <span class="kw-server">writer-for-designerer</span></li>
+            <li><span class="kw-server">builder-of-decks</span> now targets Slidev (was Reveal.js) with a custom Apple HIG theme</li>
+            <li>updated tool names and descriptions throughout to match current specs</li>
+          </ul>
+        </div>
+
         <!-- ── What Are MCPs? ─────────────────────────────────── -->
         <h2 id="what-are-mcps">
           <span class="material-symbols-outlined" aria-hidden="true">hub</span>
@@ -221,16 +230,16 @@
               </tr>
               <tr>
                 <td><span class="kw-server">builder-of-decks</span></td>
-                <td>Reveal.js slide templates, layouts, design rules</td>
+                <td>Slidev presentation toolkit with custom Apple HIG theme</td>
               </tr>
               <tr>
-                <td><span class="kw-server">writer-for-brand</span></td>
+                <td><span class="kw-server">writer-for-human</span></td>
                 <td>
                   Linguistic style &mdash; tone, word choice, bilingual glossary
                 </td>
               </tr>
               <tr>
-                <td><span class="kw-server">designer-for-brand</span></td>
+                <td><span class="kw-server">designer-for-human</span></td>
                 <td>
                   Visual design system &mdash; colours, type, spacing,
                   components
@@ -241,7 +250,7 @@
                 <td>Psycholinguistic rules for human-sounding writing</td>
               </tr>
               <tr>
-                <td><span class="kw-server">writer-for-design</span></td>
+                <td><span class="kw-server">writer-for-designer</span></td>
                 <td>Client communication guide for freelance design</td>
               </tr>
             </tbody>
@@ -266,15 +275,15 @@
           </li>
 
           <li>
-            <span class="kw-server">builder-of-decks</span> &mdash; Slide
-            layouts, theme tokens, CSS classes, Chart.js chart patterns, speaker
+            <span class="kw-server">builder-of-decks</span> &mdash; CSS
+            class reference, composition patterns, design workflow, speaker
             notes rules, quality checklists. One
-            <code>get_deck_scaffold</code> call gives Claude a working Reveal.js
+            <code>get_scaffold</code> call gives Claude a working Slidev
             deck with the brand theme baked in.
           </li>
 
           <li>
-            <span class="kw-server">writer-for-brand</span> &mdash; English
+            <span class="kw-server">writer-for-human</span> &mdash; English
             writing rules, Traditional Chinese writing rules, tone calibration,
             a bilingual glossary, word-choice guidance, formatting rules.
             <code>get_style_for_task</code> returns only what applies to a given
@@ -283,7 +292,7 @@
           </li>
 
           <li>
-            <span class="kw-server">designer-for-brand</span> &mdash; Colour
+            <span class="kw-server">designer-for-human</span> &mdash; Colour
             palette (hex/RGB/HSL + WCAG contrast ratios), typography (5 fonts,
             11-step fluid type scale), spacing, elevation, motion, icons, 12 UI
             components, 11 behaviour patterns, imagery direction, dark-mode
@@ -302,7 +311,7 @@
           </li>
 
           <li>
-            <span class="kw-server">writer-for-design</span> &mdash;
+            <span class="kw-server">writer-for-designer</span> &mdash;
             Communication principles, audience-aware guidance (design-literate
             vs. non-designer clients), context-specific rules for proposals,
             feedback sessions, scope conversations, and the awkward ones too.
@@ -510,19 +519,19 @@
         <ol class="steps">
           <li>
             <span class="kw-server">builder-of-decks</span> &rarr;
-            <code>get_deck_scaffold</code> &mdash; a working Reveal.js deck with
+            <code>get_scaffold</code> &mdash; a working Slidev deck with
             the brand theme
           </li>
           <li>
             <span class="kw-server">builder-of-decks</span> &rarr;
-            <code>suggest_layouts</code> &mdash; picks a layout for each slide
+            <code>get_compositions</code> &mdash; picks a composition pattern for each slide
           </li>
           <li>
-            <span class="kw-server">designer-for-brand</span> &rarr;
+            <span class="kw-server">designer-for-human</span> &rarr;
             <code>get_visual_for_task</code> &mdash; colours, fonts, spacing
           </li>
           <li>
-            <span class="kw-server">writer-for-brand</span> &rarr;
+            <span class="kw-server">writer-for-human</span> &rarr;
             <code>get_style_for_task</code> &mdash; tone and language rules
           </li>
           <li>
@@ -550,7 +559,7 @@
 
         <ol class="steps">
           <li>
-            <span class="kw-server">writer-for-design</span> &rarr;
+            <span class="kw-server">writer-for-designer</span> &rarr;
             <code>get_communication_guide</code> &mdash; proposal rules matched
             to client literacy
           </li>
@@ -559,7 +568,7 @@
             rules so it reads like a person wrote it
           </li>
           <li>
-            <span class="kw-server">designer-for-brand</span> &rarr;
+            <span class="kw-server">designer-for-human</span> &rarr;
             <code>get_brand_foundation</code> &mdash; if the proposal references
             the practice itself
           </li>
