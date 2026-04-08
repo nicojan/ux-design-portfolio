@@ -238,8 +238,8 @@ function initDataFlowChart() {
           };
           ctx.font = `600 ${labelSize}px ${monoFont}`;
           const textWidth = ctx.measureText(label).width;
-          const padX = 6;
-          const padY = 3;
+          const padX = isCompactLayout ? 4 : 6;
+          const padY = isCompactLayout ? 2 : 3;
           const boxW = textWidth + padX * 2;
           const boxH = labelSize + padY * 2;
           ctx.fillStyle = labelFill;
@@ -419,8 +419,8 @@ function initDataFlowChart() {
           { x: b.tunnel.cx + 4, y: b.tunnel.top },
           {
             label: "HTTPS / MCP calls",
-            labelOffsetX: 56,
-            labelOffsetY: -8,
+            labelOffsetX: 28,
+            labelOffsetY: -6,
             stroke: withAlpha(palette.red, 0.88),
             arrowHead: withAlpha(palette.red, 0.95),
             labelText: palette.red,
@@ -432,7 +432,8 @@ function initDataFlowChart() {
           { x: b.mcp.left, y: b.mcp.cy - 6 },
           {
             label: "Docker local",
-            labelOffsetY: -17,
+            labelOffsetX: 18,
+            labelOffsetY: -12,
             stroke: withAlpha(palette.indigo, 0.9),
             arrowHead: withAlpha(palette.indigo, 0.96),
             labelText: palette.indigo,
@@ -444,7 +445,7 @@ function initDataFlowChart() {
           { x: b.tunnel.right, y: b.tunnel.cy + 6 },
           {
             label: "JSON",
-            labelOffsetY: 16,
+            labelOffsetY: 14,
             stroke: withAlpha(palette.mint, 0.95),
             arrowHead: withAlpha(palette.mint, 0.98),
             labelText: palette.mint,
@@ -456,8 +457,8 @@ function initDataFlowChart() {
           { x: b.claude.cx - 4, y: b.claude.bottom },
           {
             label: "JSON",
-            labelOffsetX: -56,
-            labelOffsetY: 8,
+            labelOffsetX: -18,
+            labelOffsetY: 10,
             stroke: withAlpha(palette.mint, 0.95),
             arrowHead: withAlpha(palette.mint, 0.98),
             labelText: palette.mint,
