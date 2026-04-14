@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>wyd — Nico Jan</title>
+    <meta
+      name="description"
+      content="Case study: wyd, a transit-aware event discovery app designed for newcomers to Vancouver."
+    />
+    <meta name="author" content="Nico Jan" />
+    <meta
+      name="robots"
+      content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+    />
+    <link rel="canonical" href="https://nicojan.com/wyd" />
+    <meta property="og:site_name" content="Nico Jan" />
+    <meta property="og:url" content="https://nicojan.com/wyd" />
+    <meta property="og:title" content="wyd — Nico Jan" />
+    <meta
+      property="og:description"
+      content="Case study: transit-aware event discovery for Vancouver newcomers."
+    />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="en_CA" />
+    <meta
+      property="og:image"
+      content="https://nicojan.com/assets/website-thumbnail.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="wyd — Nico Jan" />
+    <meta
+      name="twitter:description"
+      content="Case study: transit-aware event discovery for Vancouver newcomers."
+    />
+    <meta
+      name="twitter:image"
+      content="https://nicojan.com/assets/website-thumbnail.png"
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/apple-touch-icon.png"
+    />
+    <link rel="manifest" href="/assets/site.webmanifest" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=mail"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/brands.min.css"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div data-include="partials/nav.html"></div>
+
+    <main id="main">
+      <!-- ── 1. HERO ── -->
+      <section class="cs-hero">
+        <div class="cs-hero-inner">
+          <h1 class="cs-hero-title hero-anim" style="animation-delay: 0.3s">
+            <picture>
+              <source
+                srcset="assets/wyd/logo-dark.png"
+                media="(prefers-color-scheme: dark)"
+              />
+              <img
+                src="assets/wyd/logo-white.png"
+                alt="wyd"
+                class="cs-hero-logo"
+              />
+            </picture>
+            <span class="visually-hidden">wyd</span>
+          </h1>
+          <p class="cs-hero-subtitle hero-anim" style="animation-delay: 0.45s">
+            transit-aware event discovery for Vancouver newcomers
+          </p>
+          <p class="cs-hero-meta hero-anim" style="animation-delay: 0.6s">
+            Nico Jan · UX Design · Jan–Apr 2026 · Emily Carr University
+          </p>
+        </div>
+      </section>
+
+      <!-- ── 1b. SUMMARY ── -->
+      <section class="cs-summary">
+        <div class="cs-summary-inner">
+          <div class="cs-summary-item">
+            <span class="cs-summary-label">Role</span>
+            <span class="cs-summary-value">UX Designer & Researcher</span>
+          </div>
+          <div class="cs-summary-item">
+            <span class="cs-summary-label">Timeline</span>
+            <span class="cs-summary-value">4 months (Jan–Apr 2026)</span>
+          </div>
+          <div class="cs-summary-item">
+            <span class="cs-summary-label">Methods</span>
+            <span class="cs-summary-value">User interviews, journey mapping, usability testing</span>
+          </div>
+          <div class="cs-summary-item">
+            <span class="cs-summary-label">Tools</span>
+            <span class="cs-summary-value">Figma, FigJam</span>
+          </div>
+          <div class="cs-summary-item">
+            <span class="cs-summary-label">Outcome</span>
+            <span class="cs-summary-value">4.7 / 5 decision confidence across 3 test participants</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 2. PROBLEM STATEMENT ── -->
+      <section class="cs-section">
+        <div class="cs-section-inner">
+          <h2 class="section-heading reveal">The Problem</h2>
+          <div class="cs-prose reveal-stagger">
+            <p class="reveal" style="--delay: 100ms">
+              Yuki is an international student from China studying UX design in
+              Vancouver. She likes art, music, and snowboarding. She takes the
+              bus everywhere. And every time she opens Eventbrite or Meetup to
+              find something to do on the weekend, the experience falls apart in
+              the same ways.
+            </p>
+            <p class="reveal" style="--delay: 200ms">
+              The recommendations are wrong. The categories are hard to find.
+              Events that might actually interest her are buried three pages
+              deep. And when she does find something, she has no idea how to get
+              there by transit, what to bring, or whether the event is even
+              appropriate for someone who has never tried the activity before.
+            </p>
+
+            <div class="cs-quote reveal" style="--delay: 250ms">
+              <blockquote>
+                "I need to know the traffic. How can I go to hiking? It's close
+                or far."
+              </blockquote>
+              <cite>Yuki, during user interview</cite>
+            </div>
+
+            <p class="reveal" style="--delay: 300ms">
+              She wants to try hiking. She keeps saying so. But the gap between
+              wanting to go and actually going is filled with unanswered
+              questions about gear, bus routes, and trail difficulty. So hiking
+              stays on the list. Another weekend passes.
+            </p>
+            <p class="reveal" style="--delay: 400ms">
+              The problem is not motivation. Yuki is willing to explore alone if
+              she has to. The problem is that no existing platform gives her the
+              logistical context she needs to commit. Not one of them tells her
+              which bus to take.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 3. RESEARCH ── -->
+      <section class="cs-section">
+        <div class="cs-section-inner">
+          <h2 class="section-heading reveal">Research</h2>
+
+          <h3 class="cs-subheading reveal">Approach</h3>
+          <div class="cs-prose reveal-stagger">
+            <p class="reveal">
+              I conducted a semi-structured interview with Yuki, in person,
+              about 30 minutes. The goal was to understand how she currently
+              discovers events, what breaks down in that process, and what
+              information she needs before she is willing to commit to attending
+              something.
+            </p>
+            <p class="reveal">
+              I also reviewed Eventbrite and Meetup as competitors, not through
+              a formal audit but by walking through their onboarding and search
+              flows with Yuki's constraints in mind. Neither platform surfaces
+              transit information. Neither asks newcomers what kind of
+              experience level they are comfortable with. Both bury filtering
+              behind multiple taps.
+            </p>
+          </div>
+
+          <h3 class="cs-subheading reveal">Key Findings</h3>
+          <div class="cs-prose reveal-stagger">
+            <p class="reveal">
+              <strong>Broken discovery.</strong> Yuki described opening
+              Eventbrite and being shown tech meetups and corporate networking
+              events. The things she would actually attend, sketch nights and
+              art walks and music events, required her to scroll past content
+              that was clearly not for her. "It always recommend me some new
+              activities, but it's not what I want to find."
+            </p>
+            <p class="reveal">
+              <strong>Transit as a wall.</strong> Every event listing she found
+              gave her a location name. Commercial Drive. Grouse Mountain. None
+              of them told her which bus to take, how long the ride would be, or
+              how far she would need to walk from the stop. She described having
+              to open Google Maps as a separate step every single time, and
+              often deciding not to bother.
+            </p>
+            <p class="reveal">
+              <strong>Newcomer friction.</strong> Yuki wanted to try hiking but
+              did not know what gear to bring, what trails were accessible by
+              transit, or whether a particular event expected prior experience.
+              This information gap kept her cycling through the same familiar
+              activities instead of branching out. "Maybe I need to buy some
+              tools... I don't know."
+            </p>
+          </div>
+
+          <h3 class="cs-subheading reveal">Journey Map</h3>
+          <div class="cs-prose reveal">
+            <p>
+              I mapped Yuki's current experience across five phases: Trigger,
+              Search, Scroll and Dig, Evaluate Logistics, and Decision. The
+              emotional low point lands squarely in Evaluate Logistics, which is
+              where she runs into the transit question and the information gaps
+              that prevent her from committing. This phase became the design
+              target.
+            </p>
+          </div>
+          <figure class="cs-wide reveal-scale">
+            <div class="cs-wide-scroll">
+              <img
+                src="assets/wyd/journey-map.png"
+                alt="Journey map: Trigger, Search, Scroll and Dig, Evaluate Logistics, Decision"
+                loading="lazy"
+              />
+            </div>
+            <figcaption>
+              Yuki's current experience mapped across five phases
+            </figcaption>
+          </figure>
+
+          <h3 class="cs-subheading reveal">Problem Statements</h3>
+          <div class="cs-tensions reveal-scale">
+            <div class="cs-tension">
+              <h4>She cannot get there</h4>
+              <p>
+                The listing says "Commercial Drive." Which bus? How long? Is it
+                walkable from the stop? She closes the app.
+              </p>
+            </div>
+            <div class="cs-tension">
+              <h4>She wants to go but will not</h4>
+              <p>
+                Hiking keeps coming up. She does not own the gear, does not know
+                the trails, and cannot reach them by bus. It stays on the
+                someday list.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 4. PROCESS ── -->
+      <section class="cs-section">
+        <div class="cs-section-inner">
+          <h2 class="section-heading reveal">Process</h2>
+
+          <h3 class="cs-subheading reveal">Jobs To Be Done</h3>
+          <div class="cs-prose reveal-stagger">
+            <p class="reveal">
+              "Tell it who I am." First launch. Set interests, transit mode, and
+              goals so the feed actually reflects what she cares about.
+            </p>
+            <p class="reveal">
+              "Show me what fits." Home screen. Events that are nearby,
+              relevant, and reachable by her transit mode. Less scrolling, more
+              going.
+            </p>
+            <p class="reveal">
+              "Help me commit." Event detail. Transit directions, duration, what
+              to bring. Everything she needs to say yes instead of maybe.
+            </p>
+          </div>
+
+          <h3 class="cs-subheading reveal">User Flows</h3>
+          <div class="cs-prose reveal">
+            <p>
+              I built three flows in Figma. A high-level user flow covering all
+              four tab destinations (discover, explore, saved, profile) with the
+              onboarding path for first-time users. A task flow for onboarding,
+              six screens trimmed from an original eight after consolidating the
+              newcomer check and social vibe steps. And a task flow for the core
+              discovery loop mapped to the journey map phases: trigger, search,
+              scroll and dig, evaluate logistics, decision.
+            </p>
+          </div>
+          <figure class="cs-wide reveal-scale">
+            <div class="cs-wide-scroll">
+              <img
+                src="assets/wyd/flow-user.png"
+                alt="User flow diagram showing onboarding, discover, explore, evaluate, and save paths"
+                loading="lazy"
+              />
+            </div>
+            <figcaption>
+              High-level user flow covering all four tab destinations
+            </figcaption>
+          </figure>
+
+          <h3 class="cs-subheading reveal">Brand Identity</h3>
+          <div class="cs-prose reveal-stagger">
+            <p class="reveal">
+              The brand direction is called Powder and Ink. Ink because Yuki
+              sketches. Powder because she rides. The brush-stroke wordmark
+              references the physicality of paint on paper rather than the
+              sterile feel of the apps she gave up on.
+            </p>
+            <p class="reveal">
+              The palette is built from three families: Ink (dark navy, primary
+              text and surfaces), Coral (the accent colour for actions and
+              emphasis), and Cream (warm off-white backgrounds). All brand copy
+              is lowercase. Typography follows Apple's Human Interface
+              Guidelines using SF Pro, with an 8pt spacing grid and 44pt minimum
+              touch targets.
+            </p>
+          </div>
+          <figure class="cs-wide reveal-scale">
+            <div class="cs-wide-scroll">
+              <img
+                src="assets/wyd/brand-board.png"
+                alt="wyd brand board: brush-stroke logo, ink coral cream palette, type scale, spacing grid"
+                loading="lazy"
+              />
+            </div>
+            <figcaption>Powder and Ink: brand reference board</figcaption>
+          </figure>
+
+          <h3 class="cs-subheading reveal">Design System</h3>
+          <div class="cs-prose reveal-stagger">
+            <p class="reveal">
+              The prototype uses atomic design. Twelve atoms (buttons, chips,
+              inputs, avatars, badges, toggles, progress dots, and others) nest
+              into eight molecules (search bar, transit block, event card,
+              filter chip row, and others), which compose into nine organisms
+              (full screens). One hundred and twenty-seven design tokens across
+              four collections, with 247 bindings across the component library.
+            </p>
+            <p class="reveal">
+              The transit block is the molecule that matters most. It shows bus
+              route, travel time, distance, and walk from stop in a single
+              component. It appears on event cards, the event detail screen, and
+              the save confirmation. Built once, bound to tokens, reused
+              everywhere.
+            </p>
+            <p class="reveal">
+              Three semantic modes (Light, Dark, and Wireframe) mean the same
+              component instances serve both the hi-fi prototype and the lo-fi
+              wireframes. Switching the Semantic collection to Wireframe mode
+              turns the entire prototype greyscale. One toggle.
+            </p>
+          </div>
+          <figure class="cs-wide reveal-scale">
+            <div class="cs-wide-scroll">
+              <img
+                src="assets/wyd/molecules.png"
+                alt="Molecule components: search bar, transit block, event card, filter chip row, interest card"
+                loading="lazy"
+              />
+            </div>
+            <figcaption>
+              Molecules: the transit block (centre) is the most reused component
+            </figcaption>
+          </figure>
+
+          <h3 class="cs-subheading reveal">Lo-Fi Wireframes</h3>
+          <div class="cs-prose reveal">
+            <p>
+              Sixteen screens across three flows: seven for onboarding, six for
+              the discovery and save loop, and three supporting screens for
+              saved events, profile, and notifications. Built using the
+              Wireframe mode of the design system, which meant the components
+              were structurally identical to the hi-fi but stripped of colour
+              and visual polish. These wireframes went directly into usability
+              testing.
+            </p>
+          </div>
+          <figure class="cs-wide reveal-scale">
+            <div class="cs-wide-scroll">
+              <img
+                src="assets/wyd/lofi-full.png"
+                alt="16 lo-fi wireframe screens across onboarding, discovery, and supporting flows"
+                loading="lazy"
+              />
+            </div>
+            <figcaption>
+              16 wireframe screens built in the design system's Wireframe mode
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ── 5. PRODUCT ── -->
+      <section class="cs-section">
+        <div class="cs-section-inner">
+          <h2 class="section-heading reveal">The Product</h2>
+
+          <h3 class="cs-subheading reveal">Hi-Fi Prototype</h3>
+          <div class="cs-prose reveal-stagger">
+            <p class="reveal">
+              The hi-fi prototype covers 13 screens across two flows.
+            </p>
+            <p class="reveal">
+              The onboarding flow has seven screens. Each collects one piece of
+              information: city and location, interests (from eight
+              emoji-labelled categories), transit mode (bus, skytrain, car,
+              walking), and notification preference. The copy uses the PET
+              framework: persuasion on the value prop screen, emotion on the
+              welcome and ready screens, and trust on the screens that ask for
+              location and notification access. Every screen after the welcome
+              is skippable. The final screen reads "let's see wyd this weekend"
+              and its CTA says "show me," not "get started," because the promise
+              is immediate.
+            </p>
+          </div>
+        </div>
+
+        <figure class="cs-screen-strip-wrap reveal-scale">
+          <div class="cs-screen-strip">
+            <img
+              src="assets/wyd/v2-welcome.png"
+              alt="Onboarding: welcome screen"
+              loading="lazy"
+            />
+            <img
+              src="assets/wyd/v2-valueprop.png"
+              alt="Onboarding: value proposition"
+              loading="lazy"
+            />
+            <img
+              src="assets/wyd/v2-city.png"
+              alt="Onboarding: city and location"
+              loading="lazy"
+            />
+            <img
+              src="assets/wyd/v2-interests.png"
+              alt="Onboarding: interest selection"
+              loading="lazy"
+            />
+            <img
+              src="assets/wyd/v2-transit.png"
+              alt="Onboarding: transit mode"
+              loading="lazy"
+            />
+            <img
+              src="assets/wyd/v2-notifications.png"
+              alt="Onboarding: notifications"
+              loading="lazy"
+            />
+            <img
+              src="assets/wyd/v2-ready.png"
+              alt="Onboarding: ready state"
+              loading="lazy"
+            />
+          </div>
+          <figcaption>
+            Onboarding: 7 screens, each collecting one piece of information
+          </figcaption>
+        </figure>
+
+        <div class="cs-section-inner">
+          <div class="cs-prose reveal-stagger">
+            <p class="reveal">
+              The discovery flow has six screens. The home screen shows a
+              personalized greeting, a search bar, category chips reflecting her
+              onboarding selections, and a feed of event cards with transit time
+              in the metadata row. The explore screen adds active filter chips
+              and a filter icon that opens the filter sheet. The filter sheet
+              lets her narrow by time, vibe, price, and transit mode. The event
+              detail screen is where the product earns its keep: hero image,
+              badges (solo friendly, no experience needed, free), full metadata
+              including duration, the transit block in a blue-tinted surface, a
+              map placeholder, a "what to bring" section, and organiser info
+              with external links. The save confirmation includes a calendar
+              prompt, share options (link or image), "more like this"
+              recommendations, and a small delight moment: "this is your 3rd
+              event!"
+            </p>
+            <p class="reveal">
+              The empty state gives two exit paths: clear filters, or try a new
+              search.
+            </p>
+          </div>
+        </div>
+
+        <figure class="cs-screen-strip-wrap reveal-scale">
+          <div class="cs-screen-strip">
+            <img
+              src="assets/wyd/v2-home.png"
+              alt="Home screen with personalized feed"
+              loading="lazy"
+            />
+            <img
+              src="assets/wyd/v2-explore.png"
+              alt="Explore screen with active filters"
+              loading="lazy"
+            />
+            <img
+              src="assets/wyd/v2-filter.png"
+              alt="Filter sheet: time, vibe, price, transit"
+              loading="lazy"
+            />
+            <img
+              src="assets/wyd/v2-event-detail.png"
+              alt="Event detail with transit block and what to bring"
+              loading="lazy"
+            />
+            <img
+              src="assets/wyd/v2-save.png"
+              alt="Save confirmation with calendar and share options"
+              loading="lazy"
+            />
+            <img
+              src="assets/wyd/v2-empty.png"
+              alt="Empty state with clear filters and new search options"
+              loading="lazy"
+            />
+          </div>
+          <figcaption>
+            Discovery: home, explore, filter, event detail, save, empty state
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- ── 6. TESTING ── -->
+      <section class="cs-section">
+        <div class="cs-section-inner">
+          <h2 class="section-heading reveal">Testing and Iteration</h2>
+
+          <h3 class="cs-subheading reveal">Usability Testing</h3>
+          <div class="cs-prose reveal-stagger">
+            <p class="reveal">
+              I tested the hi-fi prototype with three participants. All were
+              newcomers to Vancouver (8 months, 12 months, and 3 months), all
+              relied on public transit, and all had used at least one event
+              platform before. Sessions were one-on-one, using the think-aloud
+              protocol with the Figma prototype on a mobile device.
+            </p>
+            <p class="reveal">
+              Each participant walked through four tasks: complete onboarding,
+              find an event from the home screen, explore and filter, and
+              evaluate and save an event.
+            </p>
+          </div>
+
+          <div class="cs-metrics reveal">
+            <div>
+              <div class="cs-metric-number">4.7 / 5</div>
+              <div class="cs-metric-label">enough information to decide</div>
+            </div>
+            <div>
+              <div class="cs-metric-number">4.0 / 5</div>
+              <div class="cs-metric-label">would use again</div>
+            </div>
+            <div>
+              <div class="cs-metric-number">3.3 / 5</div>
+              <div class="cs-metric-label">ease of finding something</div>
+            </div>
+          </div>
+
+          <h3 class="cs-subheading reveal">What Worked</h3>
+          <div class="cs-prose reveal-stagger">
+            <p class="reveal">
+              The transit block was the standout. All three participants reacted
+              to it strongly. One said he normally has to check Google Maps
+              separately. Another said the transit information would be the
+              deciding factor in whether she actually committed to attending an
+              event. A third recognized his own bus route and said "it knows my
+              bus?" Route, travel time, and walk from stop was what each of
+              them pointed to first.
+            </p>
+
+            <div class="cs-quote reveal">
+              <blockquote>"It knows my bus? That's really cool."</blockquote>
+              <cite>Marco, exchange student, 3 months in Vancouver</cite>
+            </div>
+          </div>
+
+          <h3 class="cs-subheading reveal">What Did Not Work</h3>
+          <div class="cs-prose reveal-stagger">
+            <p class="reveal">
+              The filter sheet was unreachable. All three participants tried to
+              modify the filter chips by tapping them directly. When that
+              failed, two noticed the filter icon but it was not wired. The
+              third did not notice the icon at all. This was the finding that
+              mattered most: the filter system, which is one of the primary answers to
+              the discovery problem, could not be tested because nobody could
+              reach it.
+            </p>
+
+            <div class="cs-quote reveal">
+              <blockquote>"I can see there's a filter system because of these chips but I can't change them."</blockquote>
+              <cite>Priya, junior developer, 12 months in Vancouver</cite>
+            </div>
+
+            <p class="reveal">
+              Secondary actions on the save confirmation were dead. Two
+              participants tried tapping "add to calendar," "share," and the
+              "more like this" cards. Nothing responded. One described the
+              screen as "a dead end." The "maybe later" button on the
+              notifications screen also failed for two participants, forcing
+              them to tap the primary CTA instead. That undermines the trust the
+              onboarding is supposed to build.
+            </p>
+
+            <div class="cs-quote reveal">
+              <blockquote>"It feels like a dead end. I can see what I'd want to do next but I can't do it."</blockquote>
+              <cite>Marco, on the save confirmation screen</cite>
+            </div>
+            <p class="reveal">
+              Two of three participants moved through onboarding in under a
+              minute without reading the subtitle text on the value prop screen.
+              The transit-awareness promise lives in that subtitle. Most users
+              skipped it.
+            </p>
+            <p class="reveal">
+              One participant wanted to select "sports" as an interest but the
+              option did not exist. He settled on "outdoor" reluctantly. The
+              interest set was scoped to Yuki's specific profile, which is
+              defensible for the prototype, but the mismatch made him feel the
+              app was not for him.
+            </p>
+          </div>
+
+          <h3 class="cs-subheading reveal">What Changed</h3>
+          <div class="cs-prose reveal-stagger">
+            <p class="reveal">
+              The gap between "ease of finding something" (3.3 out of 5) and
+              "enough information to decide" (4.7 out of 5) confirmed the
+              design hypothesis: once someone reaches an event detail, the
+              content is strong. The challenge is the discovery layer that gets
+              them there.
+            </p>
+            <p class="reveal">
+              Four fixes went into the second version. The filter icon on the
+              explore screen was wired to open the filter sheet. The "maybe
+              later" button on notifications now advances to the next screen.
+              Secondary actions on the save confirmation respond to taps. And
+              I toned down the interactive look of the home-screen category
+              chips so they would stop implying they work as filters. Every
+              one of these was an interaction change, not a visual one, which
+              is why the screens look nearly identical in static screenshots.
+            </p>
+          </div>
+
+          <div class="cs-compare reveal-scale">
+            <figure>
+              <img
+                src="assets/wyd/lofi-home.png"
+                alt="Lo-fi home screen wireframe"
+                loading="lazy"
+              />
+              <figcaption>Lo-fi: no visible search entry point</figcaption>
+            </figure>
+            <figure>
+              <img
+                src="assets/wyd/v2-home.png"
+                alt="Hi-fi home screen with search bar, transit times, and category chips"
+                loading="lazy"
+              />
+              <figcaption>Hi-fi: search bar added to home screen</figcaption>
+            </figure>
+            <figure>
+              <img
+                src="assets/wyd/lofi-save.png"
+                alt="Lo-fi save confirmation wireframe"
+                loading="lazy"
+              />
+              <figcaption>Lo-fi: basic save confirmation only</figcaption>
+            </figure>
+            <figure>
+              <img
+                src="assets/wyd/v2-save.png"
+                alt="Hi-fi save confirmation with calendar, share, and recommendations"
+                loading="lazy"
+              />
+              <figcaption>Hi-fi: calendar, share, recommendations, delight copy</figcaption>
+            </figure>
+          </div>
+
+          <figure class="cs-wide reveal-scale">
+            <div class="cs-wide-scroll">
+              <img
+                src="assets/wyd/flow-discover.png"
+                alt="Annotated discover, save, and share task flow with usability findings marked in amber"
+                loading="lazy"
+              />
+            </div>
+            <figcaption>
+              Annotated task flow: amber callouts mark each usability finding
+              and its resolution
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ── 7. REFLECTION ── -->
+      <section class="cs-section">
+        <div class="cs-section-inner">
+          <h2 class="section-heading reveal">Reflection</h2>
+          <div class="cs-prose reveal-stagger">
+            <p class="reveal" style="--delay: 100ms">
+              Designing for one person clarified the work in ways I did not
+              expect. Every decision, from the interest categories to the
+              transit block to the copy on the onboarding screens, had a name
+              attached to it. There was no abstraction to hide behind. If the
+              design did not work for Yuki, it did not work.
+            </p>
+            <p class="reveal" style="--delay: 200ms">
+              The design system took longer to build than I anticipated, but it
+              paid off during iteration. When testing revealed that the filter
+              sheet needed to be wired, or that labels needed changing, those
+              updates cascaded through every screen that used the relevant
+              components. Without the token architecture, each change would have
+              meant touching a dozen frames by hand.
+            </p>
+            <p class="reveal" style="--delay: 300ms">
+              Usability testing surprised me in a specific way. I expected the
+              transit block to land well because it was designed around Yuki's
+              most articulated pain point. What I did not expect was the filter
+              sheet failing completely. Three out of three participants could
+              not reach it. That is not an edge case. It is a structural gap
+              that the design itself created by not giving the filter icon
+              enough visual weight. The lesson is that features only exist if
+              users can find them.
+            </p>
+            <p class="reveal" style="--delay: 400ms">
+              If I were to continue this project, three things would come next.
+              Calendar integration, because Yuki mentioned wanting to avoid
+              double-booking. Social matching, because she often goes to events
+              alone not by choice but because her friends are not interested.
+              And a real transit data layer pulling from TransLink's API,
+              because the static content in the prototype would need to become
+              dynamic for the product to actually work.
+            </p>
+            <p class="reveal" style="--delay: 500ms">
+              The audience for wyd extends beyond international students. Anyone
+              relocating to a new city, whether as a recent graduate, an
+              immigrant, or someone starting over, faces the same gap between
+              curiosity and action. The transit constraint is just the most
+              visible version of a broader problem: platforms that assume you
+              already know where you are.
+            </p>
+            <p class="reveal" style="--delay: 600ms">
+              Yuki was the first user. She will not be the last.
+            </p>
+          </div>
+
+          <div class="cs-links reveal" style="--delay: 600ms">
+            <a
+              href="https://www.figma.com/design/CkH60N1T99abA3NGDKyNjO/wyd?node-id=0-1&t=4SNAVQ87FIDzvLyM-1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View the Figma file
+              <svg fill="none" viewBox="0 0 14 14" aria-hidden="true">
+                <path
+                  d="M1 7h12M8 2l5 5-5 5"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+            <a
+              href="/assets/wyd/deck.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View the presentation
+              <svg fill="none" viewBox="0 0 14 14" aria-hidden="true">
+                <path
+                  d="M1 7h12M8 2l5 5-5 5"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT CTA -->
+      <div data-include="partials/contact-cta.html"></div>
+    </main>
+
+    <div data-include="partials/footer.html"></div>
+
+    <script src="partials/includes.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
