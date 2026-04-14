@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Blueprint — Studio Operations</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-s: #f5f5f7;
+    --bg-t: #fbfbfd;
+    --bg-e: #ffffff;
+    --tx: #1d1d1f;
+    --tx2: #6e6e73;
+    --tx3: #aeaeb2;
+    --bd: rgba(0,0,0,0.08);
+    --bds: rgba(0,0,0,0.14);
+    --acc: #007aff;
+    --red: #ff3b30;
+    --red-bg: #fff2f1;
+    --red-bd: #ffb3af;
+    --red-tx: #c42b22;
+    --amber: #ff9500;
+    --amber-bg: #fff7eb;
+    --amber-bd: #ffd699;
+    --amber-tx: #8a5200;
+    --green: #34c759;
+    --green-bg: #edfcf2;
+    --green-bd: #a0e8b8;
+    --green-tx: #1a7a34;
+    --purple:#af52de; --purple-bg:#f5eefb; --purple-bd:#d9b3ef; --purple-tx:#6b2fa0;
+    --teal:#30b0c7; --teal-bg:#e8f7fa; --teal-bd:#a0dce8; --teal-tx:#1a7a8a;
+    --coral:#ff6b47; --coral-bg:#fff0ec; --coral-bd:#ffb8a6; --coral-tx:#a03520;
+    --blue:#007aff; --blue-bg:#e8f2ff; --blue-bd:#a0c8ff; --blue-tx:#004fc4;
+    --gray-bg:#f2f2f7; --gray-bd:#d1d1d6;
+    --r-sm: 8px; --r-md: 12px; --r-lg: 16px;
+    --sh: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#000; --bg-s:#1c1c1e; --bg-t:#0d0d0d; --bg-e:#2c2c2e;
+      --tx:#f5f5f7; --tx2:#98989d; --tx3:#636366;
+      --bd:rgba(255,255,255,0.08); --bds:rgba(255,255,255,0.14);
+      --red-bg:#3a1210; --red-bd:#801a14; --red-tx:#ff8a84;
+      --amber-bg:#2a1e00; --amber-bd:#8a5200; --amber-tx:#ffc040;
+      --green-bg:#0a2a14; --green-bd:#1a7a34; --green-tx:#6ee890;
+      --purple-bg:#2a1a38; --purple-bd:#6b3a90; --purple-tx:#d9a0f0;
+      --teal-bg:#0f2a30; --teal-bd:#1a7a8a; --teal-tx:#6edce8;
+      --coral-bg:#301510; --coral-bd:#a03520; --coral-tx:#ffaa90;
+      --blue-bg:#001a38; --blue-bd:#004fc4; --blue-tx:#60b0ff;
+      --gray-bg:#2c2c2e; --gray-bd:#48484a;
+      --sh: 0 1px 3px rgba(0,0,0,0.2);
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased}
+  .page{max-width:1200px;margin:0 auto;padding:60px 40px 80px}
+  @media(max-width:768px){.page{padding:32px 16px 60px}}
+
+  /* Header */
+  .header{text-align:center;margin-bottom:48px}
+  .header-label{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);margin-bottom:12px}
+  .header h1{font-size:36px;font-weight:700;letter-spacing:-.02em;line-height:1.15;margin-bottom:16px}
+  .header p{font-size:17px;line-height:1.55;color:var(--tx2);max-width:640px;margin:0 auto}
+  @media(max-width:768px){.header h1{font-size:26px}.header p{font-size:15px}}
+
+  /* Intro cards */
+  .intro-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:48px}
+  @media(max-width:768px){.intro-row{grid-template-columns:1fr}}
+  .intro-card{background:var(--bg-s);border:1px solid var(--bd);border-radius:var(--r-lg);padding:24px}
+  .intro-card h3{font-size:15px;font-weight:600;margin-bottom:8px}
+  .intro-card p{font-size:14px;line-height:1.55;color:var(--tx2)}
+  .intro-card ul{list-style:none;margin-top:12px}
+  .intro-card li{font-size:14px;line-height:1.6;color:var(--tx2);padding-left:20px;position:relative;margin-bottom:4px}
+  .intro-card li::before{content:'';position:absolute;left:0;top:8px;width:8px;height:8px;border-radius:50%}
+  .intro-card.how-read li:nth-child(1)::before{background:var(--red)}
+  .intro-card.how-read li:nth-child(2)::before{background:var(--amber)}
+  .intro-card.how-read li:nth-child(3)::before{background:var(--green)}
+
+  /* Section */
+  .section-title{font-size:22px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px}
+  .section-sub{font-size:15px;color:var(--tx2);margin-bottom:24px;line-height:1.5}
+
+  /* Blueprint */
+  .blueprint-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:48px;padding-bottom:8px}
+  .blueprint{display:grid;grid-template-columns:140px repeat(6, 180px);gap:0;min-width:1220px}
+
+  /* Phase headers */
+  .phase-header{background:var(--bg-s);border:1px solid var(--bd);padding:14px 16px;text-align:center;position:sticky;top:0;z-index:2}
+  .phase-header:first-child{border-radius:var(--r-md) 0 0 0;background:transparent;border:none}
+  .phase-header:last-child{border-radius:0 var(--r-md) 0 0}
+  .phase-num{font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+  .phase-name{font-size:14px;font-weight:600;color:var(--tx)}
+
+  /* Lane labels */
+  .lane-label{padding:16px 12px;border-right:1px solid var(--bd);display:flex;align-items:center;gap:8px;position:sticky;left:0;z-index:1;background:var(--bg)}
+  .lane-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+  .lane-name{font-size:13px;font-weight:600;line-height:1.3}
+  .lane-role{font-size:11px;color:var(--tx3);font-weight:400}
+
+  /* Cells */
+  .cell{border:1px solid var(--bd);border-top:none;padding:12px;min-height:90px;position:relative;display:flex;flex-direction:column;gap:6px}
+  .cell:last-child{border-right:1px solid var(--bd)}
+  .lane-label{border-bottom:1px solid var(--bd)}
+
+  /* Task chips */
+  .task{font-size:12px;line-height:1.4;color:var(--tx2);padding:6px 10px;border-radius:6px;background:var(--bg-s);border:1px solid var(--bd)}
+  .task.manual{border-left:3px solid var(--amber);background:var(--amber-bg);color:var(--amber-tx)}
+  .task.bottleneck{border-left:3px solid var(--red);background:var(--red-bg);color:var(--red-tx)}
+  .task.automated{border-left:3px solid var(--green);background:var(--green-bg);color:var(--green-tx)}
+  .task.handoff{border-left:3px solid var(--acc);background:var(--blue-bg);color:var(--blue-tx)}
+
+  /* Empty cell marker */
+  .cell-empty{color:var(--tx3);font-size:11px;font-style:italic;align-self:center;margin:auto}
+
+  /* Friction overlay */
+  .friction{position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;cursor:pointer;transition:transform .15s ease;z-index:1}
+  .friction:hover{transform:scale(1.15)}
+  .friction.sev-high{background:var(--red);color:#fff}
+  .friction.sev-med{background:var(--amber);color:#fff}
+  .friction-tooltip{display:none;position:absolute;top:32px;right:0;width:220px;background:var(--bg-e);border:1px solid var(--bds);border-radius:var(--r-md);padding:14px;box-shadow:var(--sh);z-index:10;font-size:12px;line-height:1.5;color:var(--tx2)}
+  .friction-tooltip strong{display:block;color:var(--tx);font-size:13px;margin-bottom:4px}
+  .friction.active .friction-tooltip{display:block}
+
+  /* Handoff arrows (CSS-only) */
+  .handoff-indicator{font-size:11px;color:var(--acc);font-weight:600;display:flex;align-items:center;gap:4px;margin-top:auto;padding-top:4px}
+  .handoff-indicator::before{content:'→';font-size:14px}
+
+  /* Bottom row styling */
+  .blueprint .cell:nth-last-child(-n+6){border-bottom:1px solid var(--bd)}
+  .blueprint .cell:nth-last-child(6){border-radius:0 0 0 var(--r-md)}
+  .blueprint .lane-label:last-of-type{border-radius:0 0 0 0}
+
+  /* Findings section */
+  .findings{margin-top:48px}
+  .findings-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:24px}
+  @media(max-width:768px){.findings-grid{grid-template-columns:1fr}}
+  .finding{background:var(--bg-s);border:1px solid var(--bd);border-radius:var(--r-lg);padding:24px;position:relative;overflow:hidden}
+  .finding::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+  .finding.critical::before{background:var(--red)}
+  .finding.warning::before{background:var(--amber)}
+  .finding .finding-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+  .finding.critical .finding-label{color:var(--red-tx)}
+  .finding.warning .finding-label{color:var(--amber-tx)}
+  .finding h4{font-size:15px;font-weight:600;margin-bottom:6px}
+  .finding p{font-size:14px;line-height:1.55;color:var(--tx2)}
+  .finding .proposed{margin-top:10px;padding:10px 12px;border-radius:var(--r-sm);background:var(--green-bg);border:1px solid var(--green-bd);font-size:13px;line-height:1.5;color:var(--green-tx)}
+
+  /* Next steps */
+  .next-steps{margin-top:56px;background:var(--bg-s);border:1px solid var(--bd);border-radius:var(--r-lg);padding:32px}
+  .next-steps h2{font-size:22px;font-weight:700;margin-bottom:20px;text-align:center}
+  .steps-list{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  @media(max-width:768px){.steps-list{grid-template-columns:1fr}}
+  .step{text-align:center;padding:16px}
+  .step-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--acc);color:#fff;font-size:15px;font-weight:600;margin-bottom:10px}
+  .step h4{font-size:14px;font-weight:600;margin-bottom:4px}
+  .step p{font-size:13px;color:var(--tx2);line-height:1.5}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-label">Service Blueprint</div>
+    <h1>Studio Operations — Current State</h1>
+    <p>A map of how work actually flows between departments today. Red markers indicate bottlenecks. Amber markers indicate manual friction. Use this as a template when documenting your own processes with staff.</p>
+  </div>
+
+  <div class="intro-row">
+    <div class="intro-card how-read">
+      <h3>How to read this blueprint</h3>
+      <p>Each row is a department. Each column is a phase of the student lifecycle. Tasks are colour-coded by type:</p>
+      <ul>
+        <li><strong style="color:var(--red-tx)">Red border</strong> — bottleneck that blocks other work</li>
+        <li><strong style="color:var(--amber-tx)">Amber border</strong> — manual task that could be automated</li>
+        <li><strong style="color:var(--green-tx)">Green border</strong> — proposed automation solution</li>
+      </ul>
+    </div>
+    <div class="intro-card">
+      <h3>What staff should document</h3>
+      <p>For each task in your department, capture:</p>
+      <ul style="list-style:disc;padding-left:32px;margin-top:8px">
+        <li style="padding-left:4px;margin-bottom:4px;font-size:14px;color:var(--tx2)">What triggers this task?</li>
+        <li style="padding-left:4px;margin-bottom:4px;font-size:14px;color:var(--tx2)">What information do you need to start?</li>
+        <li style="padding-left:4px;margin-bottom:4px;font-size:14px;color:var(--tx2)">Who do you pass the result to?</li>
+        <li style="padding-left:4px;margin-bottom:4px;font-size:14px;color:var(--tx2)">What slows you down or blocks you?</li>
+        <li style="padding-left:4px;font-size:14px;color:var(--tx2)">How long does it typically take?</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-title">Process Blueprint</h2>
+  <p class="section-sub">Scroll horizontally to see all phases. Click the numbered markers to see friction details and proposed solutions.</p>
+
+  <div class="blueprint-wrap">
+    <div class="blueprint">
+
+      <!-- Phase headers -->
+      <div class="phase-header"></div>
+      <div class="phase-header"><div class="phase-num">Phase 1</div><div class="phase-name">Inquiry &amp; Acquisition</div></div>
+      <div class="phase-header"><div class="phase-num">Phase 2</div><div class="phase-name">Enrollment &amp; Payment</div></div>
+      <div class="phase-header"><div class="phase-num">Phase 3</div><div class="phase-name">Onboarding</div></div>
+      <div class="phase-header"><div class="phase-num">Phase 4</div><div class="phase-name">Programme Delivery</div></div>
+      <div class="phase-header"><div class="phase-num">Phase 5</div><div class="phase-name">Content &amp; Marketing</div></div>
+      <div class="phase-header"><div class="phase-num">Phase 6</div><div class="phase-name">Recurring Operations</div></div>
+
+      <!-- ROW: Student (external) -->
+      <div class="lane-label"><div class="lane-dot" style="background:var(--gray-bd)"></div><div><div class="lane-name">Student</div><div class="lane-role">External</div></div></div>
+      <div class="cell">
+        <div class="task">Discovers studio via social media or referral</div>
+        <div class="task">Sends inquiry message</div>
+      </div>
+      <div class="cell">
+        <div class="task">Fills enrollment form</div>
+        <div class="task">Receives invoice</div>
+        <div class="task">Makes payment</div>
+      </div>
+      <div class="cell">
+        <div class="task">Receives welcome materials</div>
+        <div class="task">Accesses LMS on Lark</div>
+      </div>
+      <div class="cell">
+        <div class="task">Attends sessions</div>
+        <div class="task">Submits work</div>
+      </div>
+      <div class="cell">
+        <div class="task">Work featured in studio content</div>
+        <div class="cell-empty">(Passive)</div>
+      </div>
+      <div class="cell">
+        <div class="task">Receives recurring invoices</div>
+        <div class="task">Continues programme</div>
+      </div>
+
+      <!-- ROW: Director -->
+      <div class="lane-label"><div class="lane-dot" style="background:var(--purple)"></div><div><div class="lane-name">Director</div><div class="lane-role">Operations</div></div></div>
+      <div class="cell">
+        <div class="task bottleneck">Reviews every inquiry personally</div>
+        <div class="task bottleneck">Provides programme details from memory</div>
+        <div class="friction sev-high" onclick="toggleF(this)">1
+          <div class="friction-tooltip"><strong>Bottleneck: Director handles all inquiries</strong>Every new inquiry requires the director's attention because programme details and pricing aren't documented. Staff can't answer without asking him first.<div class="proposed">Solution: SOP knowledge base + Lark Bot answers common questions automatically.</div></div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="task bottleneck">Approves each enrollment</div>
+        <div class="handoff-indicator">To Finance</div>
+      </div>
+      <div class="cell">
+        <div class="task manual">Reviews onboarding materials</div>
+        <div class="task bottleneck">Briefs education team verbally</div>
+        <div class="friction sev-high" onclick="toggleF(this)">3
+          <div class="friction-tooltip"><strong>Bottleneck: Verbal briefings</strong>Onboarding information is communicated in person or via ad-hoc messages. Context is lost, details are forgotten, and new staff can't reference past decisions.<div class="proposed">Solution: Standardized onboarding checklist in Lark Base, auto-populated from enrollment data.</div></div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="task bottleneck">Answers all staff questions about procedures</div>
+        <div class="task manual">Manually reviews progress reports</div>
+        <div class="friction sev-high" onclick="toggleF(this)">5
+          <div class="friction-tooltip"><strong>Bottleneck: Director is the knowledge base</strong>Staff come to the director for every procedural question. He can't hold all the information in his head. This is the single biggest operational bottleneck.<div class="proposed">Solution: SOPs documented in Lark Wiki, queryable via Lark Bot + Ollama RAG. Staff ask the bot instead.</div></div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="task bottleneck">Decides what content to produce</div>
+        <div class="task manual">Reviews all content before posting</div>
+      </div>
+      <div class="cell">
+        <div class="task bottleneck">Oversees all recurring operations</div>
+        <div class="task manual">Manually checks OKR progress</div>
+        <div class="friction sev-high" onclick="toggleF(this)">8
+          <div class="friction-tooltip"><strong>Bottleneck: No automated reporting</strong>The director manually cross-references Lark Bases, OKRs, and spreadsheets to understand studio performance. This takes hours weekly.<div class="proposed">Solution: Claude scheduled task generates daily briefing by reading all Bases via MCP. Delivered to director's dashboard.</div></div>
+        </div>
+      </div>
+
+      <!-- ROW: Education -->
+      <div class="lane-label"><div class="lane-dot" style="background:var(--teal)"></div><div><div class="lane-name">Education</div><div class="lane-role">Annie + Director</div></div></div>
+      <div class="cell">
+        <div class="cell-empty">Not involved</div>
+      </div>
+      <div class="cell">
+        <div class="task manual">Receives enrollment info from director</div>
+        <div class="task">Assigns student to programme</div>
+        <div class="handoff-indicator">From Director</div>
+      </div>
+      <div class="cell">
+        <div class="task">Sets up student in Lark LMS</div>
+        <div class="task manual">Creates schedule manually</div>
+        <div class="friction sev-med" onclick="toggleF(this)">4
+          <div class="friction-tooltip"><strong>Friction: Manual schedule creation</strong>Each student's schedule is created manually in Lark. No template or automation to generate schedules from programme type.<div class="proposed">Solution: Lark Base automation generates schedule from programme template when enrollment status changes.</div></div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="task">Delivers sessions</div>
+        <div class="task">Tracks student progress in Lark</div>
+        <div class="task manual">Writes progress reports manually</div>
+      </div>
+      <div class="cell">
+        <div class="task handoff">Provides student work to marketing</div>
+        <div class="handoff-indicator">To Marketing</div>
+        <div class="friction sev-med" onclick="toggleF(this)">6
+          <div class="friction-tooltip"><strong>Friction: Ad-hoc content handoff</strong>Education shares student work with marketing through messages or shared folders with no consistent format or schedule. Marketing often doesn't know what's available.<div class="proposed">Solution: "Content Source" table in Lark Base. Education tags student work as available. Marketing dashboard surfaces it automatically.</div></div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="task">Updates programme materials</div>
+        <div class="task manual">Reports to director verbally</div>
+      </div>
+
+      <!-- ROW: Marketing -->
+      <div class="lane-label"><div class="lane-dot" style="background:var(--coral)"></div><div><div class="lane-name">Marketing</div><div class="lane-role">Emily + Marina</div></div></div>
+      <div class="cell">
+        <div class="task">Runs social media campaigns</div>
+        <div class="task">Manages studio's online presence</div>
+      </div>
+      <div class="cell">
+        <div class="cell-empty">Not directly involved</div>
+      </div>
+      <div class="cell">
+        <div class="cell-empty">Not directly involved</div>
+      </div>
+      <div class="cell">
+        <div class="cell-empty">Not directly involved</div>
+      </div>
+      <div class="cell">
+        <div class="task manual">Creates content from student work</div>
+        <div class="task manual">Adapts content per platform manually</div>
+        <div class="task manual">Uploads analytics after posting</div>
+        <div class="friction sev-med" onclick="toggleF(this)">7
+          <div class="friction-tooltip"><strong>Friction: Analytics collected but unused</strong>Emily uploads post statistics into Lark, but nobody analyses them or uses them to guide future content decisions. The data sits idle.<div class="proposed">Solution: Claude reads analytics via MCP, generates performance report + content recommendations weekly. Delivered to marketing dashboard.</div></div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="task manual">Plans next content calendar</div>
+        <div class="task bottleneck">Waits for director's content decisions</div>
+      </div>
+
+      <!-- ROW: Finance -->
+      <div class="lane-label"><div class="lane-dot" style="background:var(--blue)"></div><div><div class="lane-name">Finance</div><div class="lane-role">Kelly + Annie</div></div></div>
+      <div class="cell">
+        <div class="cell-empty">Not involved</div>
+      </div>
+      <div class="cell">
+        <div class="task manual">Generates invoice manually</div>
+        <div class="task manual">Sends invoice to student</div>
+        <div class="task manual">Manually checks if student has paid</div>
+        <div class="friction sev-high" onclick="toggleF(this)">2
+          <div class="friction-tooltip"><strong>Bottleneck: Manual payment checking</strong>Someone must manually log into the payment system, check each student's status, update the Lark Base, then notify the education team. This happens for every single student, every billing cycle.<div class="proposed">Solution: Cron script polls payment API hourly. Auto-updates Lark Base. Dashboard alerts finance only for exceptions.</div></div>
+        </div>
+      </div>
+      <div class="cell">
+        <div class="task handoff">Notifies education that student has paid</div>
+        <div class="handoff-indicator">To Education</div>
+      </div>
+      <div class="cell">
+        <div class="cell-empty">Not directly involved</div>
+      </div>
+      <div class="cell">
+        <div class="cell-empty">Not directly involved</div>
+      </div>
+      <div class="cell">
+        <div class="task manual">Generates recurring invoices manually</div>
+        <div class="task manual">Chases overdue payments manually</div>
+        <div class="task manual">Reports financials to director verbally</div>
+        <div class="friction sev-med" onclick="toggleF(this)">9
+          <div class="friction-tooltip"><strong>Friction: Recurring invoices are manual</strong>Every month, the same invoices are regenerated by hand. Overdue follow-ups require manually cross-referencing dates and amounts.<div class="proposed">Solution: Cron auto-generates recurring invoices. Claude drafts overdue reminders. Finance approves on dashboard.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Findings -->
+  <div class="findings">
+    <h2 class="section-title">Key Findings</h2>
+    <p class="section-sub">Nine friction points identified across six process phases. Four are critical bottlenecks centred on the director.</p>
+
+    <div class="findings-grid">
+      <div class="finding critical">
+        <div class="finding-label">Critical — Structural</div>
+        <h4>Director is the single point of failure</h4>
+        <p>Four of nine friction points (1, 3, 5, 8) exist because operational knowledge, decision authority, and status visibility are concentrated in one person. When the director is unavailable, operations stall.</p>
+      </div>
+      <div class="finding critical">
+        <div class="finding-label">Critical — Operational</div>
+        <h4>Manual payment processing</h4>
+        <p>The invoice-to-payment-to-onboarding chain (friction point 2) requires three manual handoffs across two departments. Each handoff introduces delay and error risk. This is the most impactful automation target.</p>
+      </div>
+      <div class="finding warning">
+        <div class="finding-label">Warning — Waste</div>
+        <h4>Data collected but not used</h4>
+        <p>Social media analytics (friction point 7) are uploaded into Lark but never analysed. Student progress data exists but isn't cross-referenced with OKRs. The studio has the data — it just doesn't flow to the right people.</p>
+      </div>
+      <div class="finding warning">
+        <div class="finding-label">Warning — Scaling Risk</div>
+        <h4>No standard operating procedures</h4>
+        <p>Every procedure lives in the director's memory (friction point 5). New staff can't onboard effectively. The studio cannot scale, add services, or survive the director's absence without documented processes.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Next steps -->
+  <div class="next-steps">
+    <h2>Recommended Next Steps</h2>
+    <div class="steps-list">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Staff workshops</h4>
+        <p>Each department documents their tasks using the prompts above. Capture the real workflow, not the ideal one.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Validate this map</h4>
+        <p>Walk through each phase with the team. Correct inaccuracies, add missing tasks, confirm friction points.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Prioritise automations</h4>
+        <p>Rank friction points by impact and effort. Payment processing and SOP documentation are the quickest wins.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>Build Phase 1</h4>
+        <p>Set up Mac Mini, connect Lark MCP, automate the payment flow, and deploy the first staff dashboard.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleF(el) {
+  const wasActive = el.classList.contains('active');
+  document.querySelectorAll('.friction').forEach(f => f.classList.remove('active'));
+  if (!wasActive) el.classList.add('active');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.friction')) {
+    document.querySelectorAll('.friction').forEach(f => f.classList.remove('active'));
+  }
+});
+</script>
+</body>
+</html>

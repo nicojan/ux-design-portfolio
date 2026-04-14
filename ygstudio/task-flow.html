@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Flow — Studio Communications Map</title>
+<style>
+  :root {
+    --bg:#fff;--bg-s:#f5f5f7;--bg-e:#fff;--tx:#1d1d1f;--tx2:#6e6e73;--tx3:#aeaeb2;
+    --bd:rgba(0,0,0,.08);--bds:rgba(0,0,0,.14);--acc:#007aff;
+    --red:#ff3b30;--red-bg:#fff2f1;--amber:#ff9500;--green:#34c759;--green-bg:#edfcf2;
+    --purple:#af52de;--purple-bg:#f5eefb;--purple-light:#d9b3ef;
+    --teal:#30b0c7;--teal-bg:#e8f7fa;
+    --coral:#ff6b47;--coral-bg:#fff0ec;
+    --blue:#007aff;--blue-bg:#e8f2ff;
+    --gray-bg:#f2f2f7;--gray-bd:#d1d1d6;
+  }
+  @media(prefers-color-scheme:dark){:root{
+    --bg:#000;--bg-s:#1c1c1e;--bg-e:#2c2c2e;--tx:#f5f5f7;--tx2:#98989d;--tx3:#636366;
+    --bd:rgba(255,255,255,.08);--bds:rgba(255,255,255,.14);
+    --red-bg:#3a1210;--green-bg:#0a2a14;
+    --purple-bg:#2a1a38;--purple-light:#6b3a90;
+    --teal-bg:#0f2a30;--coral-bg:#301510;--blue-bg:#001a38;
+    --gray-bg:#2c2c2e;--gray-bd:#48484a;
+  }}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','SF Pro Text','Helvetica Neue',sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased}
+  .page{max-width:1080px;margin:0 auto;padding:60px 40px 80px}
+  @media(max-width:768px){.page{padding:32px 16px 60px}}
+
+  .header{text-align:center;margin-bottom:40px}
+  .header-label{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--acc);margin-bottom:12px}
+  .header h1{font-size:36px;font-weight:700;letter-spacing:-.02em;line-height:1.15;margin-bottom:16px}
+  .header p{font-size:17px;line-height:1.55;color:var(--tx2);max-width:600px;margin:0 auto}
+  @media(max-width:768px){.header h1{font-size:26px}.header p{font-size:15px}}
+
+  /* Toggle */
+  .toggle-wrap{display:flex;justify-content:center;gap:0;margin-bottom:12px}
+  .toggle-btn{padding:10px 28px;font:600 15px/-apple-system,sans-serif;border:1px solid var(--bds);background:var(--bg-e);color:var(--tx2);cursor:pointer;transition:all .2s;-webkit-user-select:none;user-select:none}
+  .toggle-btn:first-child{border-radius:980px 0 0 980px}
+  .toggle-btn:last-child{border-radius:0 980px 980px 0;border-left:none}
+  .toggle-btn.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+  .toggle-btn:first-child.active+.toggle-btn{border-left-color:var(--acc)}
+
+  /* Stats bar */
+  .stats{display:flex;justify-content:center;gap:40px;margin-bottom:24px;transition:opacity .3s}
+  .stat{text-align:center}
+  .stat-val{font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1}
+  .stat-label{font-size:12px;color:var(--tx3);margin-top:4px;font-weight:500}
+  .stat-val.red{color:var(--red)}
+  .stat-val.green{color:var(--green)}
+
+  /* Graph container */
+  .graph-wrap{background:var(--bg-s);border:1px solid var(--bd);border-radius:20px;padding:16px;position:relative;overflow:hidden}
+  .graph-wrap svg{display:block;width:100%}
+  .graph-wrap svg text{font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text',sans-serif}
+
+  /* Edge detail panel */
+  .detail{background:var(--bg-e);border:1px solid var(--bds);border-radius:12px;padding:18px 20px;margin-top:16px;min-height:60px;transition:opacity .2s}
+  .detail h3{font-size:15px;font-weight:600;margin-bottom:6px}
+  .detail p{font-size:14px;line-height:1.55;color:var(--tx2)}
+  .detail .tag{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;margin-right:4px}
+  .detail .tag.friction{background:var(--red-bg);color:var(--red)}
+  .detail .tag.automated{background:var(--green-bg);color:var(--green)}
+
+  /* Legend */
+  .legend{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+  .legend-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--tx2)}
+  .legend-swatch{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+  .legend-line{width:24px;height:3px;border-radius:2px;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-label">Communications Map</div>
+    <h1>Who talks to whom — and why</h1>
+    <p>A network view of how information flows between staff. Toggle between the current state and the proposed system to see how the bottleneck dissolves.</p>
+  </div>
+
+  <div class="toggle-wrap">
+    <button class="toggle-btn active" onclick="setState('current')">Current state</button>
+    <button class="toggle-btn" onclick="setState('proposed')">With system</button>
+  </div>
+
+  <div class="stats" id="stats">
+    <div class="stat"><div class="stat-val red" id="s-dir">12</div><div class="stat-label">Director connections</div></div>
+    <div class="stat"><div class="stat-val" id="s-hand" style="color:var(--amber)">9</div><div class="stat-label">Manual handoffs</div></div>
+    <div class="stat"><div class="stat-val red" id="s-bot">4</div><div class="stat-label">Bottleneck points</div></div>
+  </div>
+
+  <div class="graph-wrap">
+    <svg id="graph" viewBox="0 0 800 560"></svg>
+  </div>
+
+  <div class="detail" id="detail">
+    <p style="color:var(--tx3);font-size:14px">Click any connection line to see what information flows along it and where friction occurs.</p>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--purple)"></div>Director</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--teal)"></div>Education</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--coral)"></div>Marketing</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--blue)"></div>Finance</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:var(--gray-bd)"></div>Student / External</div>
+    <div class="legend-item"><div class="legend-line" style="background:var(--red)"></div>Bottleneck</div>
+    <div class="legend-item"><div class="legend-line" style="background:var(--amber)"></div>Manual friction</div>
+    <div class="legend-item"><div class="legend-line" style="background:var(--green)"></div>Automated</div>
+  </div>
+</div>
+
+<script>
+const nodes = {
+  current: {
+    director: { x:400, y:280, label:'Director', sub:'Operations', color:'var(--purple)', bg:'var(--purple-bg)', r:44 },
+    annie:    { x:170, y:130, label:'Annie', sub:'Education', color:'var(--teal)', bg:'var(--teal-bg)', r:34 },
+    emily:    { x:630, y:130, label:'Emily', sub:'Marketing', color:'var(--coral)', bg:'var(--coral-bg)', r:34 },
+    marina:   { x:700, y:340, label:'Marina', sub:'Marketing', color:'var(--coral)', bg:'var(--coral-bg)', r:30 },
+    kelly:    { x:560, y:480, label:'Kelly', sub:'Finance', color:'var(--blue)', bg:'var(--blue-bg)', r:34 },
+    students: { x:150, y:460, label:'Students', sub:'External', color:'var(--gray-bd)', bg:'var(--gray-bg)', r:36 }
+  },
+  proposed: {
+    system:   { x:400, y:280, label:'AI System', sub:'Mac Mini + Lark', color:'var(--acc)', bg:'var(--blue-bg)', r:48 },
+    director: { x:400, y:76, label:'Director', sub:'Strategic decisions', color:'var(--purple)', bg:'var(--purple-bg)', r:34 },
+    annie:    { x:140, y:200, label:'Annie', sub:'Education', color:'var(--teal)', bg:'var(--teal-bg)', r:34 },
+    emily:    { x:660, y:200, label:'Emily', sub:'Marketing', color:'var(--coral)', bg:'var(--coral-bg)', r:34 },
+    marina:   { x:700, y:380, label:'Marina', sub:'Marketing', color:'var(--coral)', bg:'var(--coral-bg)', r:30 },
+    kelly:    { x:540, y:480, label:'Kelly', sub:'Finance', color:'var(--blue)', bg:'var(--blue-bg)', r:34 },
+    students: { x:140, y:420, label:'Students', sub:'External', color:'var(--gray-bd)', bg:'var(--gray-bg)', r:36 }
+  }
+};
+
+const edges = {
+  current: [
+    { from:'students', to:'director', label:'Inquiries, questions', type:'bottleneck', detail:'Every student inquiry goes to the director personally. Staff can\'t answer programme questions because details aren\'t documented anywhere.' },
+    { from:'director', to:'annie', label:'Assignments, verbal briefings', type:'bottleneck', detail:'The director verbally briefs Annie on each new student — programme details, schedule preferences, special requirements. Nothing is written down.' },
+    { from:'director', to:'emily', label:'Content decisions', type:'bottleneck', detail:'Emily waits for the director to decide what content to produce. She can\'t act independently because there\'s no content strategy documented.' },
+    { from:'director', to:'marina', label:'Content approval', type:'manual', detail:'Marina sends content to the director for review before posting. The director reviews every single post across every platform.' },
+    { from:'director', to:'kelly', label:'Enrollment approvals', type:'bottleneck', detail:'Kelly can\'t generate an invoice until the director approves the enrollment. This creates a queue when the director is busy.' },
+    { from:'kelly', to:'director', label:'Payment status, reports', type:'manual', detail:'Kelly manually reports payment status to the director, usually verbally or via message. No automated visibility into financial status.' },
+    { from:'annie', to:'director', label:'Progress reports, questions', type:'manual', detail:'Annie asks the director procedural questions throughout the day. Progress reports are delivered verbally in ad-hoc conversations.' },
+    { from:'emily', to:'director', label:'Analytics, content review', type:'manual', detail:'Emily uploads analytics to Lark but then has to summarise them verbally for the director. The data exists but isn\'t surfaced automatically.' },
+    { from:'kelly', to:'annie', label:'Payment confirmation', type:'manual', detail:'After manually checking the payment system, Kelly messages Annie to confirm a student has paid so Annie can proceed with onboarding. Pure manual handoff.' },
+    { from:'annie', to:'emily', label:'Student work (ad-hoc)', type:'manual', detail:'Annie shares student work with Emily through messages when she remembers to. No consistent schedule or format. Emily often doesn\'t know what\'s available.' },
+    { from:'emily', to:'marina', label:'Content collaboration', type:'normal', detail:'Emily and Marina collaborate on content creation. This is a natural working relationship with relatively low friction.' },
+    { from:'kelly', to:'students', label:'Invoices, reminders', type:'manual', detail:'Kelly manually generates and sends invoices. Overdue follow-ups require cross-referencing dates and amounts by hand every time.' }
+  ],
+  proposed: [
+    { from:'students', to:'system', label:'Inquiries via Bot', type:'automated', detail:'Students message the Lark Bot with questions. Common queries are answered automatically by Ollama reading from the SOP knowledge base. Only complex inquiries escalate.' },
+    { from:'system', to:'director', label:'Daily briefing, escalations', type:'automated', detail:'The AI chief of staff sends a daily summary with recommendations. Only strategic decisions and edge cases reach the director.' },
+    { from:'system', to:'annie', label:'Auto assignments, schedules', type:'automated', detail:'When a student enrolls and pays, the system auto-generates their schedule from programme templates and notifies Annie via her dashboard.' },
+    { from:'system', to:'emily', label:'Content drafts, analytics', type:'automated', detail:'Claude generates platform-specific content drafts from student work and brand guidelines. Weekly analytics reports are auto-generated. Emily reviews and approves.' },
+    { from:'system', to:'marina', label:'Approved content to post', type:'automated', detail:'Once Emily approves a draft, the system queues it for posting. Marina handles the community engagement side.' },
+    { from:'system', to:'kelly', label:'Auto invoices, alerts', type:'automated', detail:'Recurring invoices are auto-generated. Payment status syncs automatically. Kelly only handles exceptions and approves overdue reminders.' },
+    { from:'system', to:'students', label:'Auto invoices, reminders', type:'automated', detail:'Invoices and payment reminders are sent automatically after finance approval. Students receive timely, consistent communication.' },
+    { from:'director', to:'system', label:'Strategy, approvals', type:'normal', detail:'The director sets strategy, approves major content decisions, and handles escalated issues. Day-to-day operations run without his constant involvement.' },
+    { from:'annie', to:'system', label:'Progress data, content', type:'normal', detail:'Annie logs student progress in Lark Base as she already does. The system picks it up — no extra work. She tags student work for marketing.' },
+    { from:'kelly', to:'system', label:'Exception handling', type:'normal', detail:'Kelly reviews auto-generated invoices and approves overdue reminders. She manages exceptions rather than processing every transaction.' },
+    { from:'emily', to:'system', label:'Approvals, strategy input', type:'normal', detail:'Emily reviews AI-generated content drafts, approves or edits, and provides creative direction that improves future generations.' }
+  ]
+};
+
+let state = 'current';
+let selectedEdge = null;
+
+function bezier(x1,y1,x2,y2) {
+  const mx = (x1+x2)/2, my = (y1+y2)/2;
+  const dx = x2-x1, dy = y2-y1;
+  const len = Math.sqrt(dx*dx+dy*dy);
+  const off = Math.min(len*0.18, 40);
+  const nx = -dy/len*off, ny = dx/len*off;
+  return `M${x1},${y1} Q${mx+nx},${my+ny} ${x2},${y2}`;
+}
+
+function render(animated) {
+  const svg = document.getElementById('graph');
+  const n = nodes[state];
+  const e = edges[state];
+  const isP = state === 'proposed';
+
+  // Stats
+  if (isP) {
+    document.getElementById('s-dir').textContent = '2';
+    document.getElementById('s-dir').className = 'stat-val green';
+    document.getElementById('s-hand').textContent = '0';
+    document.getElementById('s-hand').style.color = 'var(--green)';
+    document.getElementById('s-bot').textContent = '0';
+    document.getElementById('s-bot').className = 'stat-val green';
+  } else {
+    document.getElementById('s-dir').textContent = '12';
+    document.getElementById('s-dir').className = 'stat-val red';
+    document.getElementById('s-hand').textContent = '9';
+    document.getElementById('s-hand').style.color = 'var(--amber)';
+    document.getElementById('s-bot').textContent = '4';
+    document.getElementById('s-bot').className = 'stat-val red';
+  }
+
+  let html = '';
+
+  // Draw edges
+  e.forEach((edge, i) => {
+    const f = n[edge.from], t = n[edge.to];
+    if (!f || !t) return;
+
+    const dx = t.x-f.x, dy = t.y-f.y;
+    const len = Math.sqrt(dx*dx+dy*dy);
+    const ux = dx/len, uy = dy/len;
+    const sx = f.x + ux*f.r, sy = f.y + uy*f.r;
+    const ex = t.x - ux*t.r, ey = t.y - uy*t.r;
+
+    let stroke, sw, dash='';
+    if (edge.type==='bottleneck') { stroke='var(--red)'; sw=2.5; }
+    else if (edge.type==='manual') { stroke='var(--amber)'; sw=1.8; }
+    else if (edge.type==='automated') { stroke='var(--green)'; sw=2; }
+    else { stroke='var(--tx3)'; sw=1; }
+
+    const path = bezier(sx,sy,ex,ey);
+    const mx = (sx+ex)/2, my = (sy+ey)/2;
+    const offx = -(ey-sy)/len*14, offy = (ex-sx)/len*14;
+
+    html += `<path d="${path}" fill="none" stroke="${stroke}" stroke-width="${sw}" stroke-linecap="round" 
+      style="cursor:pointer;opacity:${animated?0:1};transition:opacity .4s ease ${i*0.04}s" 
+      data-idx="${i}" onclick="selectEdge(${i})"
+      onmouseover="this.setAttribute('stroke-width',${sw+1.5})" 
+      onmouseout="this.setAttribute('stroke-width',${sw})"/>`;
+    html += `<text x="${mx+offx}" y="${my+offy}" text-anchor="middle" dominant-baseline="central" 
+      font-size="10" font-weight="500" fill="var(--tx3)"
+      style="pointer-events:none;opacity:${animated?0:1};transition:opacity .4s ease ${i*0.04+0.1}s">${edge.label}</text>`;
+  });
+
+  // Draw nodes
+  Object.entries(n).forEach(([key, node], i) => {
+    const delay = i * 0.05;
+    html += `<g style="opacity:${animated?0:1};transition:opacity .35s ease ${delay}s">`;
+    html += `<circle cx="${node.x}" cy="${node.y}" r="${node.r}" fill="${node.bg}" stroke="${node.color}" stroke-width="2"/>`;
+    if (key === 'director' && !isP) {
+      html += `<circle cx="${node.x}" cy="${node.y}" r="${node.r+6}" fill="none" stroke="var(--red)" stroke-width="1.5" stroke-dasharray="4 3" opacity=".5"/>`;
+    }
+    if (key === 'system') {
+      html += `<circle cx="${node.x}" cy="${node.y}" r="${node.r+6}" fill="none" stroke="var(--green)" stroke-width="1.5" stroke-dasharray="4 3" opacity=".5"/>`;
+    }
+    html += `<text x="${node.x}" y="${node.y-6}" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="600" fill="var(--tx)">${node.label}</text>`;
+    html += `<text x="${node.x}" y="${node.y+10}" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="400" fill="var(--tx2)">${node.sub}</text>`;
+    html += `</g>`;
+  });
+
+  svg.innerHTML = html;
+
+  if (animated) {
+    requestAnimationFrame(() => {
+      svg.querySelectorAll('[style*="opacity:0"]').forEach(el => {
+        el.style.opacity = 1;
+      });
+    });
+  }
+
+  // Reset detail
+  selectedEdge = null;
+  document.getElementById('detail').innerHTML = '<p style="color:var(--tx3);font-size:14px">Click any connection line to see what information flows along it.</p>';
+}
+
+function selectEdge(idx) {
+  const e = edges[state][idx];
+  if (!e) return;
+  const typeTag = e.type === 'bottleneck' ? '<span class="tag friction">Bottleneck</span>' :
+                  e.type === 'manual' ? '<span class="tag" style="background:var(--amber-bg);color:var(--amber)">Manual</span>' :
+                  e.type === 'automated' ? '<span class="tag automated">Automated</span>' :
+                  '<span class="tag" style="background:var(--gray-bg);color:var(--tx3)">Normal</span>';
+  const n = nodes[state];
+  const from = n[e.from]?.label || e.from;
+  const to = n[e.to]?.label || e.to;
+  document.getElementById('detail').innerHTML = `<h3>${from} → ${to} ${typeTag}</h3><p>${e.detail}</p>`;
+
+  // Highlight
+  document.querySelectorAll('#graph path').forEach((p,i) => {
+    p.style.opacity = i===idx ? 1 : 0.15;
+  });
+  document.querySelectorAll('#graph text').forEach(t => {
+    if (t.style.pointerEvents === 'none') t.style.opacity = 0.15;
+  });
+}
+
+function setState(s) {
+  state = s;
+  document.querySelectorAll('.toggle-btn').forEach((b,i) => {
+    b.classList.toggle('active', (i===0 && s==='current') || (i===1 && s==='proposed'));
+  });
+  render(true);
+}
+
+// Click outside to deselect
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('#graph path') && !e.target.closest('.detail')) {
+    document.querySelectorAll('#graph path, #graph text').forEach(el => el.style.opacity = 1);
+    if (selectedEdge !== null) {
+      selectedEdge = null;
+      document.getElementById('detail').innerHTML = '<p style="color:var(--tx3);font-size:14px">Click any connection line to see what information flows along it.</p>';
+    }
+  }
+});
+
+render(false);
+</script>
+</body>
+</html>
