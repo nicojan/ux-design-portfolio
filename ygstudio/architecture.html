@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Architecture — Studio Operations Platform</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-secondary: #f5f5f7;
+    --bg-tertiary: #fbfbfd;
+    --bg-elevated: #ffffff;
+    --text-primary: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --text-tertiary: #aeaeb2;
+    --border: rgba(0,0,0,0.08);
+    --border-strong: rgba(0,0,0,0.14);
+    --accent: #007aff;
+    --accent-bg: rgba(0,122,255,0.08);
+    --purple: #af52de;
+    --purple-bg: #f5eefb;
+    --purple-border: #d9b3ef;
+    --purple-text: #6b2fa0;
+    --teal: #30b0c7;
+    --teal-bg: #e8f7fa;
+    --teal-border: #a0dce8;
+    --teal-text: #1a7a8a;
+    --coral: #ff6b47;
+    --coral-bg: #fff0ec;
+    --coral-border: #ffb8a6;
+    --coral-text: #a03520;
+    --blue: #007aff;
+    --blue-bg: #e8f2ff;
+    --blue-border: #a0c8ff;
+    --blue-text: #004fc4;
+    --amber: #ff9f0a;
+    --amber-bg: #fff5e0;
+    --amber-border: #ffd080;
+    --amber-text: #8a5500;
+    --gray-node: #f2f2f7;
+    --gray-node-border: #d1d1d6;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 8px 28px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --bg-secondary: #1c1c1e;
+      --bg-tertiary: #0d0d0d;
+      --bg-elevated: #2c2c2e;
+      --text-primary: #f5f5f7;
+      --text-secondary: #98989d;
+      --text-tertiary: #636366;
+      --border: rgba(255,255,255,0.08);
+      --border-strong: rgba(255,255,255,0.14);
+      --accent-bg: rgba(0,122,255,0.15);
+      --purple-bg: #2a1a38;
+      --purple-border: #6b3a90;
+      --purple-text: #d9a0f0;
+      --teal-bg: #0f2a30;
+      --teal-border: #1a7a8a;
+      --teal-text: #6edce8;
+      --coral-bg: #301510;
+      --coral-border: #a03520;
+      --coral-text: #ffaa90;
+      --blue-bg: #001a38;
+      --blue-border: #004fc4;
+      --blue-text: #60b0ff;
+      --amber-bg: #2a1e00;
+      --amber-border: #8a5500;
+      --amber-text: #ffc040;
+      --gray-node: #2c2c2e;
+      --gray-node-border: #48484a;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+      --shadow-lg: 0 8px 28px rgba(0,0,0,0.4);
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .page {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 60px 40px 80px;
+  }
+
+  @media (max-width: 768px) {
+    .page { padding: 32px 20px 60px; }
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .header-label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+  }
+  .header p {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    max-width: 620px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 768px) {
+    .header h1 { font-size: 28px; }
+    .header p { font-size: 16px; }
+  }
+
+  /* Principles */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 768px) {
+    .principles { grid-template-columns: 1fr; }
+  }
+  .principle {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    border: 1px solid var(--border);
+  }
+  .principle-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .principle h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+  }
+  .principle p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  /* Scenario controls */
+  .controls {
+    margin-bottom: 20px;
+  }
+  .controls-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 10px;
+  }
+  .scenario-bar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .scenario-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--border-strong);
+    border-radius: 980px;
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+    font: 500 14px/1 -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .scenario-btn:hover {
+    background: var(--bg-secondary);
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+  }
+  .scenario-btn.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  /* Description card */
+  .desc-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    margin-bottom: 28px;
+    min-height: 56px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    transition: background 0.2s;
+  }
+  .desc-card strong {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* Diagram container */
+  .diagram-wrap {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: 32px 24px 24px;
+    box-shadow: var(--shadow-sm);
+    overflow-x: auto;
+  }
+
+  /* SVG styles */
+  .diagram-wrap svg text {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+  }
+  .diagram-wrap svg .label-lg {
+    font-size: 14px;
+    font-weight: 600;
+    fill: var(--text-primary);
+  }
+  .diagram-wrap svg .label-md {
+    font-size: 13px;
+    font-weight: 600;
+    fill: var(--text-primary);
+  }
+  .diagram-wrap svg .label-sm {
+    font-size: 11px;
+    font-weight: 500;
+    fill: var(--text-secondary);
+  }
+  .diagram-wrap svg .label-xs {
+    font-size: 10px;
+    font-weight: 500;
+    fill: var(--text-tertiary);
+  }
+  .diagram-wrap svg .nb { transition: opacity 0.3s ease; }
+  .diagram-wrap svg .ep { transition: opacity 0.3s ease; }
+  .diagram-wrap svg.dimmed .nb { opacity: 0.1; }
+  .diagram-wrap svg.dimmed .ep { opacity: 0.05; }
+  .diagram-wrap svg.dimmed .nb.h { opacity: 1; }
+  .diagram-wrap svg.dimmed .ep.h { opacity: 1; }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .legend-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .legend-line {
+    width: 24px;
+    height: 2px;
+    flex-shrink: 0;
+    border-radius: 1px;
+  }
+
+  /* Stack section */
+  .stack-section {
+    margin-top: 56px;
+  }
+  .stack-section h2 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  @media (max-width: 768px) {
+    .stack-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .stack-item {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    text-align: center;
+  }
+  .stack-item .stack-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+  .stack-item h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--text-primary);
+  }
+  .stack-item p {
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--text-secondary);
+  }
+  .stack-item .stack-cost {
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-label">System Architecture Proposal</div>
+    <h1>Studio Operations Platform</h1>
+    <p>A unified system that reduces operational drag by automating data handoffs, content production, and reporting — while keeping humans in the decision seat.</p>
+  </div>
+
+  <!-- Principles -->
+  <div class="principles">
+    <div class="principle">
+      <div class="principle-number">1</div>
+      <h3>Lark stays home</h3>
+      <p>All data lives in Lark Bases. Staff change nothing about how they work. The system listens and acts around them.</p>
+    </div>
+    <div class="principle">
+      <div class="principle-number">2</div>
+      <h3>AI works silently</h3>
+      <p>A Mac Mini runs automation 24/7 — syncing data, generating content, compiling reports. No cloud dependency for routine tasks.</p>
+    </div>
+    <div class="principle">
+      <div class="principle-number">3</div>
+      <h3>Humans decide</h3>
+      <p>Nothing posts, sends, or changes without staff approval. AI produces and recommends. People approve and deliver.</p>
+    </div>
+  </div>
+
+  <!-- Scenario controls -->
+  <div class="controls">
+    <div class="controls-label">Information flow scenarios</div>
+    <div class="scenario-bar">
+      <button class="scenario-btn active" onclick="S(0)">Overview</button>
+      <button class="scenario-btn" onclick="S(1)">Student pays</button>
+      <button class="scenario-btn" onclick="S(2)">Content pipeline</button>
+      <button class="scenario-btn" onclick="S(3)">Staff asks SOP</button>
+      <button class="scenario-btn" onclick="S(4)">Director briefing</button>
+      <button class="scenario-btn" onclick="S(5)">Invoice overdue</button>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div class="desc-card" id="desc">
+    <strong>Click a scenario above</strong> to trace how information flows through the system. Each path shows what data moves, what processes it, and where it ends up.
+  </div>
+
+  <!-- Diagram -->
+  <div class="diagram-wrap">
+    <svg id="fs" width="100%" viewBox="0 0 800 580">
+
+      <!-- === ROW 1: Lark + External === -->
+
+      <!-- Social platforms -->
+      <g class="nb" data-n="social">
+        <rect x="16" y="28" width="116" height="44" rx="10" fill="var(--gray-node)" stroke="var(--gray-node-border)" stroke-width="0.5"/>
+        <text class="label-md" x="74" y="45" text-anchor="middle" dominant-baseline="central">Social platforms</text>
+        <text class="label-xs" x="74" y="60" text-anchor="middle" dominant-baseline="central">IG, LinkedIn, XHS</text>
+      </g>
+
+      <!-- Lark -->
+      <g class="nb" data-n="lark">
+        <rect x="168" y="12" width="464" height="76" rx="14" fill="var(--bg-elevated)" stroke="var(--border-strong)" stroke-width="1"/>
+        <text class="label-lg" x="400" y="36" text-anchor="middle" dominant-baseline="central">Lark — single source of truth</text>
+        <text class="label-sm" x="400" y="56" text-anchor="middle" dominant-baseline="central">Bases · Docs · Wiki · OKRs · Bot · Native automations</text>
+        <text class="label-xs" x="400" y="74" text-anchor="middle" dominant-baseline="central">Students · Programmes · Invoices · Content calendar · SOPs</text>
+      </g>
+
+      <!-- Payment API -->
+      <g class="nb" data-n="pay">
+        <rect x="668" y="28" width="116" height="44" rx="10" fill="var(--gray-node)" stroke="var(--gray-node-border)" stroke-width="0.5"/>
+        <text class="label-md" x="726" y="45" text-anchor="middle" dominant-baseline="central">Payment API</text>
+        <text class="label-xs" x="726" y="60" text-anchor="middle" dominant-baseline="central">Stripe, etc.</text>
+      </g>
+
+      <!-- === ROW 2: Mac Mini === -->
+      <g class="nb" data-n="mac">
+        <rect x="110" y="138" width="580" height="190" rx="16" fill="var(--bg-secondary)" stroke="var(--border)" stroke-width="0.5"/>
+        <text class="label-lg" x="400" y="162" text-anchor="middle" dominant-baseline="central">Mac Mini — always-on automation server</text>
+      </g>
+
+      <!-- API Proxy -->
+      <g class="nb" data-n="proxy">
+        <rect x="130" y="180" width="160" height="54" rx="10" fill="var(--purple-bg)" stroke="var(--purple-border)" stroke-width="0.5"/>
+        <text class="label-md" x="210" y="200" text-anchor="middle" dominant-baseline="central" fill="var(--purple-text)">API proxy</text>
+        <text class="label-xs" x="210" y="218" text-anchor="middle" dominant-baseline="central" fill="var(--purple-text)">Dashboard ↔ Lark bridge</text>
+      </g>
+
+      <!-- Cron -->
+      <g class="nb" data-n="cron">
+        <rect x="308" y="180" width="170" height="54" rx="10" fill="var(--gray-node)" stroke="var(--gray-node-border)" stroke-width="0.5"/>
+        <text class="label-md" x="393" y="200" text-anchor="middle" dominant-baseline="central">Cron scripts</text>
+        <text class="label-xs" x="393" y="218" text-anchor="middle" dominant-baseline="central">Polling · Detection · Sync</text>
+      </g>
+
+      <!-- Ollama -->
+      <g class="nb" data-n="ollama">
+        <rect x="496" y="180" width="176" height="54" rx="10" fill="var(--gray-node)" stroke="var(--gray-node-border)" stroke-width="0.5"/>
+        <text class="label-md" x="584" y="200" text-anchor="middle" dominant-baseline="central">Ollama</text>
+        <text class="label-xs" x="584" y="218" text-anchor="middle" dominant-baseline="central">Local AI · SOP knowledge base</text>
+      </g>
+
+      <!-- Claude tasks -->
+      <g class="nb" data-n="claude">
+        <rect x="130" y="252" width="260" height="54" rx="10" fill="var(--purple-bg)" stroke="var(--purple-border)" stroke-width="0.5"/>
+        <text class="label-md" x="260" y="272" text-anchor="middle" dominant-baseline="central" fill="var(--purple-text)">Claude scheduled tasks</text>
+        <text class="label-xs" x="260" y="290" text-anchor="middle" dominant-baseline="central" fill="var(--purple-text)">Content generation · Reports · AI chief of staff</text>
+      </g>
+
+      <!-- MCP servers -->
+      <g class="nb" data-n="mcp">
+        <rect x="408" y="252" width="264" height="54" rx="10" fill="var(--amber-bg)" stroke="var(--amber-border)" stroke-width="0.5"/>
+        <text class="label-md" x="540" y="272" text-anchor="middle" dominant-baseline="central" fill="var(--amber-text)">MCP servers</text>
+        <text class="label-xs" x="540" y="290" text-anchor="middle" dominant-baseline="central" fill="var(--amber-text)">Lark · Social media · Google Drive · Brand</text>
+      </g>
+
+      <!-- Claude API (external) -->
+      <g class="nb" data-n="api">
+        <rect x="16" y="262" width="80" height="36" rx="8" fill="var(--gray-node)" stroke="var(--gray-node-border)" stroke-width="0.5"/>
+        <text class="label-sm" x="56" y="284" text-anchor="middle" dominant-baseline="central">Claude API</text>
+      </g>
+
+      <!-- === ROW 3: Dashboards === -->
+      <g class="nb" data-n="dashboards">
+        <rect x="60" y="388" width="680" height="120" rx="16" fill="var(--bg-secondary)" stroke="var(--border)" stroke-width="0.5"/>
+        <text class="label-lg" x="400" y="412" text-anchor="middle" dominant-baseline="central">Custom dashboards — read and write to Lark via API proxy</text>
+      </g>
+
+      <g class="nb" data-n="dir">
+        <rect x="82" y="428" width="148" height="60" rx="10" fill="var(--purple-bg)" stroke="var(--purple-border)" stroke-width="0.5"/>
+        <text class="label-md" x="156" y="450" text-anchor="middle" dominant-baseline="central" fill="var(--purple-text)">Director</text>
+        <text class="label-xs" x="156" y="468" text-anchor="middle" dominant-baseline="central" fill="var(--purple-text)">Full overview + AI briefing</text>
+      </g>
+      <g class="nb" data-n="edu">
+        <rect x="246" y="428" width="148" height="60" rx="10" fill="var(--teal-bg)" stroke="var(--teal-border)" stroke-width="0.5"/>
+        <text class="label-md" x="320" y="450" text-anchor="middle" dominant-baseline="central" fill="var(--teal-text)">Education</text>
+        <text class="label-xs" x="320" y="468" text-anchor="middle" dominant-baseline="central" fill="var(--teal-text)">Students · Programmes · Tasks</text>
+      </g>
+      <g class="nb" data-n="mkt">
+        <rect x="410" y="428" width="148" height="60" rx="10" fill="var(--coral-bg)" stroke="var(--coral-border)" stroke-width="0.5"/>
+        <text class="label-md" x="484" y="450" text-anchor="middle" dominant-baseline="central" fill="var(--coral-text)">Marketing</text>
+        <text class="label-xs" x="484" y="468" text-anchor="middle" dominant-baseline="central" fill="var(--coral-text)">Content approval · Analytics</text>
+      </g>
+      <g class="nb" data-n="fin">
+        <rect x="574" y="428" width="148" height="60" rx="10" fill="var(--blue-bg)" stroke="var(--blue-border)" stroke-width="0.5"/>
+        <text class="label-md" x="648" y="450" text-anchor="middle" dominant-baseline="central" fill="var(--blue-text)">Finance</text>
+        <text class="label-xs" x="648" y="468" text-anchor="middle" dominant-baseline="central" fill="var(--blue-text)">Invoices · Payment alerts</text>
+      </g>
+
+      <!-- Lark Bot -->
+      <g class="nb" data-n="bot">
+        <rect x="280" y="538" width="240" height="34" rx="8" fill="var(--gray-node)" stroke="var(--gray-node-border)" stroke-width="0.5" stroke-dasharray="5 3"/>
+        <text class="label-sm" x="400" y="559" text-anchor="middle" dominant-baseline="central">Lark Bot — quick AI questions in chat</text>
+      </g>
+
+      <!-- ============ EDGES ============ -->
+
+      <!-- Lark ↔ Proxy -->
+      <path class="ep" data-e="e1" d="M280 88 L220 178" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)"/>
+      <path class="ep" data-e="e1b" d="M200 178 L260 88" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)"/>
+      <text class="label-xs ep" data-e="e1l" x="222" y="128" text-anchor="middle">REST API</text>
+
+      <!-- Lark ↔ MCP -->
+      <path class="ep" data-e="e2" d="M520 88 L540 250" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)"/>
+      <path class="ep" data-e="e2b" d="M554 250 L534 88" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)"/>
+      <text class="label-xs ep" data-e="e2l" x="554" y="168" text-anchor="start">MCP read / write</text>
+
+      <!-- MCP → Claude -->
+      <path class="ep" data-e="e3" d="M408 280 L392 280" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)"/>
+      <text class="label-xs ep" data-e="e3l" x="400" y="270" text-anchor="middle">Context</text>
+
+      <!-- Claude API → Claude tasks -->
+      <path class="ep" data-e="e4" d="M96 280 L128 280" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)"/>
+      <text class="label-xs ep" data-e="e4l" x="112" y="268" text-anchor="middle">Fallback</text>
+
+      <!-- Proxy ↔ Dashboards -->
+      <path class="ep" data-e="e5" d="M210 234 L210 350 L300 386" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)"/>
+      <path class="ep" data-e="e5b" d="M320 386 L230 350 L230 234" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)"/>
+      <text class="label-xs ep" data-e="e5l" x="195" y="350" text-anchor="end">Read / write</text>
+
+      <!-- Cron → Lark -->
+      <path class="ep" data-e="e6" d="M393 180 L393 120 L400 88" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)"/>
+      <text class="label-xs ep" data-e="e6l" x="412" y="120" text-anchor="start">Poll + update</text>
+
+      <!-- Payment → Cron -->
+      <path class="ep" data-e="e7" d="M726 72 L726 120 L510 120 L440 178" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)"/>
+      <text class="label-xs ep" data-e="e7l" x="640" y="112" text-anchor="middle">Payment events</text>
+
+      <!-- Social ↔ MCP -->
+      <path class="ep" data-e="e8" d="M74 72 L74 330 L540 330 L540 306" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)"/>
+      <text class="label-xs ep" data-e="e8l" x="90" y="330" text-anchor="start">Analytics in / posts out</text>
+
+      <!-- Ollama → Dashboards -->
+      <path class="ep" data-e="e9" d="M584 234 L584 356 L530 386" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)"/>
+      <text class="label-xs ep" data-e="e9l" x="600" y="350" text-anchor="start">SOP answers</text>
+
+      <!-- Claude → Lark (write drafts) -->
+      <path class="ep" data-e="e10" d="M200 252 L200 120 L260 88" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)" stroke-dasharray="5 3"/>
+      <text class="label-xs ep" data-e="e10l" x="184" y="174" text-anchor="end">Write drafts + reports</text>
+
+      <!-- Bot → Ollama -->
+      <path class="ep" data-e="e11" d="M400 538 L400 520 L584 520 L584 234" fill="none" stroke="var(--text-tertiary)" stroke-width="1" marker-end="url(#a)"/>
+      <text class="label-xs ep" data-e="e11l" x="500" y="532" text-anchor="middle">Questions</text>
+
+      <!-- Arrow marker -->
+      <defs>
+        <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+    </svg>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:var(--purple-bg);border:1px solid var(--purple-border)"></div>
+      AI-powered
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:var(--amber-bg);border:1px solid var(--amber-border)"></div>
+      Connectors
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:var(--teal-bg);border:1px solid var(--teal-border)"></div>
+      Education
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:var(--coral-bg);border:1px solid var(--coral-border)"></div>
+      Marketing
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:var(--blue-bg);border:1px solid var(--blue-border)"></div>
+      Finance
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background:var(--text-tertiary)"></div>
+      Automated flow
+    </div>
+    <div class="legend-item">
+      <div class="legend-line" style="background:var(--text-tertiary);background:repeating-linear-gradient(90deg, var(--text-tertiary) 0 4px, transparent 4px 8px)"></div>
+      AI-generated write
+    </div>
+  </div>
+
+  <!-- Stack summary -->
+  <div class="stack-section">
+    <h2>What runs where</h2>
+    <div class="stack-grid">
+      <div class="stack-item">
+        <div class="stack-icon">📦</div>
+        <h4>Lark</h4>
+        <p>All data, docs, OKRs, bot interface. Staff work here daily.</p>
+        <div class="stack-cost">Already in use</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🖥</div>
+        <h4>Mac Mini M4 Pro</h4>
+        <p>API proxy, cron scripts, Ollama, Claude Code tasks.</p>
+        <div class="stack-cost">~$2,000 one-time</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">🤖</div>
+        <h4>Claude API</h4>
+        <p>Cloud fallback for complex content and reasoning.</p>
+        <div class="stack-cost">~$50–150/month</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-icon">📊</div>
+        <h4>Dashboards</h4>
+        <p>React app served from Mac Mini. No separate hosting.</p>
+        <div class="stack-cost">$0</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const sc = {
+  0: { n:[], e:[], d:'<strong>Click a scenario above</strong> to trace how information flows through the system. Each path shows what data moves, what processes it, and where it ends up.' },
+  1: { n:['pay','cron','lark','mac','proxy','dashboards','fin'],
+       e:['e7','e7l','e6','e6l','e1','e1b','e1l','e5','e5b','e5l'],
+       d:'<strong>Student pays →</strong> Cron script polls the payment API hourly. When a new payment is detected, it updates the invoice record in the Lark Base directly. The Finance dashboard, reading from Lark through the API proxy, reflects the change. No manual handoff between staff.' },
+  2: { n:['lark','mac','mcp','claude','api','proxy','dashboards','mkt','social'],
+       e:['e2','e2b','e2l','e3','e3l','e4','e4l','e10','e10l','e1','e1b','e1l','e5','e5b','e5l','e8','e8l'],
+       d:'<strong>Content pipeline →</strong> Claude reads brand guidelines and past analytics from Lark via MCP. It generates platform-specific drafts and writes them into a Content Drafts table in Lark. Marketing sees them on their dashboard, approves or edits, and approved content is posted to social platforms via the social media MCP.' },
+  3: { n:['bot','ollama','mac','lark','mcp'],
+       e:['e11','e11l','e2','e2l'],
+       d:'<strong>Staff asks SOP question →</strong> A staff member messages the Lark Bot with a question. The bot routes to Ollama running locally on the Mac Mini, which reads the relevant SOP documents from Lark via MCP and returns the answer directly in chat. Fully local — works even if the internet drops.' },
+  4: { n:['lark','mac','mcp','claude','api','proxy','dashboards','dir'],
+       e:['e2','e2b','e2l','e3','e3l','e4','e4l','e10','e10l','e1','e1b','e1l','e5','e5b','e5l'],
+       d:'<strong>Director briefing →</strong> Daily Claude task reads all Bases via MCP — students, invoices, OKRs. Cross-references targets vs. actuals and writes a briefing to Lark. The Director dashboard shows the full report with actionable recommendations. Also sent as a summary via Lark Bot.' },
+  5: { n:['lark','mac','cron','claude','mcp','api','proxy','dashboards','fin'],
+       e:['e6','e6l','e2','e2b','e2l','e3','e3l','e4','e4l','e10','e10l','e1','e1b','e1l','e5','e5b','e5l'],
+       d:'<strong>Invoice overdue →</strong> Cron script detects invoices unpaid past 7 days. Claude reads the student record via MCP and drafts a reminder. The draft is written into a Pending Actions table in Lark. Finance dashboard shows it for approval. On approval, the system sends the reminder and logs the follow-up.' }
+};
+
+function S(n) {
+  document.querySelectorAll('.scenario-btn').forEach((b, i) => b.classList.toggle('active', i === n));
+  document.getElementById('desc').innerHTML = sc[n].d;
+  const svg = document.getElementById('fs');
+  if (!n) {
+    svg.classList.remove('dimmed');
+    svg.querySelectorAll('.nb,.ep').forEach(el => el.classList.remove('h'));
+    return;
+  }
+  svg.classList.add('dimmed');
+  svg.querySelectorAll('.nb,.ep').forEach(el => el.classList.remove('h'));
+  sc[n].n.forEach(id => { const el = svg.querySelector('[data-n="'+id+'"]'); if (el) el.classList.add('h'); });
+  sc[n].e.forEach(id => { svg.querySelectorAll('[data-e="'+id+'"]').forEach(el => el.classList.add('h')); });
+}
+</script>
+</body>
+</html>
