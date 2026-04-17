@@ -223,20 +223,20 @@
 
     // List of images in the aoni directory
     var images = [
-      "002_how2sex_foreplay.png",
-      "003_how2sex_protection.png",
-      "006_how2sex_roleplay.png",
-      "007_how2sex_booty call.png",
-      "009_how2sex_toys.png",
-      "012_how2sex_signals.png",
-      "w1_animalsexspecs_three-d_colorbg_fb.png",
-      "w2_animalsexspecs_human-style_fb.png",
-      "w3_animalsexspecs_12-seconds_fb.png",
-      "w3_sexspecs_130000_fb.png",
-      "w3_sexspecs_teamwork_fb.png",
-      "w4_animalsexspecs_poop-play_fb.png",
-      "w4_sexspecs_average-ejaculation_fb.png",
-      "w4_sexspecs_grandma_fb.png",
+      "002_how2sex_foreplay.webp",
+      "003_how2sex_protection.webp",
+      "006_how2sex_roleplay.webp",
+      "007_how2sex_booty call.webp",
+      "009_how2sex_toys.webp",
+      "012_how2sex_signals.webp",
+      "w1_animalsexspecs_three-d_colorbg_fb.webp",
+      "w2_animalsexspecs_human-style_fb.webp",
+      "w3_animalsexspecs_12-seconds_fb.webp",
+      "w3_sexspecs_130000_fb.webp",
+      "w3_sexspecs_teamwork_fb.webp",
+      "w4_animalsexspecs_poop-play_fb.webp",
+      "w4_sexspecs_average-ejaculation_fb.webp",
+      "w4_sexspecs_grandma_fb.webp",
     ];
 
     var currentIndex = 0;
@@ -492,9 +492,9 @@
       { name: "protagonist", type: "video" },
 
       // Images (full filename with extension)
-      { name: "freytag.png", type: "image" },
-      { name: "story-starters.png", type: "image" },
-      { name: "types-of-characters.png", type: "image" },
+      { name: "freytag.webp", type: "image" },
+      { name: "story-starters.webp", type: "image" },
+      { name: "types-of-characters.webp", type: "image" },
 
       // Add your new files below this line:
       // { name: "new-video", type: "video" },

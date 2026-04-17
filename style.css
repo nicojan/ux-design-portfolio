@@ -724,7 +724,7 @@ ol {
 
 /* Vertical video/animated webp (e.g. phone screen recordings) — constrain height */
 .project-image video,
-.project-image img[src$=".png"] {
+.project-image img[src$=".webp"] {
   max-height: 70vh;
   width: auto;
   max-width: 100%;

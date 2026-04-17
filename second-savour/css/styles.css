@@ -864,7 +864,7 @@ p {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("../images/frame.png");
+  background-image: url("../images/frame.webp");
   background-size: 30vw auto;
   background-position: right bottom;
   background-repeat: no-repeat;
